@@ -1,15 +1,13 @@
 <template>
-  <div class="left-container">
+  <div class="left-container group-container">
     <div class="user-heading">
-      <div>My Chat</div>
-      <div @click="onUserGroupChatClick" class="group-chat-heading">
-        Create group chat
-      </div>
+      <div>Add Group Participants</div>
+      <div @click="closeGroupSidebar" class="close-group">close</div>
     </div>
     <div class="search-bar-wrapper">
       <input
         type="text"
-        placeholder="Search user or create chat"
+        placeholder="Add users to group"
         class="search-bar"
         v-model="userSearchData"
         @input="searchUser"
@@ -32,22 +30,6 @@
         </div>
       </div>
     </div>
-    <div class="user" v-else>
-      <div class="user-one">
-        <div class="user-data">
-          <div>
-            <img
-              src="https://res.cloudinary.com/dkidih85l/image/upload/v1674054232/ge2eratqkshdnega4ecn.jpg"
-              class="user-one-pic"
-            />
-          </div>
-          <div class="chat-content">
-            <p class="chat-friend-name">swapnesh</p>
-            <p class="latest-chat">my latest chat</p>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -55,6 +37,11 @@
 import apiService from "../services/api.services";
 
 export default {
+  props: {
+    isShowGroup: {
+      type: Boolean,
+    },
+  },
   data() {
     return {
       userSearchData: "",
@@ -68,9 +55,12 @@ export default {
       this.responseUser = response.data.users;
       console.log(this.responseUser);
     },
-    onUserGroupChatClick() {
-      this.$emit("showGroupSidebar");
+    closeGroupSidebar() {
+      this.$emit("closeGroupSidebar");
     },
+  },
+  mounted() {
+    console.log(this.isShowGroup);
   },
 };
 </script>
@@ -125,7 +115,7 @@ export default {
   box-sizing: border-box;
   outline: none;
   padding-left: 18px;
-  @media only screen and (max-width: 600px) {
+   @media only screen and (max-width: 600px) {
     font-size: 10px;
     padding-left: 5px;
   }
@@ -338,7 +328,7 @@ export default {
     margin: 0;
   }
 }
-.group-chat-heading {
+.close-group {
   cursor: pointer;
 }
 </style>

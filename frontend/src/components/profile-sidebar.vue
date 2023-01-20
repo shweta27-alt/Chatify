@@ -3,7 +3,7 @@
     <div class="profile-photo-user">
       <label for="image-input">
         <img
-          :src="profiledata && profiledata.profilepic"
+          :src="profiledata && profiledata.profilePic"
           class="profile-picture"
         />
       </label>
@@ -19,7 +19,7 @@
 
         <div>
           <p class="name-info">Name</p>
-          <p class="profile-name">{{ profiledata && profiledata.fullname }}</p>
+          <p class="profile-name">{{ profiledata && profiledata.fullName }}</p>
         </div>
       </div>
 
@@ -55,8 +55,8 @@
           </div>
           <!-- <p class="about-user-text">
             {{
-              profiledata && profiledata.profilebio
-                ? profiledata.profilebio
+              profiledata && profiledata.profileBio
+                ? profiledata.profileBio
                 : "Hey there, I am using chatify"
             }}
           </p> -->
@@ -96,10 +96,10 @@ export default {
   },
   mounted() {
     this.profiledata = this.$store.state.userData.user;
-    console.log(this.profiledata.profilebio);
+    console.log(this.profiledata.profileBio);
     this.profileBio =
-      this.profiledata && this.profiledata.profilebio
-        ? this.profiledata.profilebio
+      this.profiledata && this.profiledata.profileBio
+        ? this.profiledata.profileBio
         : "Hey there, I am using chatify";
 
     apiService.createuserchat({userId: "63ba899da4f8a716d32ee0fe"})
@@ -192,6 +192,7 @@ export default {
   height: 130px;
   padding-top: 20px;
   border-radius:50% ;
+    cursor: pointer;
 }
 
 .profile-photo-user {
@@ -269,5 +270,13 @@ export default {
 .profile-bio {
   display: flex;
   align-items: center;
+   @media only screen and (max-width: 600px) {
+   width:80%;
+  }
+}
+.about-me-profile{
+   @media only screen and (max-width: 600px) {
+   width:100%;
+  }
 }
 </style>

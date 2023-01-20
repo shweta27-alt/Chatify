@@ -1,27 +1,47 @@
 <template>
   <div class="container">
     <div class="nav-bar-project">
-      <div>
-        <img src="../../assets/chatify-logo.jpeg" class="chatify-logo" />
+      <div class="logo-wrapper">
+        <div class="mobile-icon" @click="openUserSidebar">mobile-icon</div>
+        <div>
+          <img src="../../assets/chatify-logo.jpeg" class="chatify-logo" />
+        </div>
       </div>
-
       <div class="user-profile-notification">
         <div class="notification">
           <img src="../../assets/notification-bell.png" class="user-icon" />
         </div>
-        <div class="user-image" @click="onProfileClick" >
-          <img :src="userData && userData.profilepic" class="user-icon" />
+        <div class="user-image" @click="onProfileClick">
+          <img :src="userData && userData.profilePic" class="user-icon" />
         </div>
       </div>
     </div>
     <div class="lower-chat">
       <div class="inner-container">
-        <user-sidebar />
+        <user-sidebar
+          @showGroupSidebar="showGroupSidebar"
+          v-if="!showGroupContainer"
+          :class="{
+            'user-sidebar': true,
+            'show-user-sidebar': showMobileUserSidebar,
+          }"
+        />
+        <group-sidebar
+          @closeGroupSidebar="closeGroupSidebar"
+          :isShowGroup="showGroupContainer"
+          :class="{
+            'group-container': true,
+          }"
+          v-else
+        />
         <message-bar />
-        <profile-sidebar @userData="setUserdata" :class="{
+        <profile-sidebar
+          @userData="setUserdata"
+          :class="{
             'profile-container': true,
             profile: showProfileContainer,
-          }"/>
+          }"
+        />
       </div>
     </div>
   </div>
@@ -30,32 +50,47 @@
 <script>
 import messageBar from "../../components/message-bar.vue";
 import userSideBar from "../../components/user-sidebar.vue";
+import groupSideBar from "../../components/group-sidebar.vue";
 import profileSidebar from "../../components/profile-sidebar.vue";
 export default {
   components: {
     "message-bar": messageBar,
     "user-sidebar": userSideBar,
     "profile-sidebar": profileSidebar,
+    "group-sidebar": groupSideBar,
   },
   data() {
     return {
       showProfileContainer: false,
-      userData:null
+      userData: null,
+      showGroupContainer: false,
+      showMobileUserSidebar: false,
     };
   },
   methods: {
     onProfileClick() {
+      this.showMobileUserSidebar = false;
       this.showProfileContainer = !this.showProfileContainer;
-
     },
-    setUserdata(user){
-     this.userData=user;
-    }
+    setUserdata(user) {
+      this.userData = user;
+    },
+    showGroupSidebar() {
+      console.log("hey");
+      this.showGroupContainer = true;
+    },
+    closeGroupSidebar() {
+      this.showGroupContainer = false;
+    },
+    openUserSidebar() {
+      this.showProfileContainer = false;
+      this.showMobileUserSidebar = !this.showMobileUserSidebar;
+    },
   },
-  mounted(){
-    this.userData=this.$store.state.userData.user;
-    console.log(this.userData && this.userData.profilepic)
-  }
+  mounted() {
+    this.userData = this.$store.state.userData.user;
+    console.log(this.userData && this.userData.profilePic);
+  },
 };
 </script>
 
@@ -72,6 +107,9 @@ export default {
   background-color: rgb(243, 246, 255);
   display: flex;
   flex-direction: column;
+  @media only screen and (max-width: 600px) {
+    height: 100%;
+  }
 }
 
 .inner-container {
@@ -85,50 +123,11 @@ export default {
   align-content: center;
   background-color: rgb(243, 246, 255);
   border-radius: 15px;
-}
-
-.left-container {
-  width: 25%;
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  margin-right: 15px;
-  box-shadow: 0 4px 8px 0 rgba(58, 58, 58, 0.2),
-    0 6px 20px 0 rgba(28, 28, 28, 0.19);
-}
-
-.right-container {
-  width: 70%;
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.user-heading {
-  width: 100%;
-  height: 40px;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: rgb(116, 116, 115);
-}
-
-.search-bar {
-  width: 90%;
-  height: 28px;
-  padding: 0;
-  margin: 0;
-  margin-left: 10px;
-  border: 1px solid #d5dfea;
-  padding-left: 36px;
-  border-radius: 16px;
-  box-sizing: border-box;
-  outline: none;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+  }
 }
 
 .user {
@@ -254,18 +253,6 @@ export default {
   padding-left: 10px;
 }
 
-.dummy-chat-sender {
-  background-color: rgb(141, 158, 195);
-  width: 70%;
-  display: flex;
-  flex-direction: row-reverse;
-  margin-left: 26%;
-  border-radius: 10px;
-  margin-top: 10px;
-  padding: 10px 10px 10px 10px;
-  text-align: right;
-}
-
 .user-image,
 .notification,
 .full-screen {
@@ -333,19 +320,56 @@ export default {
 
 .profile-container {
   width: 0;
-  overflow:hidden;
+  overflow: hidden;
 }
-
+.group-container {
+  overflow: hidden;
+  padding: 0;
+  width: 25%;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  padding: 25px;
+  @media only screen and (max-width: 600px) {
+    width: 58%;
+    padding: 14px;
+  }
+}
 .profile {
   width: 350px;
   background-color: rgb(255, 255, 255);
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -ms-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  transition: all .5s ease;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-left:15px;
-  border-radius:10px;
+  margin-left: 15px;
+  border-radius: 10px;
+}
+.group {
+}
+.user-image {
+  cursor: pointer;
+}
+.user-sidebar {
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.mobile-icon {
+  display: none;
+  @media only screen and (max-width: 600px) {
+    display: inline-block;
+  }
+}
+.show-user-sidebar {
+  display: inline-block;
+}
+.logo-wrapper{
+  display: flex;
 }
 </style>

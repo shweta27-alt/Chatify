@@ -75,7 +75,7 @@ router.post('/register/form', async (req, res) => {
       phoneNumber,
       countryCode
     },
-    fullname: fullName,
+    fullName: fullName,
     username: emailAddress
   }
 
@@ -102,8 +102,8 @@ router.get('/usersession', checkAuthenticated,async(req,res,next)=>{
 router.get('/test', async (req, res, next) => {
   console.log(req.session);
   // const newuser = new user({
-  //     profilepic: "https://res.cloudinary.com/my_cloud/image/upload/t_transf1/t_transf2/v1/my_path/sample.jpg",
-  //     profilebio: "I'm cool",
+  //     profilePic: "https://res.cloudinary.com/my_cloud/image/upload/t_transf1/t_transf2/v1/my_path/sample.jpg",
+  //     profileBio: "I'm cool",
   //     email: "shweta@gmail.com",
   //     salt:{value:"!@#$$" },
   //     hash :{value:"####"},

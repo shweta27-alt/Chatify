@@ -23,7 +23,7 @@ router.post("/access-chat", async (req, res, next) => {
 
     isChat = await User.populate(isChat, {
       path: "lastestMessage.sender",
-      select: "fullname profilepic email",
+      select: "fullName profilePic email",
     });
     if (isChat.length > 0) {
       res.status(200).json(isChat[0]);
@@ -56,7 +56,7 @@ router.get("/fetch-chat", async (req, res, next) => {
       .sort({ updatedAt: -1 });
     result = await User.populate(result, {
       path: "latestMessage.sender",
-      select: "fullname profilepic email",
+      select: "fullName profilePic email",
     });
     return res.status(200).json({ result });
   } catch (error) {

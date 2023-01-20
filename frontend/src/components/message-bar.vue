@@ -95,34 +95,6 @@ export default {};
   box-sizing: border-box;
 }
 
-.lower-chat {
-  width: 100%;
-  background-color: rgb(243, 246, 255);
-  display: flex;
-  flex-direction: column;
-}
-
-.inner-container {
-  width: 95%;
-  position: relative;
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  background-color: rgb(243, 246, 255);
-  border-radius: 15px;
-}
-
-.left-container {
-  width: 25%;
-  background-color: rgb(255, 255, 255);
-  border-radius: 10px;
-  margin-right: 15px;
-  box-shadow: 0 4px 8px 0 rgba(58, 58, 58, 0.2),
-    0 6px 20px 0 rgba(28, 28, 28, 0.19);
-}
 
 .right-container {
   width: 70%;
@@ -131,33 +103,11 @@ export default {};
   padding-left: 30px;
   padding-right: 30px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 }
 
-.user-heading {
-  width: 100%;
-  height: 40px;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  margin-top: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  color: rgb(116, 116, 115);
-}
-
-.search-bar {
-  width: 90%;
-  height: 28px;
-  padding: 0;
-  margin: 0;
-  margin-left: 10px;
-  border: 1px solid #d5dfea;
-  padding-left: 36px;
-  border-radius: 16px;
-  box-sizing: border-box;
-  outline: none;
-}
 
 .user {
   margin-top: 20px;
@@ -230,6 +180,11 @@ export default {};
   border-radius: 10px;
   box-sizing: border-box;
   padding: 10px 10px 10px 10px;
+    @media only screen and (max-width: 600px) {
+     width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+  }
 }
 
 .time-name-chat {
@@ -290,6 +245,12 @@ export default {};
   margin-top: 10px;
   padding: 10px 10px 10px 10px;
   text-align: right;
+  box-sizing: border-box;
+   @media only screen and (max-width: 600px) {
+     width: 100%;
+     margin-left: 0;
+      margin-right: 0;
+  }
 }
 
 .user-image,

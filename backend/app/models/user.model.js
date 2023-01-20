@@ -20,17 +20,17 @@ const phoneNumber = new Schema({
 
 const User = new Schema(
     {
-        fullname: {
+        fullName: {
             type: String,
             required: true,
         },
-        profilepic: {
+        profilePic: {
             type: String,
             required: true,
             default: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
         },
 
-        profilebio: {
+        profileBio: {
             type: String,
             default: ''
         },

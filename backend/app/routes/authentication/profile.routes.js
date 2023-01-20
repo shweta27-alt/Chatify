@@ -8,11 +8,11 @@ router.post('/update-profile', async (req, res, next) => {
     let profileUser = await User.findOne({_id : userID}) 
     console.log(profileUser)
     if(profileImage){
-        profileUser.profilepic = profileImage
+        profileUser.profilePic = profileImage
     }
 
     if(profileBio){
-        profileUser.profilebio =  profileBio
+        profileUser.profileBio =  profileBio
         
     }
     let response = await profileUser.save()
