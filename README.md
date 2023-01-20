@@ -1,2 +1,1 @@
-# webchatapplication-chatify
-web chat application
+# webchatapplication
