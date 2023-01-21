@@ -1,34 +1,61 @@
 <template>
   <div class="left-container group-container">
-    <div class="user-heading">
-      <div>Add Group Participants</div>
-      <div @click="closeGroupSidebar" class="close-group">close</div>
-    </div>
-    <div class="search-bar-wrapper">
-      <input
-        type="text"
-        placeholder="Add users to group"
-        class="search-bar"
-        v-model="userSearchData"
-        @input="searchUser"
-      />
-    </div>
-
-    <div class="user" v-if="userSearchData">
-      <div class="user-one">
-        <div
-          class="user-data"
-          v-for="data in responseUser"
-          :key="data.username"
-        >
-          <div>
-            <img :src="data.profilePic" class="user-one-pic" />
+    <div>
+      <div class="user-heading">
+        <div>Add Group Participants</div>
+        <div @click="closeGroupSidebar" class="close-group">
+          <img src="../assets/cross.png" alt="" />
+        </div>
+      </div>
+      <div class="search-bar-wrapper">
+        <div v-if="groupUser.length > 0">
+          <div
+            v-for="data in groupUser"
+            :key="data.username"
+            class="group-user"
+          >
+            <div class="group-user-info">
+              <div class="group-user-img">
+                <img :src="data.profilePic" alt="" />
+              </div>
+              <div class="group-user-name">{{ data.fullName }}</div>
+            </div>
+            <div class="remove-group-user" @click="removeGroupUser(data)">
+              <img src="../assets/cross.png" alt="" />
+            </div>
           </div>
-          <div>
-            <p class="friend-name">{{ data.fullName }}</p>
+          <input class="group-name" placeholder="Add group name" type="text" />
+        </div>
+        <input
+          type="text"
+          placeholder="Add users to group"
+          class="search-bar"
+          v-model="userSearchData"
+          @input="searchUser"
+        />
+      </div>
+
+      <div class="user" v-if="userSearchData">
+        <div class="user-one">
+          <div
+            class="user-data"
+            v-for="data in responseUser"
+            :key="data.username"
+            @click="addGroupUser(data)"
+          >
+            <div>
+              <img :src="data.profilePic" class="user-one-pic" />
+            </div>
+            <div class="search-user">
+              <p class="friend-name">{{ data.fullName }}</p>
+              <p class="friend-detail">{{ data.email }}</p>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="create-group" @click="onGroupAdd">
+      <img src="../assets/next.png" alt="" />
     </div>
   </div>
 </template>
@@ -46,6 +73,8 @@ export default {
     return {
       userSearchData: "",
       responseUser: [],
+      groupUser: [],
+      showAddGroupUser: true,
     };
   },
 
@@ -53,15 +82,32 @@ export default {
     async searchUser() {
       let response = await apiService.usersearch(this.userSearchData);
       this.responseUser = response.data.users;
-      console.log(this.responseUser);
     },
     closeGroupSidebar() {
       this.$emit("closeGroupSidebar");
     },
+    addGroupUser(data) {
+      let ifGroupUserExists = this.groupUser.find((val) => val._id == data._id);
+      if (!ifGroupUserExists) {
+        this.groupUser.push(data);
+      }
+    },
+    removeGroupUser(data) {
+      let removeUserIndex = this.groupUser.findIndex(
+        (val) => val._id == data._id
+      );
+      if (removeUserIndex >= 0) {
+        this.groupUser.splice(removeUserIndex, 1);
+      }
+    },
+    onGroupAdd() {
+      this.$toast.show("group created successfully", {
+        type: "success",
+        position: "top",
+      });
+    },
   },
-  mounted() {
-    console.log(this.isShowGroup);
-  },
+  mounted() {},
 };
 </script>
 
@@ -85,6 +131,7 @@ export default {
   @media only screen and (max-width: 600px) {
     width: 58%;
     padding: 14px;
+    border-radius: unset;
   }
 }
 
@@ -115,7 +162,7 @@ export default {
   box-sizing: border-box;
   outline: none;
   padding-left: 18px;
-   @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 600px) {
     font-size: 10px;
     padding-left: 5px;
   }
@@ -124,6 +171,7 @@ export default {
 .user {
   margin-top: 20px;
   width: 100%;
+  overflow-y: scroll;
 }
 
 .user-icon {
@@ -142,6 +190,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   height: 60px;
+  border-top: 2px solid #f5f6f6;
 }
 
 .user-one-pic {
@@ -215,13 +264,6 @@ export default {
 .say-something-text {
   margin-left: 30px;
   color: rgb(148, 147, 147);
-}
-
-.nav-bar-project {
-  display: flex;
-  justify-content: space-between;
-  height: 70px;
-  width: 100%;
 }
 
 .sender-image {
@@ -304,10 +346,6 @@ export default {
   outline: none;
 }
 
-.profile-container {
-  width: 0;
-}
-
 .profile {
   width: 350px;
   background-color: yellow;
@@ -330,5 +368,63 @@ export default {
 }
 .close-group {
   cursor: pointer;
+  height: 10px;
+  img {
+    height: 100%;
+  }
+}
+.group-user {
+  background-color: #e9edef;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 8px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.group-user-img {
+  height: 15px;
+  img {
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+.group-user-info {
+  display: flex;
+  align-items: center;
+}
+.remove-group-user {
+  height: 10px;
+  padding-bottom: 9px;
+  img {
+    height: 100%;
+  }
+}
+.search-user {
+  text-align: left;
+  font-size: 10px;
+  margin-left: 10px;
+  p {
+    margin: 0;
+  }
+}
+.group-user-name {
+  margin-left: 4px;
+}
+.create-group {
+  height: 40px;
+  img {
+    height: 100%;
+  }
+}
+.group-name {
+  width: 100%;
+  border: 0;
+  border-bottom: 3px solid #f5f6f6;
+  margin-bottom: 15px;
+  outline: none;
 }
 </style>

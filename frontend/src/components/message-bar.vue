@@ -95,7 +95,6 @@ export default {};
   box-sizing: border-box;
 }
 
-
 .right-container {
   width: 70%;
   background-color: rgb(255, 255, 255);
@@ -105,9 +104,9 @@ export default {};
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   @media only screen and (max-width: 600px) {
     width: 100%;
+    border-radius: unset;
   }
 }
-
 
 .user {
   margin-top: 20px;
@@ -180,10 +179,10 @@ export default {};
   border-radius: 10px;
   box-sizing: border-box;
   padding: 10px 10px 10px 10px;
-    @media only screen and (max-width: 600px) {
-     width: 100%;
-      margin-left: 0;
-      margin-right: 0;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -213,13 +212,6 @@ export default {};
   color: rgb(148, 147, 147);
 }
 
-.nav-bar-project {
-  display: flex;
-  justify-content: space-between;
-  height: 70px;
-  width: 100%;
-}
-
 .sender-image {
   margin-left: 20px;
 }
@@ -246,10 +238,10 @@ export default {};
   padding: 10px 10px 10px 10px;
   text-align: right;
   box-sizing: border-box;
-   @media only screen and (max-width: 600px) {
-     width: 100%;
-     margin-left: 0;
-      margin-right: 0;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -318,9 +310,6 @@ export default {};
   outline: none;
 }
 
-.profile-container {
-  width: 0;
-}
 
 .profile {
   width: 350px;

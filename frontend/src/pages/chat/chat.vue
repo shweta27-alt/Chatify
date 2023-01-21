@@ -108,7 +108,7 @@ export default {
   display: flex;
   flex-direction: column;
   @media only screen and (max-width: 600px) {
-    height: 100%;
+    height: 91%;
   }
 }
 
@@ -234,7 +234,7 @@ export default {
 .nav-bar-project {
   display: flex;
   justify-content: space-between;
-  height: 70px;
+  height: 9%;
   width: 100%;
 }
 
@@ -332,6 +332,9 @@ export default {
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
   padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   @media only screen and (max-width: 600px) {
     width: 58%;
     padding: 14px;
@@ -348,6 +351,9 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-left: 15px;
   border-radius: 10px;
+  @media only screen and (max-width: 600px) {
+    border-radius: unset;
+  }
 }
 .group {
 }
@@ -369,7 +375,7 @@ export default {
 .show-user-sidebar {
   display: inline-block;
 }
-.logo-wrapper{
+.logo-wrapper {
   display: flex;
 }
 </style>

@@ -3,7 +3,7 @@
     <div class="user-heading">
       <div>My Chat</div>
       <div @click="onUserGroupChatClick" class="group-chat-heading">
-        Create group chat
+        <img src="../assets/users-group.png" alt="create group chat" />
       </div>
     </div>
     <div class="search-bar-wrapper">
@@ -95,6 +95,7 @@ export default {
   @media only screen and (max-width: 600px) {
     width: 58%;
     padding: 14px;
+    border-radius: unset;
   }
 }
 
@@ -227,13 +228,6 @@ export default {
   color: rgb(148, 147, 147);
 }
 
-.nav-bar-project {
-  display: flex;
-  justify-content: space-between;
-  height: 70px;
-  width: 100%;
-}
-
 .sender-image {
   margin-left: 20px;
 }
@@ -314,9 +308,6 @@ export default {
   outline: none;
 }
 
-.profile-container {
-  width: 0;
-}
 
 .profile {
   width: 350px;
@@ -340,5 +331,9 @@ export default {
 }
 .group-chat-heading {
   cursor: pointer;
+  height: 18px;
+  img {
+    height: 100%;
+  }
 }
 </style>
