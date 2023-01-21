@@ -1,6 +1,6 @@
 <template>
   <div class="right-container">
-    <div class="user-name-show" @click="showFreindsProfile">
+    <div class="user-name-show" @click="showFriendsProfile">
       <div class="chat-user">
         <img src="../assets/girl.png" class="user-one-pic" />
       </div>
@@ -86,8 +86,8 @@
 <script>
 export default {
   methods: {
-    showFreindsProfile() {
-      this.$emit("showFreindsProfile");
+    showFriendsProfile() {
+      this.$emit("showFriendsProfile");
     },
   },
   components: {

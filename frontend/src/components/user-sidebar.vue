@@ -34,7 +34,8 @@
       </div>
     </div>
     <div class="user" v-else>
-      <div class="user-one">
+      <div class="user-one" v-for="data in userChat"
+        :key="data._id" >
         <div class="user-data">
           <div>
             <img
@@ -43,7 +44,7 @@
             />
           </div>
           <div class="chat-content">
-            <p class="chat-friend-name">swapnesh</p>
+            <p class="chat-friend-name">{{ getChatUserName(data) }}</p>
             <p class="latest-chat">my latest chat</p>
           </div>
         </div>
@@ -60,6 +61,8 @@ export default {
     return {
       userSearchData: "",
       responseUser: [],
+      userChat : [],
+      userData:null
     };
   },
 
@@ -74,10 +77,38 @@ export default {
     },
     createUserChat(data){
       console.log(data);
+       apiService
+      .createuserchat({ userId: data._id })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
       this.userSearchData="";
-
+      
     }
   },
+
+  mounted(){
+    this.userData = this.$store.state.userData.user;
+    apiService
+      .fetchchat()
+      .then((response) => {
+        this.userChat= response.data.result
+      console.log(this.userChat)
+      })
+       .catch((error) => console.log(error));
+  },
+  computed:{
+    getChatUserName(data){
+      console.log(data)
+      if(!data.isGroupChat){
+        let userName = data.users.find((val)=>{
+          return val._id != this.userData._id
+        })
+        return userName
+      }else{
+        return data.chatName
+      }
+    }
+  }
 };
 </script>
 

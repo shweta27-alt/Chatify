@@ -11,7 +11,7 @@
       </div>
       <div class="frineds-about">
         <div class="frineds-about-txt">About</div>
-        <div>tetstttttttyttttttttttt</div>
+        <div>testttttttttttttttttt</div>
       </div>
     </div>
     <div class="group-info">

@@ -42,6 +42,10 @@ const apiService = {
 
   createuserchat(data){
     return axios.post(getUrl() + "/chat/access-chat", data, { withCredentials: true }, getHeader())
+  },
+  
+  fetchchat(){
+    return axios.get(getUrl() + "/chat/fetch-chat", { withCredentials: true }, getHeader())
   }
 };
 

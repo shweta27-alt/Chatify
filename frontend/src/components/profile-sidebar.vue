@@ -108,10 +108,10 @@ export default {
         ? this.profiledata.profileBio
         : "Hey there, I am using chatify";
 
-    apiService
-      .createuserchat({ userId: "63ba899da4f8a716d32ee0fe" })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
+    // apiService
+    //   .createuserchat({ userId: "63ba899da4f8a716d32ee0fe" })
+    //   .then((response) => console.log(response))
+    //   .catch((error) => console.log(error));
   },
   methods: {
     updateProfileBio() {

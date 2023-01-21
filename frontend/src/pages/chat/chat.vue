@@ -34,7 +34,7 @@
           }"
           v-else
         />
-        <message-bar @showFreindsProfile="showFreindsProfile" />
+        <message-bar @showFriendsProfile="showFriendsProfile" />
         <profile-sidebar
           @userData="setUserdata"
           :class="{
@@ -95,7 +95,7 @@ export default {
       this.showFriendProfile =false
       this.showMobileUserSidebar = !this.showMobileUserSidebar;
     },
-    showFreindsProfile() {
+    showFriendsProfile() {
       this.showMobileUserSidebar = false;
       this.showProfileContainer = false;
       this.showFriendProfile = !this.showFriendProfile;
