@@ -87,6 +87,13 @@
 import apiService from "@/services/api.services";
 import axios from "axios";
 export default {
+  props: {
+    isFriendsProfile: {
+      type: Boolean,
+      default:false
+    },
+
+  },
   data() {
     return {
       profiledata: null,
@@ -96,16 +103,15 @@ export default {
   },
   mounted() {
     this.profiledata = this.$store.state.userData.user;
-    console.log(this.profiledata.profileBio);
     this.profileBio =
       this.profiledata && this.profiledata.profileBio
         ? this.profiledata.profileBio
         : "Hey there, I am using chatify";
 
-    apiService.createuserchat({userId: "63ba899da4f8a716d32ee0fe"})
-    .then((response)=>console.log(response))
-    .catch((error)=>console.log(error))
-
+    apiService
+      .createuserchat({ userId: "63ba899da4f8a716d32ee0fe" })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
   },
   methods: {
     updateProfileBio() {
@@ -118,7 +124,7 @@ export default {
         .then(({ data }) => {
           this.profiledata = data.user;
           this.$store.dispatch("getUserData");
-          this.$emit('userData',this.profiledata);
+          this.$emit("userData", this.profiledata);
         })
         .catch((error) => {
           console.log(error);
@@ -152,7 +158,7 @@ export default {
         .then(({ data }) => {
           this.profiledata = data.user;
           this.$store.dispatch("getUserData");
-          this.$emit('userData',this.profiledata);
+          this.$emit("userData", this.profiledata);
         })
         .catch((error) => {
           console.log(error);
@@ -191,8 +197,8 @@ export default {
 .profile-picture {
   height: 130px;
   padding-top: 20px;
-  border-radius:50% ;
-    cursor: pointer;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .profile-photo-user {
@@ -270,13 +276,13 @@ export default {
 .profile-bio {
   display: flex;
   align-items: center;
-   @media only screen and (max-width: 600px) {
-   width:80%;
+  @media only screen and (max-width: 600px) {
+    width: 80%;
   }
 }
-.about-me-profile{
-   @media only screen and (max-width: 600px) {
-   width:100%;
+.about-me-profile {
+  @media only screen and (max-width: 600px) {
+    width: 100%;
   }
 }
 </style>

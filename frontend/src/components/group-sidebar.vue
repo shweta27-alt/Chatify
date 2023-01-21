@@ -214,14 +214,6 @@ export default {
   margin-top: 20px;
 }
 
-.user-name-show {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px;
-  margin-left: 30px;
-  height: 60px;
-  background-color: rgb(255, 255, 255);
-}
 
 .chat-user-name,
 .dummy-chat {

@@ -22,6 +22,7 @@
           class="user-data"
           v-for="data in responseUser"
           :key="data.username"
+          @click="createUserChat(data)"
         >
           <div>
             <img :src="data.profilePic" class="user-one-pic" />
@@ -71,6 +72,11 @@ export default {
     onUserGroupChatClick() {
       this.$emit("showGroupSidebar");
     },
+    createUserChat(data){
+      console.log(data);
+      this.userSearchData="";
+
+    }
   },
 };
 </script>
@@ -176,14 +182,6 @@ export default {
   margin-top: 20px;
 }
 
-.user-name-show {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px;
-  margin-left: 30px;
-  height: 60px;
-  background-color: rgb(255, 255, 255);
-}
 
 .chat-user-name,
 .dummy-chat {

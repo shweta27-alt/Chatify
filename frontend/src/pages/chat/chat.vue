@@ -34,13 +34,18 @@
           }"
           v-else
         />
-        <message-bar />
+        <message-bar @showFreindsProfile="showFreindsProfile" />
         <profile-sidebar
           @userData="setUserdata"
           :class="{
             'profile-container': true,
             profile: showProfileContainer,
           }"
+        />
+        <friend-sidebar
+          v-if="showFriendProfile"
+          @userData="setUserdata"
+          class="friend-container"
         />
       </div>
     </div>
@@ -52,11 +57,13 @@ import messageBar from "../../components/message-bar.vue";
 import userSideBar from "../../components/user-sidebar.vue";
 import groupSideBar from "../../components/group-sidebar.vue";
 import profileSidebar from "../../components/profile-sidebar.vue";
+import friendSidebar from "../../components/friend-sidebar.vue";
 export default {
   components: {
     "message-bar": messageBar,
     "user-sidebar": userSideBar,
     "profile-sidebar": profileSidebar,
+    "friend-sidebar": friendSidebar,
     "group-sidebar": groupSideBar,
   },
   data() {
@@ -65,18 +72,19 @@ export default {
       userData: null,
       showGroupContainer: false,
       showMobileUserSidebar: false,
+      showFriendProfile: false,
     };
   },
   methods: {
     onProfileClick() {
       this.showMobileUserSidebar = false;
       this.showProfileContainer = !this.showProfileContainer;
+      this.showFriendProfile = false;
     },
     setUserdata(user) {
       this.userData = user;
     },
     showGroupSidebar() {
-      console.log("hey");
       this.showGroupContainer = true;
     },
     closeGroupSidebar() {
@@ -84,12 +92,17 @@ export default {
     },
     openUserSidebar() {
       this.showProfileContainer = false;
+      this.showFriendProfile =false
       this.showMobileUserSidebar = !this.showMobileUserSidebar;
+    },
+    showFreindsProfile() {
+      this.showMobileUserSidebar = false;
+      this.showProfileContainer = false;
+      this.showFriendProfile = !this.showFriendProfile;
     },
   },
   mounted() {
     this.userData = this.$store.state.userData.user;
-    console.log(this.userData && this.userData.profilePic);
   },
 };
 </script>
@@ -177,15 +190,6 @@ export default {
   display: flex;
   padding-bottom: 20px;
   margin-top: 20px;
-}
-
-.user-name-show {
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px;
-  margin-left: 30px;
-  height: 60px;
-  background-color: rgb(255, 255, 255);
 }
 
 .chat-user-name,
@@ -318,7 +322,8 @@ export default {
   outline: none;
 }
 
-.profile-container {
+.profile-container,
+.friend-container {
   width: 0;
   overflow: hidden;
 }
@@ -340,7 +345,8 @@ export default {
     padding: 14px;
   }
 }
-.profile {
+.profile,
+.friend-container {
   width: 350px;
   background-color: rgb(255, 255, 255);
   -webkit-transition: all 0.5s ease;

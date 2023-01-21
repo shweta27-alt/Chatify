@@ -1,6 +1,6 @@
 <template>
   <div class="right-container">
-    <div class="user-name-show">
+    <div class="user-name-show" @click="showFreindsProfile">
       <div class="chat-user">
         <img src="../assets/girl.png" class="user-one-pic" />
       </div>
@@ -84,9 +84,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    showFreindsProfile() {
+      this.$emit("showFreindsProfile");
+    },
+  },
+  components: {
+  },
+};
 </script>
-
 <style lang="scss" scoped>
 .container {
   height: 100%;
@@ -309,7 +316,6 @@ export default {};
   border-top: 1px solid rgba(0, 0, 0, 0.07);
   outline: none;
 }
-
 
 .profile {
   width: 350px;
