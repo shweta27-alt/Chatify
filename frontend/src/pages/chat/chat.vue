@@ -126,9 +126,7 @@ export default {
 .inner-container {
   width: 95%;
   position: relative;
-  margin-top: 30px;
-  margin-left: 30px;
-  margin-right: 30px;
+  margin: 30px;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -356,12 +354,14 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-left: 15px;
   border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
   @media only screen and (max-width: 600px) {
     border-radius: unset;
   }
 }
-.group {
-}
+
 .user-image {
   cursor: pointer;
 }

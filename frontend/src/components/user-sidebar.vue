@@ -94,20 +94,21 @@ export default {
     },
     getChatUserEmail(data) {
       if (!data.isGroupChat) {
-        let userName = data.users.find((val) => {
+        let userEmail = data.users.find((val) => {
           return val._id != this.userData._id;
         });
-        return userName.email;
+        return userEmail.email;
       } else {
         return "";
       }
     },
     getChatUserImage(data) {
       if (!data.isGroupChat) {
-        let userName = data.users.find((val) => {
-          return val._id != this.userData.profilePic;
+        let userImage = data.users.find((val) => {
+          return val._id != this.userData._id;
         });
-        return userName.profilePic;
+        console.log(userImage);
+        return userImage.profilePic;
       } else {
         return "";
       }
@@ -213,6 +214,7 @@ export default {
 
 .user-pic {
   height: 40px;
+    width: 40px;
   /* margin-left:5px; */
   padding-top: 10px;
 }

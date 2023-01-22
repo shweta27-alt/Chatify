@@ -1,44 +1,74 @@
 <template>
   <div>
-    <div>
+    <div v-if="!isGroupUser">
       <div class="friend-photo-user">
         <img src="../assets/girl.png" class="friend-user" />
       </div>
-      <div class="frineds-info">
+      <div class="friends-info">
         <div>shweta saindane</div>
         <div>9999999999</div>
         <div>test@gmail.com</div>
       </div>
-      <div class="frineds-about">
-        <div class="frineds-about-txt">About</div>
-        <div>testttttttttttttttttt</div>
+      <div class="friends-about">
+        <div class="friends-about-txt">About</div>
+        <textarea
+          class="friends-about-data"
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          disabled
+        >
+hwefgwfff</textarea
+        >
       </div>
     </div>
-    <div class="group-info">
+    <div class="group-info" v-else>
       <div class="group-participants">
-        <div>2 participants</div>
-        <div>
-          <div>test 1</div>
-          <div>test 2</div>
-        </div>
+        <div>Group info</div>
       </div>
       <div class="edit-group-participants">
-        <div>Add or edit participants</div>
+        <div>
+          <div>Group name</div>
+          <input
+            type="text"
+            class="about-user-text"
+            v-model="groupName"
+            :disabled="editGroupName"
+          />
+          <img
+            class="groupName-icon"
+            src="../assets/pencil.png"
+            alt=""
+            @click="updateGroupName"
+            v-if="editGroupName"
+          />
+          <img
+            class="groupName-icon"
+            src="../assets/check.png"
+            alt=""
+            @click="submitGroupName"
+            v-else
+          />
+        </div>
+        <div class="search-bar-title">Add or edit participants</div>
         <div class="search-bar-wrapper">
           <div v-if="groupUser.length > 0">
-            <div
-              v-for="data in groupUser"
-              :key="data.username"
-              class="group-user"
-            >
-              <div class="group-user-info">
-                <div class="group-user-img">
-                  <img :src="data.profilePic" alt="" />
+            <div class="group-add-user-wrapper">
+              <div
+                v-for="data in groupUser"
+                :key="data.username"
+                class="group-user"
+              >
+                <div class="group-user-info">
+                  <div class="group-user-img">
+                    <img :src="data.profilePic" alt="" />
+                  </div>
+                  <div class="group-user-name">{{ data.fullName }}</div>
                 </div>
-                <div class="group-user-name">{{ data.fullName }}</div>
-              </div>
-              <div class="remove-group-user" @click="removeGroupUser(data)">
-                <img src="../assets/cross.png" alt="" />
+                <div class="remove-group-user" @click="removeGroupUser(data)">
+                  <img src="../assets/cross.png" alt="" />
+                </div>
               </div>
             </div>
           </div>
@@ -62,8 +92,9 @@
               <div>
                 <img :src="data.profilePic" class="user-pic" />
               </div>
-              <div>
+              <div class="search-user">
                 <p class="friend-name">{{ data.fullName }}</p>
+                <p class="friend-detail">{{ data.email }}</p>
               </div>
             </div>
           </div>
@@ -81,6 +112,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isGroupUser: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -88,6 +123,8 @@ export default {
       responseUser: [],
       userSearchData: "",
       groupUser: [],
+      editGroupName:true,
+      groupName:'testtt'
     };
   },
   mounted() {
@@ -113,6 +150,12 @@ export default {
         this.groupUser.splice(removeUserIndex, 1);
       }
     },
+    updateGroupName(){
+  this.editGroupName = false;
+    },
+    submitGroupName(){
+  this.editGroupName = true;
+    }
   },
 };
 </script>
@@ -132,7 +175,7 @@ export default {
 .user-wrapper {
   display: flex;
   flex-direction: column;
-  height: 56%;
+  height: 63%;
   overflow-y: scroll;
 }
 .user-data {
@@ -198,7 +241,7 @@ export default {
   border: 1px;
   background-color: rgb(224, 224, 224);
 }
-.profilebio-icon {
+.groupName-icon {
   height: 15px;
   margin-left: 5px;
 }
@@ -216,6 +259,7 @@ export default {
 }
 .user-pic {
   height: 40px;
+  width: 40px;
   /* margin-left:5px; */
   padding-top: 10px;
 }
@@ -263,31 +307,67 @@ export default {
     margin: 0;
   }
 }
-.frineds-about {
+.friends-about {
   margin-top: 20px;
   text-align: left;
   margin-left: 15px;
   margin-right: 15px;
   border-top: 1px solid grey;
-  .frineds-about-txt {
+  .friends-about-txt {
     margin-top: 10px;
   }
 }
 
 .group-info {
   margin-top: 20px;
-  height: 56%;
+  height: 100%;
 }
 .group-participants {
   margin-top: 20px;
   text-align: left;
-  margin-left: 16px;
+  font-weight:bold ;
 }
 .edit-group-participants {
   margin-top: 20px;
   text-align: left;
-  margin-left: 16px;
-  height: 100%;
+  height: 83%;
+}
+.group-add-user-wrapper {
+  height: 110px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+.friends-about-data {
+  resize: none;
+  width: 100%;
+  margin-top: 10px;
+}
+.search-bar {
+  width: 100%;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #d5dfea;
+  border-radius: 16px;
+  box-sizing: border-box;
+  outline: none;
+  padding-left: 18px;
+}
+.search-bar-wrapper {
+  margin-top: 5px;
+}
+.edit-group {
+  height: 40px;
+  text-align: center;
+  img {
+    height: 100%;
+  }
+}
+.group-user-name {
+  margin-left: 5px;
+}
+.search-bar-title{
+  margin-top: 20px;
 }
 </style>
 

@@ -9,19 +9,21 @@
       </div>
       <div class="search-bar-wrapper">
         <div v-if="groupUser.length > 0">
-          <div
-            v-for="data in groupUser"
-            :key="data.username"
-            class="group-user"
-          >
-            <div class="group-user-info">
-              <div class="group-user-img">
-                <img :src="data.profilePic" alt="" />
+          <div class="group-add-user-wrapper">
+            <div
+              v-for="data in groupUser"
+              :key="data.username"
+              class="group-user"
+            >
+              <div class="group-user-info">
+                <div class="group-user-img">
+                  <img :src="data.profilePic" alt="" />
+                </div>
+                <div class="group-user-name">{{ data.fullName }}</div>
               </div>
-              <div class="group-user-name">{{ data.fullName }}</div>
-            </div>
-            <div class="remove-group-user" @click="removeGroupUser(data)">
-              <img src="../assets/cross.png" alt="" />
+              <div class="remove-group-user" @click="removeGroupUser(data)">
+                <img src="../assets/cross.png" alt="" />
+              </div>
             </div>
           </div>
           <input class="group-name" placeholder="Add group name" type="text" />
@@ -171,7 +173,7 @@ export default {
 .user-wrapper {
   margin-top: 20px;
   width: 100%;
-  height: 80%;
+  height: 53%;
   overflow-y: scroll;
 }
 
@@ -196,6 +198,7 @@ export default {
 
 .user-pic {
   height: 40px;
+  width: 40px;
   padding-top: 10px;
 }
 
@@ -390,6 +393,7 @@ export default {
 .remove-group-user {
   height: 10px;
   padding-bottom: 9px;
+  margin-left: 13px;
   img {
     height: 100%;
   }
@@ -420,5 +424,13 @@ export default {
 }
 .group-sidebar {
   height: 96%;
+}
+.group-add-user-wrapper {
+ height: 110px;
+ overflow-y: scroll;
+ margin-bottom: 20px;
+}
+.group-user-name{
+margin-left: 5px;
 }
 </style>

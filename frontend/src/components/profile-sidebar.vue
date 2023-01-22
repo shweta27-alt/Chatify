@@ -202,8 +202,6 @@ export default {
 }
 
 .profile-photo-user {
-  margin-left: 15px;
-  margin-right: 20px;
   border-radius: 10px;
 
   #image-input {
@@ -237,7 +235,6 @@ export default {
 .about-me,
 .Phone-no {
   display: flex;
-  padding-left: 10px;
 }
 .about-user-text {
   padding: 0;
@@ -247,7 +244,6 @@ export default {
 .about-user-text,
 .phone-no-info {
   font-size: 14px;
-  padding-left: 10px;
   border: none;
   resize: none;
   outline: none;
