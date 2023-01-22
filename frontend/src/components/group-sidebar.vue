@@ -26,7 +26,12 @@
               </div>
             </div>
           </div>
-          <input class="group-name" placeholder="Add group name" v-model="groupName" type="text" />
+          <input
+            class="group-name"
+            placeholder="Add group name"
+            v-model="groupName"
+            type="text"
+          />
         </div>
         <input
           type="text"
@@ -77,7 +82,7 @@ export default {
       responseUser: [],
       groupUser: [],
       showAddGroupUser: true,
-      groupName:""
+      groupName: "",
     };
   },
 
@@ -93,6 +98,11 @@ export default {
       let ifGroupUserExists = this.groupUser.find((val) => val._id == data._id);
       if (!ifGroupUserExists) {
         this.groupUser.push(data);
+      } else {
+        this.$toast.show("User already added to group", {
+          type: "error",
+          position: "top",
+        });
       }
     },
     removeGroupUser(data) {
@@ -104,24 +114,24 @@ export default {
       }
     },
     onGroupAdd() {
-      console.log(this.groupUser)
-      let groupUserId = this.groupUser.map((val)=>{
-        return val._id
-      })
-      console.log(groupUserId)
+      console.log(this.groupUser);
+      let groupUserId = this.groupUser.map((val) => {
+        return val._id;
+      });
+      console.log(groupUserId);
 
-      let data = {name: this.groupName, users:JSON.stringify(groupUserId)}
+      let data = { name: this.groupName, users: JSON.stringify(groupUserId) };
 
-      apiService.groupAdd(data).then((response) => {
+      apiService
+        .groupAdd(data)
+        .then((response) => {
           console.log(response);
-          this.closeGroupSidebar()
+          this.closeGroupSidebar();
         })
         .catch((error) => console.log(error));
       this.$toast.show("group created successfully", {
         type: "success",
         position: "top",
-        
-
       });
     },
   },
@@ -204,6 +214,11 @@ export default {
   align-items: center;
   overflow-x: scroll;
   border-top: 2px solid #f5f6f6;
+  border-radius: 10px;
+  padding-left: 9px;
+   &:hover{
+      background-color: #eff2f9;
+  }
 }
 
 .user {
@@ -394,6 +409,8 @@ export default {
   padding-right: 8px;
   justify-content: space-between;
   margin-bottom: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 .group-user-img {
   height: 15px;
@@ -442,11 +459,11 @@ export default {
   height: 96%;
 }
 .group-add-user-wrapper {
- height: 110px;
- overflow-y: scroll;
- margin-bottom: 20px;
+  height: 110px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
 }
-.group-user-name{
-margin-left: 5px;
+.group-user-name {
+  margin-left: 5px;
 }
 </style>

@@ -191,6 +191,12 @@ export default {
 .user {
   margin-top: 20px;
   width: 100%;
+  border-radius: 10px;
+  padding-left: 11px;
+  box-sizing: border-box;
+  &:hover{
+      background-color: #eff2f9;
+  }
 }
 
 .user-icon {
@@ -214,7 +220,7 @@ export default {
 
 .user-pic {
   height: 40px;
-    width: 40px;
+  width: 40px;
   /* margin-left:5px; */
   padding-top: 10px;
 }

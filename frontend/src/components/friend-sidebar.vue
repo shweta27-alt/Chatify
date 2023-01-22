@@ -123,8 +123,8 @@ export default {
       responseUser: [],
       userSearchData: "",
       groupUser: [],
-      editGroupName:true,
-      groupName:'testtt'
+      editGroupName: true,
+      groupName: "testtt",
     };
   },
   mounted() {
@@ -140,6 +140,11 @@ export default {
       let ifGroupUserExists = this.groupUser.find((val) => val._id == data._id);
       if (!ifGroupUserExists) {
         this.groupUser.push(data);
+      } else {
+        this.$toast.show("User already added to group", {
+          type: "error",
+          position: "top",
+        });
       }
     },
     removeGroupUser(data) {
@@ -150,12 +155,12 @@ export default {
         this.groupUser.splice(removeUserIndex, 1);
       }
     },
-    updateGroupName(){
-  this.editGroupName = false;
+    updateGroupName() {
+      this.editGroupName = false;
     },
-    submitGroupName(){
-  this.editGroupName = true;
-    }
+    submitGroupName() {
+      this.editGroupName = true;
+    },
   },
 };
 </script>
@@ -280,6 +285,8 @@ export default {
   padding-right: 8px;
   justify-content: space-between;
   margin-bottom: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 .group-user-img {
   height: 15px;
@@ -325,7 +332,7 @@ export default {
 .group-participants {
   margin-top: 20px;
   text-align: left;
-  font-weight:bold ;
+  font-weight: bold;
 }
 .edit-group-participants {
   margin-top: 20px;
@@ -366,7 +373,7 @@ export default {
 .group-user-name {
   margin-left: 5px;
 }
-.search-bar-title{
+.search-bar-title {
   margin-top: 20px;
 }
 </style>
