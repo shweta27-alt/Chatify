@@ -304,7 +304,7 @@ export default {
 
 .chats {
   overflow-y: scroll;
-  max-height: 485px;
+  height: 63%;
 }
 
 .time-name-chat-user {
