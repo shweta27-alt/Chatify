@@ -6,74 +6,51 @@
       </div>
 
       <div class="chat-user-name">
-        <div>Willie Lagasse</div>
+        <div>{{ getMessageUserName }}</div>
         <div class="time-limit">2 day ago</div>
       </div>
     </div>
 
     <div class="chats">
-      <div class="dummy-chat">
-        <div class="sender-image">
-          <img src="../assets/girl.png" class="user-pic" />
-        </div>
+      <div v-for="data in chats" :key="data._id" >
+        <div class="dummy-chat" v-if="userData._id != data.sender._id">
+          <div class="sender-image">
+            <img src="../assets/girl.png" class="user-pic" />
+          </div>
 
-        <div class="time-name-chat">
-          <div class="text-time">09:25</div>
-          <div class="sender-name">Willie Lagasse</div>
+          <div class="time-name-chat">
+            <div class="text-time">09:25</div>
+            <div class="sender-name">{{ data.sender.fullName }}</div>
 
-          <div class="dummy-chat-text">
-            What do you think about our plans for this product launch?
+            <div class="dummy-chat-text">
+              {{ data.content}}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="dummy-chat">
-        <div class="sender-image">
-          <img src="../assets/girl.png" class="user-pic" />
-        </div>
-
-        <div class="time-name-chat">
-          <div class="text-time">09:28</div>
-          <div class="sender-name">Willie Lagasse</div>
-
-          <div class="dummy-chat-text">
-            It looks to me like you have a lot planned before your deadline. I
-            would suggest you push your deadline back so you have time to run a
-            successful advertising campaign.
+        <div class="dummy-chat-sender" v-if="userData._id == data.sender._id">
+          <div class="sender-image-user">
+            <img src="../assets/girl.png" class="user-pic" />
           </div>
-        </div>
-      </div>
 
-      <div class="dummy-chat">
-        <div class="sender-image">
-          <img src="../assets/girl.png" class="user-pic" />
-        </div>
+          <div class="time-name-chat-user">
+            <div class="text-time">09:31</div>
+            <div class="sender-name-user">{{ data.sender.fullName }}</div>
 
-        <div class="time-name-chat">
-          <div class="text-time">09:29</div>
-          <div class="sender-name">Willie Lagasse</div>
-
-          <div class="dummy-chat-text">
-            I would suggest you discuss this further with the advertising team.
+            <div class="dummy-chat-text">{{ data.content}}</div>
           </div>
-        </div>
-      </div>
-      <div class="dummy-chat-sender">
-        <div class="sender-image-user">
-          <img src="../assets/girl.png" class="user-pic" />
-        </div>
-
-        <div class="time-name-chat-user">
-          <div class="text-time">09:31</div>
-          <div class="sender-name-user">Willie Lagasse</div>
-
-          <div class="dummy-chat-text">discuss this further with team.</div>
         </div>
       </div>
     </div>
 
     <div class="user-text-area">
-      <input type="text" class="message-text" placeholder="Say something..." />
+      <input
+        type="text"
+        class="message-text"
+        placeholder="Say something..."
+        v-model="message"
+        @keyup.enter="onSendMessage"
+      />
       <div class="button-position">
         <div class="send-button">
           <img src="../assets/send-message.png" class="send-button-img" />
@@ -84,14 +61,81 @@
 </template>
 
 <script>
+import apiService from "../services/api.services";
 export default {
+  data() {
+    return {
+      userData: {},
+      message: "",
+      chats: [],
+    };
+  },
   methods: {
     showFriendsProfile() {
       this.$emit("showFriendsProfile");
     },
+
+    onSendMessage() {
+      console.log(this.message);
+      if (this.message) {
+        let data = {
+          content: this.message,
+          chatId: this.selectChat._id,
+        };
+        apiService
+          .sendmessage(data)
+          .then((response) => {
+            this.fetchChat()
+            return console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+
+    fetchChat(){
+      apiService
+      .fetchmessage(this.selectChat._id)
+      .then((response) => {
+        this.chats = response.data;
+        console.log(this.chats);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
   },
-  components: {
+
+  mounted() {
+    // console.log(this.$props)
+    //  console.log("swap",this.selectChat)
+    this.userData = this.$store.state.userData.user;
+    this.fetchChat()
+
+      
   },
+
+  computed: {
+    getMessageUserName() {
+      if (this.selectChat.isGroupChat) {
+        return this.selectChat.chatName;
+      } else {
+        let userName =
+          this.selectChat.users &&
+          this.selectChat.users.find((val) => {
+            return val._id != this.userData._id;
+          });
+        return userName && userName.fullName;
+      }
+    },
+  },
+  props: {
+    selectChat: {
+      type: Object,
+    },
+  },
+  components: {},
 };
 </script>
 <style lang="scss" scoped>

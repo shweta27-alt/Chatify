@@ -19,6 +19,7 @@
     <div class="lower-chat">
       <div class="inner-container">
         <user-sidebar
+          @selectedChat ="selectedChat"
           @showGroupSidebar="showGroupSidebar"
           v-if="!showGroupContainer"
           :class="{
@@ -34,7 +35,7 @@
           }"
           v-else
         />
-        <message-bar @showFriendsProfile="showFriendsProfile" />
+        <message-bar @showFriendsProfile="showFriendsProfile" :selectChat="selectChat" :key="selectChat._id"/>
         <profile-sidebar
           @userData="setUserdata"
           :class="{
@@ -73,6 +74,7 @@ export default {
       showGroupContainer: false,
       showMobileUserSidebar: false,
       showFriendProfile: false,
+      selectChat:{}
     };
   },
   methods: {
@@ -100,10 +102,16 @@ export default {
       this.showProfileContainer = false;
       this.showFriendProfile = !this.showFriendProfile;
     },
+    selectedChat(data){
+      this.selectChat= data
+      console.log("heyyyyy",this.selectChat)
+    }
   },
   mounted() {
     this.userData = this.$store.state.userData.user;
   },
+
+  
 };
 </script>
 
