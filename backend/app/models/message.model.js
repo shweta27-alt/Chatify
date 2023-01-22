@@ -8,20 +8,20 @@ const Message = new Schema(
     {
         readby :{
             type: Array,
-            required:true,
+            
         },
 
         sender:{
             type: mongoose.Schema.Types.ObjectId,
-            required:true
+            ref:"user"
         },
         content:{
             type: String,
-            required:true,
+            
         },
         chat:{
             type:mongoose.Schema.Types.ObjectId,
-            required:true,
+            ref:"chat"
         }
     },
     {

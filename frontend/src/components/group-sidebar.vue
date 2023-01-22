@@ -26,7 +26,7 @@
               </div>
             </div>
           </div>
-          <input class="group-name" placeholder="Add group name" type="text" />
+          <input class="group-name" placeholder="Add group name" v-model="groupName" type="text" />
         </div>
         <input
           type="text"
@@ -77,6 +77,7 @@ export default {
       responseUser: [],
       groupUser: [],
       showAddGroupUser: true,
+      groupName:""
     };
   },
 
@@ -103,9 +104,24 @@ export default {
       }
     },
     onGroupAdd() {
+      console.log(this.groupUser)
+      let groupUserId = this.groupUser.map((val)=>{
+        return val._id
+      })
+      console.log(groupUserId)
+
+      let data = {name: this.groupName, users:JSON.stringify(groupUserId)}
+
+      apiService.groupAdd(data).then((response) => {
+          console.log(response);
+          this.closeGroupSidebar()
+        })
+        .catch((error) => console.log(error));
       this.$toast.show("group created successfully", {
         type: "success",
         position: "top",
+        
+
       });
     },
   },

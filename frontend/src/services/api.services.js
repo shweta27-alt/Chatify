@@ -47,6 +47,10 @@ const apiService = {
   
   fetchchat(){
     return axios.get(getUrl() + "/chat/fetch-chat", { withCredentials: true }, getHeader())
+  },
+
+  groupAdd(data){
+    return axios.post(getUrl() + "/chat/group", data, { withCredentials: true }, getHeader())
   }
 };
 
