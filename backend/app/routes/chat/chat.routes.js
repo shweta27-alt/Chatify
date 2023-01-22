@@ -8,8 +8,6 @@ router.post("/access-chat", async (req, res, next) => {
   if (!userId) {
     return res.status(400).json({ message: "Inavlid userId send" });
   }
-
-  console.log(req.user);
   try {
     let isChat = await Chat.find({
       isGroupChat: false,

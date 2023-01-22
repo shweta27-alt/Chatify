@@ -1,6 +1,6 @@
 <template>
   <div class="left-container group-container">
-    <div>
+    <div class="group-sidebar">
       <div class="user-heading">
         <div>Add Group Participants</div>
         <div @click="closeGroupSidebar" class="close-group">
@@ -35,8 +35,8 @@
         />
       </div>
 
-      <div class="user" v-if="userSearchData">
-        <div class="user-one">
+      <div class="user-wrapper" v-if="userSearchData">
+        <div class="user">
           <div
             class="user-data"
             v-for="data in responseUser"
@@ -44,7 +44,7 @@
             @click="addGroupUser(data)"
           >
             <div>
-              <img :src="data.profilePic" class="user-one-pic" />
+              <img :src="data.profilePic" class="user-pic" />
             </div>
             <div class="search-user">
               <p class="friend-name">{{ data.fullName }}</p>
@@ -168,9 +168,10 @@ export default {
   }
 }
 
-.user {
+.user-wrapper {
   margin-top: 20px;
   width: 100%;
+  height: 80%;
   overflow-y: scroll;
 }
 
@@ -183,19 +184,18 @@ export default {
 .user-data {
   display: flex;
   align-items: center;
-}
-
-.user-one {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 60px;
+  overflow-x: scroll;
   border-top: 2px solid #f5f6f6;
 }
 
-.user-one-pic {
+.user {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-pic {
   height: 40px;
-  /* margin-left:5px; */
   padding-top: 10px;
 }
 
@@ -213,7 +213,6 @@ export default {
   padding-bottom: 20px;
   margin-top: 20px;
 }
-
 
 .chat-user-name,
 .dummy-chat {
@@ -397,7 +396,7 @@ export default {
 }
 .search-user {
   text-align: left;
-  font-size: 10px;
+  font-size: 13px;
   margin-left: 10px;
   p {
     margin: 0;
@@ -418,5 +417,8 @@ export default {
   border-bottom: 3px solid #f5f6f6;
   margin-bottom: 15px;
   outline: none;
+}
+.group-sidebar {
+  height: 96%;
 }
 </style>

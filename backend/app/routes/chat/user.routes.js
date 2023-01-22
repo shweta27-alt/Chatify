@@ -7,7 +7,6 @@ router.get('/usersearch', async (req, res, next) => {
    if(userquery){
     let query =  {$or : [{fullName: {$regex: userquery,$options:"i"}},{email: {$regex: userquery,$options:"i"}},{ "mobile.phoneNumber" : {$regex: userquery,$options:"i"}}]}
     let response = await User.getUserByQuery(query,req.user._id);
-    console.log(response)
     return res.status(200).json({users : response});
    }
    return res.status(200).json({users : []});

@@ -2,7 +2,7 @@
   <div class="right-container">
     <div class="user-name-show" @click="showFriendsProfile">
       <div class="chat-user">
-        <img src="../assets/girl.png" class="user-one-pic" />
+        <img src="../assets/girl.png" class="user-pic" />
       </div>
 
       <div class="chat-user-name">
@@ -14,7 +14,7 @@
     <div class="chats">
       <div class="dummy-chat">
         <div class="sender-image">
-          <img src="../assets/girl.png" class="user-one-pic" />
+          <img src="../assets/girl.png" class="user-pic" />
         </div>
 
         <div class="time-name-chat">
@@ -29,7 +29,7 @@
 
       <div class="dummy-chat">
         <div class="sender-image">
-          <img src="../assets/girl.png" class="user-one-pic" />
+          <img src="../assets/girl.png" class="user-pic" />
         </div>
 
         <div class="time-name-chat">
@@ -46,7 +46,7 @@
 
       <div class="dummy-chat">
         <div class="sender-image">
-          <img src="../assets/girl.png" class="user-one-pic" />
+          <img src="../assets/girl.png" class="user-pic" />
         </div>
 
         <div class="time-name-chat">
@@ -60,7 +60,7 @@
       </div>
       <div class="dummy-chat-sender">
         <div class="sender-image-user">
-          <img src="../assets/girl.png" class="user-one-pic" />
+          <img src="../assets/girl.png" class="user-pic" />
         </div>
 
         <div class="time-name-chat-user">
@@ -131,7 +131,7 @@ export default {
   align-items: center;
 }
 
-.user-one {
+.user {
   /* text-align: center; */
   display: flex;
   flex-direction: row;
@@ -142,7 +142,7 @@ export default {
   height: 60px;
 }
 
-.user-one-pic {
+.user-pic {
   height: 40px;
   /* margin-left:5px; */
   padding-top: 10px;

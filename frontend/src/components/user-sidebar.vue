@@ -16,8 +16,8 @@
       />
     </div>
 
-    <div class="user" v-if="userSearchData">
-      <div class="user-one">
+    <div class="user-wrapper" v-if="userSearchData">
+      <div class="user">
         <div
           class="user-data"
           v-for="data in responseUser"
@@ -25,23 +25,20 @@
           @click="createUserChat(data)"
         >
           <div>
-            <img :src="data.profilePic" class="user-one-pic" />
+            <img :src="data.profilePic" class="user-pic" />
           </div>
-          <div>
+          <div class="search-user">
             <p class="friend-name">{{ data.fullName }}</p>
+            <p class="friend-name">{{ data.email }}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="user" v-else>
-      <div class="user-one" v-for="data in userChat"
-        :key="data._id" >
+    <div class="user-wrapper" v-else>
+      <div class="user" v-for="data in userChat" :key="data._id">
         <div class="user-data">
           <div>
-            <img
-              src="https://res.cloudinary.com/dkidih85l/image/upload/v1674054232/ge2eratqkshdnega4ecn.jpg"
-              class="user-one-pic"
-            />
+            <img :src="getChatUserImage(data)" class="user-pic" />
           </div>
           <div class="chat-content">
             <p class="chat-friend-name">{{ getChatUserName(data) }}</p>
@@ -61,8 +58,8 @@ export default {
     return {
       userSearchData: "",
       responseUser: [],
-      userChat : [],
-      userData:null
+      userChat: [],
+      userData: null,
     };
   },
 
@@ -75,40 +72,61 @@ export default {
     onUserGroupChatClick() {
       this.$emit("showGroupSidebar");
     },
-    createUserChat(data){
-      console.log(data);
-       apiService
-      .createuserchat({ userId: data._id })
-      .then((response) => console.log(response))
-      .catch((error) => console.log(error));
-      this.userSearchData="";
-      
-    }
+    createUserChat(data) {
+      apiService
+        .createuserchat({ userId: data._id })
+        .then((response) => {
+          console.log(response);
+          this.fetchUserChat();
+        })
+        .catch((error) => console.log(error));
+      this.userSearchData = "";
+    },
+    getChatUserName(data) {
+      if (!data.isGroupChat) {
+        let userName = data.users.find((val) => {
+          return val._id != this.userData._id;
+        });
+        return userName.fullName;
+      } else {
+        return data.chatName;
+      }
+    },
+    getChatUserEmail(data) {
+      if (!data.isGroupChat) {
+        let userName = data.users.find((val) => {
+          return val._id != this.userData._id;
+        });
+        return userName.email;
+      } else {
+        return "";
+      }
+    },
+    getChatUserImage(data) {
+      if (!data.isGroupChat) {
+        let userName = data.users.find((val) => {
+          return val._id != this.userData.profilePic;
+        });
+        return userName.profilePic;
+      } else {
+        return "";
+      }
+    },
+    fetchUserChat() {
+      apiService
+        .fetchchat()
+        .then((response) => {
+          this.userChat = response.data.result;
+          console.log(this.userChat);
+        })
+        .catch((error) => console.log(error));
+    },
   },
 
-  mounted(){
+  mounted() {
     this.userData = this.$store.state.userData.user;
-    apiService
-      .fetchchat()
-      .then((response) => {
-        this.userChat= response.data.result
-      console.log(this.userChat)
-      })
-       .catch((error) => console.log(error));
+    this.fetchUserChat();
   },
-  computed:{
-    getChatUserName(data){
-      console.log(data)
-      if(!data.isGroupChat){
-        let userName = data.users.find((val)=>{
-          return val._id != this.userData._id
-        })
-        return userName
-      }else{
-        return data.chatName
-      }
-    }
-  }
 };
 </script>
 
@@ -183,24 +201,23 @@ export default {
 .user-data {
   display: flex;
   align-items: center;
+  overflow-x: scroll;
 }
 
-.user-one {
+.user-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 60px;
+  height: 80%;
+  overflow-y: scroll;
 }
 
-.user-one-pic {
+.user-pic {
   height: 40px;
   /* margin-left:5px; */
   padding-top: 10px;
 }
 
 .friend-name {
-  font-size: 14px;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: 10;
   margin-left: 15px;
 }
@@ -212,7 +229,6 @@ export default {
   padding-bottom: 20px;
   margin-top: 20px;
 }
-
 
 .chat-user-name,
 .dummy-chat {
@@ -337,7 +353,6 @@ export default {
   outline: none;
 }
 
-
 .profile {
   width: 350px;
   background-color: yellow;
@@ -363,6 +378,14 @@ export default {
   height: 18px;
   img {
     height: 100%;
+  }
+}
+.search-user {
+  text-align: left;
+  font-size: 13px;
+  margin-left: 10px;
+  p {
+    margin: 0;
   }
 }
 </style>

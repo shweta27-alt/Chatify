@@ -51,8 +51,8 @@
           />
         </div>
 
-        <div class="user" v-if="userSearchData">
-          <div class="user-one">
+        <div class="user-wrapper" v-if="userSearchData">
+          <div class="user">
             <div
               class="user-data"
               v-for="data in responseUser"
@@ -60,7 +60,7 @@
               @click="addGroupUser(data)"
             >
               <div>
-                <img :src="data.profilePic" class="user-one-pic" />
+                <img :src="data.profilePic" class="user-pic" />
               </div>
               <div>
                 <p class="friend-name">{{ data.fullName }}</p>
@@ -129,11 +129,11 @@ export default {
   margin-right: 20px;
   border-radius: 10px;
 }
-.user-one {
+.user-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 60px;
+  height: 56%;
+  overflow-y: scroll;
 }
 .user-data {
   display: flex;
@@ -214,7 +214,7 @@ export default {
     width: 100%;
   }
 }
-.user-one-pic {
+.user-pic {
   height: 40px;
   /* margin-left:5px; */
   padding-top: 10px;
@@ -257,7 +257,7 @@ export default {
 }
 .search-user {
   text-align: left;
-  font-size: 10px;
+  font-size: 13px;
   margin-left: 10px;
   p {
     margin: 0;
@@ -276,6 +276,7 @@ export default {
 
 .group-info {
   margin-top: 20px;
+  height: 56%;
 }
 .group-participants {
   margin-top: 20px;
@@ -286,6 +287,7 @@ export default {
   margin-top: 20px;
   text-align: left;
   margin-left: 16px;
+  height: 100%;
 }
 </style>
 

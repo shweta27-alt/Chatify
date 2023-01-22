@@ -20,6 +20,7 @@ const apiService = {
     return axios.post(
       getUrl() + "/authentication/register/form",
       data,
+      { withCredentials: true },
       getHeader()
     );
   },

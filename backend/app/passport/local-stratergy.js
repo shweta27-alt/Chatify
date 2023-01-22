@@ -12,7 +12,6 @@ exports.LocalStrategy = new LocalStrategy(
     };
 
     let user = await User.findOne(query);
-    console.log(user)
     if (!user) {
       return done({message:"Invalid Username"}, false);
     } else {

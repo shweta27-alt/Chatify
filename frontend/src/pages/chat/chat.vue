@@ -120,9 +120,7 @@ export default {
   background-color: rgb(243, 246, 255);
   display: flex;
   flex-direction: column;
-  @media only screen and (max-width: 600px) {
     height: 91%;
-  }
 }
 
 .inner-container {
@@ -136,6 +134,7 @@ export default {
   align-content: center;
   background-color: rgb(243, 246, 255);
   border-radius: 15px;
+    height: 96%;
   @media only screen and (max-width: 600px) {
     width: 100%;
     margin: 0;
@@ -160,7 +159,7 @@ export default {
   align-items: center;
 }
 
-.user-one {
+.user {
   /* text-align: center; */
   display: flex;
   flex-direction: row;
@@ -171,7 +170,7 @@ export default {
   height: 60px;
 }
 
-.user-one-pic {
+.user-pic {
   height: 40px;
   /* margin-left:5px; */
   padding-top: 10px;

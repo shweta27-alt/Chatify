@@ -6,7 +6,6 @@ router.post('/update-profile', async (req, res, next) => {
     let {profileImage, profileBio} = req.body
     let userID = req.user._id 
     let profileUser = await User.findOne({_id : userID}) 
-    console.log(profileUser)
     if(profileImage){
         profileUser.profilePic = profileImage
     }
