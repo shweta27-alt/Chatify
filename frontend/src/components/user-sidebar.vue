@@ -131,7 +131,6 @@ export default {
     },
 
     setSelectedChat(data) {
-      console.log("shwetaaaa", data);
       this.$emit("selectedChat", data);
     },
   },
@@ -152,7 +151,7 @@ export default {
 }
 
 .left-container {
-  width: 25%;
+  width: 28%;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   margin-right: 15px;
@@ -221,6 +220,7 @@ export default {
   display: flex;
   align-items: center;
   overflow-x: scroll;
+  word-break: break-word;
 }
 
 .user-wrapper {

@@ -156,7 +156,7 @@ export default {
 }
 
 .left-container {
-  width: 25%;
+  width: 28%;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   margin-right: 15px;

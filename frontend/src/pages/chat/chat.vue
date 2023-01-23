@@ -12,7 +12,7 @@
           <img src="../../assets/notification-bell.png" class="user-icon" />
         </div>
         <div class="user-image" @click="onProfileClick">
-          <img :src="userData && userData.profilePic"/>
+          <img :src="userData && userData.profilePic" />
         </div>
       </div>
     </div>
@@ -21,6 +21,7 @@
         <user-sidebar
           @selectedChat="selectedChat"
           @showGroupSidebar="showGroupSidebar"
+          :key="selectChat && selectChat.chatName"
           v-if="!showGroupContainer"
           :class="{
             'user-sidebar': true,
@@ -50,6 +51,7 @@
         <friend-sidebar
           v-if="showFriendProfile"
           :selectChat="selectChat"
+          @selectedChat="selectedChat"
           @userData="setUserdata"
           class="friend-container"
         />
@@ -314,7 +316,7 @@ export default {
   flex-direction: row;
   margin-right: 20px;
   justify-content: center;
-    align-items: center;
+  align-items: center;
 }
 
 .message-text {
@@ -377,7 +379,7 @@ export default {
   height: 40px;
   width: 40px;
   overflow: hidden;
-  img{
+  img {
     height: 100%;
   }
 }

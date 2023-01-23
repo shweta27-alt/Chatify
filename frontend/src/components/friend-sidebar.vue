@@ -20,7 +20,6 @@
           disabled
           v-model="getFriendsProfileBio"
         />
-   
       </div>
     </div>
     <div class="group-info" v-else>
@@ -124,14 +123,12 @@ export default {
       editGroupName: true,
       groupName: "testtt",
       isGroupUser: false,
-      
     };
   },
   mounted() {
     // this.profiledata = this.$store.state.userData.user;
     this.userData = this.$store.state.userData.user;
     this.isGroupUser = this.selectChat.isGroupChat;
-    
   },
 
   computed: {
@@ -152,8 +149,8 @@ export default {
         let user =
           this.selectChat.users &&
           this.selectChat.users.find((val) => {
-            console.log(val)
-            console.log(this.userData)
+            console.log(val);
+            console.log(this.userData);
             return val._id != (this.userData && this.userData._id);
           });
         return user && user.profilePic;
@@ -162,37 +159,33 @@ export default {
       }
     },
 
-    getFriendPhoneNumber(){
-      
-        let user =
-          this.selectChat.users &&
-          this.selectChat.users.find((val) => {
-            return val._id != (this.userData && this.userData._id);
-          });
-        return user && user.mobile[0].phoneNumber;
-      },
-
-  getFriendEmail(){
-    let user =
-          this.selectChat.users &&
-          this.selectChat.users.find((val) => {
-            return val._id != (this.userData && this.userData._id);
-          });
-        return user && user.email;
-      },
-
-      getFriendsProfileBio(){
+    getFriendPhoneNumber() {
       let user =
-          this.selectChat.users &&
-          this.selectChat.users.find((val) => {
-            return val._id != (this.userData && this.userData._id);
-          });
-        
-       return user && user.profileBio
-      },
+        this.selectChat.users &&
+        this.selectChat.users.find((val) => {
+          return val._id != (this.userData && this.userData._id);
+        });
+      return user && user.mobile[0].phoneNumber;
+    },
 
+    getFriendEmail() {
+      let user =
+        this.selectChat.users &&
+        this.selectChat.users.find((val) => {
+          return val._id != (this.userData && this.userData._id);
+        });
+      return user && user.email;
+    },
+    getFriendsProfileBio() {
+      let user =
+        this.selectChat.users &&
+        this.selectChat.users.find((val) => {
+          return val._id != (this.userData && this.userData._id);
+        });
+
+      return user && user.profileBio;
+    },
   },
-    
 
   methods: {
     async searchUser() {
@@ -221,20 +214,19 @@ export default {
     },
     updateGroupName() {
       this.editGroupName = false;
-    
     },
     submitGroupName() {
-      let data = {chatName:this.groupName, chatId:this.selectChat._id}
-      apiService.renamegroup(data)
-      .then((response) => {
-        this.editGroupName = true;
-         console.log(response)
+      let data = { chatName: this.groupName, chatId: this.selectChat._id };
+      apiService
+        .renamegroup(data)
+        .then((response) => {
+          this.editGroupName = true;
+          this.$emit('selectedChat',response.data.getUpdateChat[0])
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
   },
 };
 </script>
