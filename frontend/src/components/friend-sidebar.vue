@@ -128,7 +128,18 @@ export default {
   mounted() {
     // this.profiledata = this.$store.state.userData.user;
     this.userData = this.$store.state.userData.user;
-    this.isGroupUser = this.selectChat.isGroupChat;
+    // this.isGroupUser = this.selectChat.isGroupChat;
+    // console.log(this.selectChat)
+    // console.log(this.userData)
+    this.groupUser =
+      this.selectChat &&
+      this.selectChat.isGroupChat &&
+      this.selectChat.users.filter((val) => {
+        console.log("val", val._id);
+        console.log("userdata", this.userData._id);
+        return val._id != this.userData._id;
+      });
+    console.log(this.groupUser);
   },
 
   computed: {
@@ -204,13 +215,22 @@ export default {
         });
       }
     },
-    removeGroupUser(data) {
-      let removeUserIndex = this.groupUser.findIndex(
-        (val) => val._id == data._id
-      );
-      if (removeUserIndex >= 0) {
-        this.groupUser.splice(removeUserIndex, 1);
-      }
+    removeGroupUser(user) {
+      let data = { chatId: this.selectChat._id, userId: user._id };
+      apiService
+        .removegroupuser(data)
+        .then((response) => {
+          let removeUserIndex = this.groupUser.findIndex(
+            (val) => val._id == data._id
+          );
+          if (removeUserIndex >= 0) {
+            this.groupUser.splice(removeUserIndex, 1);
+          }
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     updateGroupName() {
       this.editGroupName = false;
@@ -221,7 +241,7 @@ export default {
         .renamegroup(data)
         .then((response) => {
           this.editGroupName = true;
-          this.$emit('selectedChat',response.data.getUpdateChat[0])
+          this.$emit("selectedChat", response.data.getUpdateChat[0]);
         })
         .catch((error) => {
           console.log(error);

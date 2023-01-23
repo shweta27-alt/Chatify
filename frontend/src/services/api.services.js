@@ -63,6 +63,10 @@ const apiService = {
  
   renamegroup(data){
     return axios.put(getUrl() + "/chat/rename", data, { withCredentials: true }, getHeader())
+  },
+
+  removegroupuser(data){
+    return axios.put(getUrl() + "/chat/group-remove", data, { withCredentials: true }, getHeader())
   }
 
 };
