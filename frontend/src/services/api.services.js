@@ -59,7 +59,12 @@ const apiService = {
 
   sendmessage(data){
     return axios.post(getUrl() + "/chat/message", data, { withCredentials: true }, getHeader())
+  },
+ 
+  renamegroup(data){
+    return axios.put(getUrl() + "/chat/rename", data, { withCredentials: true }, getHeader())
   }
+
 };
 
 export default apiService;

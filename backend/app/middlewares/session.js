@@ -3,7 +3,7 @@ let MongoDBStore = require('connect-mongodb-session')(session);
 
 const store = new MongoDBStore({
     uri: 'mongodb://127.0.0.1:27017/chatifyDb',
-    collection: 'mySessions'
+    collection: 'sessions'
   });
 
 const sessionMW = async (req, res, next) => {

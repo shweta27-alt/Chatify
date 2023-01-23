@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div v-if="!isGroupUser">
+    <div v-if="!(selectChat && selectChat.isGroupChat)">
       <div class="friend-photo-user">
-        <img src="../assets/girl.png" class="friend-user" />
+        <img :src="getFriendUserImage" class="friend-user" />
       </div>
       <div class="friends-info">
-        <div>shweta saindane</div>
-        <div>9999999999</div>
-        <div>test@gmail.com</div>
+        <div>{{ getFriendUserName }}</div>
+        <div>{{ getFriendPhoneNumber }}</div>
+        <div>{{ getFriendEmail }}</div>
       </div>
       <div class="friends-about">
         <div class="friends-about-txt">About</div>
@@ -18,9 +18,9 @@
           cols="30"
           rows="10"
           disabled
-        >
-hwefgwfff</textarea
-        >
+          v-model="getFriendsProfileBio"
+        />
+   
       </div>
     </div>
     <div class="group-info" v-else>
@@ -111,25 +111,89 @@ export default {
     selectChat: {
       type: Object,
       default() {
-            return {}
-        }
+        return {};
+      },
     },
   },
   data() {
     return {
-      profiledata: null,
+      userData: null,
       responseUser: [],
       userSearchData: "",
       groupUser: [],
       editGroupName: true,
       groupName: "testtt",
-      isGroupUser:false
+      isGroupUser: false,
+      
     };
   },
   mounted() {
-    this.profiledata = this.$store.state.userData.user;
-    this.isGroupUser=this.selectChat.isGroupChat
+    // this.profiledata = this.$store.state.userData.user;
+    this.userData = this.$store.state.userData.user;
+    this.isGroupUser = this.selectChat.isGroupChat;
+    
   },
+
+  computed: {
+    getFriendUserName() {
+      if (this.selectChat.isGroupChat) {
+        return this.selectChat.chatName;
+      } else {
+        let user =
+          this.selectChat.users &&
+          this.selectChat.users.find((val) => {
+            return val._id != (this.userData && this.userData._id);
+          });
+        return user && user.fullName;
+      }
+    },
+    getFriendUserImage() {
+      if (!this.selectChat.isGroupChat) {
+        let user =
+          this.selectChat.users &&
+          this.selectChat.users.find((val) => {
+            console.log(val)
+            console.log(this.userData)
+            return val._id != (this.userData && this.userData._id);
+          });
+        return user && user.profilePic;
+      } else {
+        return "https://res.cloudinary.com/dkidih85l/image/upload/v1674413380/ndfqhrchmispwymvcsyh.png";
+      }
+    },
+
+    getFriendPhoneNumber(){
+      
+        let user =
+          this.selectChat.users &&
+          this.selectChat.users.find((val) => {
+            return val._id != (this.userData && this.userData._id);
+          });
+        return user && user.mobile[0].phoneNumber;
+      },
+
+  getFriendEmail(){
+    let user =
+          this.selectChat.users &&
+          this.selectChat.users.find((val) => {
+            return val._id != (this.userData && this.userData._id);
+          });
+        return user && user.email;
+      },
+
+      getFriendsProfileBio(){
+      let user =
+          this.selectChat.users &&
+          this.selectChat.users.find((val) => {
+            return val._id != (this.userData && this.userData._id);
+          });
+        
+       return user && user.profileBio
+      },
+
+  },
+    
+
   methods: {
     async searchUser() {
       let response = await apiService.usersearch(this.userSearchData);
@@ -157,10 +221,20 @@ export default {
     },
     updateGroupName() {
       this.editGroupName = false;
+    
     },
     submitGroupName() {
-      this.editGroupName = true;
+      let data = {chatName:this.groupName, chatId:this.selectChat._id}
+      apiService.renamegroup(data)
+      .then((response) => {
+        this.editGroupName = true;
+         console.log(response)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+
   },
 };
 </script>
@@ -377,4 +451,3 @@ export default {
   margin-top: 20px;
 }
 </style>
-
