@@ -221,7 +221,7 @@ export default {
         .removegroupuser(data)
         .then((response) => {
           let removeUserIndex = this.groupUser.findIndex(
-            (val) => val._id == data._id
+            (val) => val._id == user._id
           );
           if (removeUserIndex >= 0) {
             this.groupUser.splice(removeUserIndex, 1);
