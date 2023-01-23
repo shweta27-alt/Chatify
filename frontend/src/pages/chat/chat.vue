@@ -19,9 +19,9 @@
     <div class="lower-chat">
       <div class="inner-container">
         <user-sidebar
+        ref="userSideBar" 
           @selectedChat="selectedChat"
           @showGroupSidebar="showGroupSidebar"
-          :key="selectChat && selectChat.chatName"
           v-if="!showGroupContainer"
           :class="{
             'user-sidebar': true,
@@ -51,6 +51,7 @@
         <friend-sidebar
           v-if="showFriendProfile"
           :selectChat="selectChat"
+          @fetchChat="fetchChat"
           @selectedChat="selectedChat"
           @userData="setUserdata"
           class="friend-container"
@@ -111,8 +112,11 @@ export default {
     },
     selectedChat(data) {
       this.selectChat = data;
-      console.log("heyyyyy", this.selectChat);
     },
+    fetchChat(){
+      console.log('heyy');
+      this.$refs.userSideBar && this.$refs.userSideBar.fetchUserChat()
+    }
   },
   mounted() {
     this.userData = this.$store.state.userData.user;

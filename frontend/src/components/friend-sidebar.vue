@@ -126,11 +126,8 @@ export default {
     };
   },
   mounted() {
-    // this.profiledata = this.$store.state.userData.user;
     this.userData = this.$store.state.userData.user;
-    // this.isGroupUser = this.selectChat.isGroupChat;
-    // console.log(this.selectChat)
-    // console.log(this.userData)
+    this.selectChat && (this.groupName=this.selectChat.chatName)
     this.groupUser =
       this.selectChat &&
       this.selectChat.isGroupChat &&
@@ -241,7 +238,8 @@ export default {
         .renamegroup(data)
         .then((response) => {
           this.editGroupName = true;
-          this.$emit("selectedChat", response.data.getUpdateChat[0]);
+           this.$emit("selectedChat", response.data.getUpdateChat[0]);
+          this.$emit("fetchChat");
         })
         .catch((error) => {
           console.log(error);

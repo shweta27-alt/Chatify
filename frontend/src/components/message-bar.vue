@@ -108,6 +108,7 @@ export default {
   },
 
   mounted() {
+    console.log('in mounted');
     this.userData = this.$store.state.userData.user;
     this.fetchChat()
   },
