@@ -1,6 +1,6 @@
 <template>
   <div class="right-container">
-    <div class="user-name-show" @click="showFriendsProfile">
+    <div class="user-name-show" @click="showFriendsProfile" v-if="Object.keys(selectChat).length>0">
       <div class="chat-user">
         <img :src="getChatUserImage"  />
       </div>
@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="chats">
+    <div class="chats" v-if="Object.keys(selectChat).length>0">
       <div v-for="data in chats" :key="data._id" >
         <div class="dummy-chat" v-if="userData._id != data.sender._id">
           <div class="sender-image">
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="user-text-area">
+    <div class="user-text-area" v-if="Object.keys(selectChat).length>0">
       <input
         type="text"
         class="message-text"
@@ -110,7 +110,6 @@ export default {
   mounted() {
     console.log('in mounted');
     this.userData = this.$store.state.userData.user;
-    this.fetchChat()
   },
 
   computed: {
