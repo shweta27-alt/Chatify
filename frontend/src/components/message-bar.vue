@@ -2,7 +2,7 @@
   <div class="right-container">
     <div class="user-name-show" @click="showFriendsProfile">
       <div class="chat-user">
-        <img src="../assets/girl.png" class="user-pic" />
+        <img :src="getChatUserImage"  />
       </div>
 
       <div class="chat-user-name">
@@ -15,7 +15,7 @@
       <div v-for="data in chats" :key="data._id" >
         <div class="dummy-chat" v-if="userData._id != data.sender._id">
           <div class="sender-image">
-            <img src="../assets/girl.png" class="user-pic" />
+            <img :src="data.sender.profilePic" />
           </div>
 
           <div class="time-name-chat">
@@ -30,7 +30,7 @@
 
         <div class="dummy-chat-sender" v-if="userData._id == data.sender._id">
           <div class="sender-image-user">
-            <img src="../assets/girl.png" class="user-pic" />
+            <img :src="data.sender.profilePic" />
           </div>
 
           <div class="time-name-chat-user">
@@ -108,12 +108,8 @@ export default {
   },
 
   mounted() {
-    // console.log(this.$props)
-    //  console.log("swap",this.selectChat)
     this.userData = this.$store.state.userData.user;
     this.fetchChat()
-
-      
   },
 
   computed: {
@@ -127,6 +123,16 @@ export default {
             return val._id != this.userData._id;
           });
         return userName && userName.fullName;
+      }
+    },
+    getChatUserImage() {
+      if (!this.selectChat.isGroupChat) {
+        let userImage = this.selectChat.users && this.selectChat.users.find((val) => {
+          return val._id != this.userData._id;
+        });
+        return userImage && userImage.profilePic;
+      } else {
+        return 'https://res.cloudinary.com/dkidih85l/image/upload/v1674413380/ndfqhrchmispwymvcsyh.png';
       }
     },
   },
@@ -188,7 +194,6 @@ export default {
 
 .user-pic {
   height: 40px;
-  /* margin-left:5px; */
   padding-top: 10px;
 }
 
@@ -210,15 +215,17 @@ export default {
   display: flex;
   flex-direction: row;
   margin-top: 30px;
-  margin-left: 30px;
   height: 60px;
   background-color: rgb(255, 255, 255);
 }
 
-.chat-user-name,
 .dummy-chat {
   margin-left: 20px;
   margin-top: 10px;
+  text-align: left;
+}
+.chat-user-name{
+   margin-left: 20px;
   text-align: left;
 }
 
@@ -369,5 +376,16 @@ export default {
   -ms-transition: all 1s ease;
   -o-transition: all 1s ease;
   transition: all 1s ease;
+}
+
+.sender-image-user,.sender-image,.chat-user{
+  margin-left: 20px;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    img{
+      height: 100%;
+    }
 }
 </style>

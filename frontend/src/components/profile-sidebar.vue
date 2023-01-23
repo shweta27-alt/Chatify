@@ -90,9 +90,8 @@ export default {
   props: {
     isFriendsProfile: {
       type: Boolean,
-      default:false
+      default: false,
     },
-
   },
   data() {
     return {
@@ -195,14 +194,17 @@ export default {
 
 <style lang="scss" scoped>
 .profile-picture {
-  height: 130px;
-  padding-top: 20px;
-  border-radius: 50%;
+  height: 100%;
   cursor: pointer;
 }
 
 .profile-photo-user {
-  border-radius: 10px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 16px;
 
   #image-input {
     display: none;

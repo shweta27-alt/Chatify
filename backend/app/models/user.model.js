@@ -27,7 +27,7 @@ const User = new Schema(
         profilePic: {
             type: String,
             required: true,
-            default: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
+            default: "https://res.cloudinary.com/dkidih85l/image/upload/v1674412574/ip8qhnt3cxuhx6pftlip.png"
         },
 
         profileBio: {

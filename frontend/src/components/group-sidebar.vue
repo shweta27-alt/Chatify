@@ -50,8 +50,8 @@
             :key="data.username"
             @click="addGroupUser(data)"
           >
-            <div>
-              <img :src="data.profilePic" class="user-pic" />
+            <div class="user-image-wrapper">
+              <img :src="data.profilePic" />
             </div>
             <div class="search-user">
               <p class="friend-name">{{ data.fullName }}</p>
@@ -114,14 +114,22 @@ export default {
       }
     },
     onGroupAdd() {
-      console.log(this.groupUser);
+      if (!this.groupName) {
+        return this.$toast.show("please enter group name", {
+          type: "error",
+          position: "top",
+        });
+      }
       let groupUserId = this.groupUser.map((val) => {
         return val._id;
       });
-      console.log(groupUserId);
-
+      if (groupUserId > length > 1) {
+        return this.$toast.show("please add atleast 2 users", {
+          type: "error",
+          position: "top",
+        });
+      }
       let data = { name: this.groupName, users: JSON.stringify(groupUserId) };
-
       apiService
         .groupAdd(data)
         .then((response) => {
@@ -216,8 +224,10 @@ export default {
   border-top: 2px solid #f5f6f6;
   border-radius: 10px;
   padding-left: 9px;
-   &:hover{
-      background-color: #eff2f9;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  &:hover {
+    background-color: #eff2f9;
   }
 }
 
@@ -465,5 +475,17 @@ export default {
 }
 .group-user-name {
   margin-left: 5px;
+}
+
+.user-image-wrapper {
+  border-radius: 50%;
+  height: 40px;
+  overflow: hidden;
+  flex-basis: 40px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  img {
+    height: 100%;
+  }
 }
 </style>

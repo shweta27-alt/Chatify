@@ -17,15 +17,15 @@
     </div>
 
     <div class="user-wrapper" v-if="userSearchData">
-      <div class="user">
-        <div
-          class="user-data"
-          v-for="data in responseUser"
-          :key="data.username"
-          @click="createUserChat(data)"
-        >
-          <div>
-            <img :src="data.profilePic" class="user-pic" />
+      <div
+        class="user"
+        v-for="data in responseUser"
+        :key="data.username"
+        @click="createUserChat(data)"
+      >
+        <div class="user-data">
+          <div class="user-image-wrapper">
+            <img :src="data.profilePic" />
           </div>
           <div class="search-user">
             <p class="friend-name">{{ data.fullName }}</p>
@@ -35,14 +35,21 @@
       </div>
     </div>
     <div class="user-wrapper" v-else>
-      <div class="user" v-for="data in userChat" :key="data._id"  @click="setSelectedChat(data)">
+      <div
+        class="user"
+        v-for="data in userChat"
+        :key="data._id"
+        @click="setSelectedChat(data)"
+      >
         <div class="user-data">
-          <div>
-            <img :src="getChatUserImage(data)" class="user-pic" />
+          <div class="user-image-wrapper">
+            <img :src="getChatUserImage(data)" />
           </div>
           <div class="chat-content">
             <p class="chat-friend-name">{{ getChatUserName(data) }}</p>
-            <p class="latest-chat">my latest chat</p>
+            <p class="latest-chat">
+              {{ data.latestMessage && data.latestMessage.content }}
+            </p>
           </div>
         </div>
       </div>
@@ -60,7 +67,7 @@ export default {
       responseUser: [],
       userChat: [],
       userData: null,
-      selectedChat:"",
+      selectedChat: "",
     };
   },
 
@@ -108,10 +115,9 @@ export default {
         let userImage = data.users.find((val) => {
           return val._id != this.userData._id;
         });
-        console.log(userImage);
         return userImage.profilePic;
       } else {
-        return "";
+        return "https://res.cloudinary.com/dkidih85l/image/upload/v1674413380/ndfqhrchmispwymvcsyh.png";
       }
     },
     fetchUserChat() {
@@ -124,12 +130,10 @@ export default {
         .catch((error) => console.log(error));
     },
 
-    setSelectedChat(data){
-     console.log("shwetaaaa", data)
-    //  this.selectedChat = data._id
-    
-     this.$emit("selectedChat", data)
-    }
+    setSelectedChat(data) {
+      console.log("shwetaaaa", data);
+      this.$emit("selectedChat", data);
+    },
   },
 
   mounted() {
@@ -202,8 +206,8 @@ export default {
   border-radius: 10px;
   padding-left: 11px;
   box-sizing: border-box;
-  &:hover{
-      background-color: #eff2f9;
+  &:hover {
+    background-color: #eff2f9;
   }
 }
 
@@ -402,6 +406,17 @@ export default {
   margin-left: 10px;
   p {
     margin: 0;
+  }
+}
+.user-image-wrapper {
+  border-radius: 50%;
+  height: 40px;
+  overflow: hidden;
+  flex-basis: 40px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  img {
+    height: 100%;
   }
 }
 </style>

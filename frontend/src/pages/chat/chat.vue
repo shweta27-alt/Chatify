@@ -12,14 +12,14 @@
           <img src="../../assets/notification-bell.png" class="user-icon" />
         </div>
         <div class="user-image" @click="onProfileClick">
-          <img :src="userData && userData.profilePic" class="user-icon" />
+          <img :src="userData && userData.profilePic"/>
         </div>
       </div>
     </div>
     <div class="lower-chat">
       <div class="inner-container">
         <user-sidebar
-          @selectedChat ="selectedChat"
+          @selectedChat="selectedChat"
           @showGroupSidebar="showGroupSidebar"
           v-if="!showGroupContainer"
           :class="{
@@ -35,7 +35,11 @@
           }"
           v-else
         />
-        <message-bar @showFriendsProfile="showFriendsProfile" :selectChat="selectChat" :key="selectChat._id"/>
+        <message-bar
+          @showFriendsProfile="showFriendsProfile"
+          :selectChat="selectChat"
+          :key="selectChat._id"
+        />
         <profile-sidebar
           @userData="setUserdata"
           :class="{
@@ -74,7 +78,7 @@ export default {
       showGroupContainer: false,
       showMobileUserSidebar: false,
       showFriendProfile: false,
-      selectChat:{}
+      selectChat: {},
     };
   },
   methods: {
@@ -94,7 +98,7 @@ export default {
     },
     openUserSidebar() {
       this.showProfileContainer = false;
-      this.showFriendProfile =false
+      this.showFriendProfile = false;
       this.showMobileUserSidebar = !this.showMobileUserSidebar;
     },
     showFriendsProfile() {
@@ -102,16 +106,14 @@ export default {
       this.showProfileContainer = false;
       this.showFriendProfile = !this.showFriendProfile;
     },
-    selectedChat(data){
-      this.selectChat= data
-      console.log("heyyyyy",this.selectChat)
-    }
+    selectedChat(data) {
+      this.selectChat = data;
+      console.log("heyyyyy", this.selectChat);
+    },
   },
   mounted() {
     this.userData = this.$store.state.userData.user;
   },
-
-  
 };
 </script>
 
@@ -128,7 +130,7 @@ export default {
   background-color: rgb(243, 246, 255);
   display: flex;
   flex-direction: column;
-    height: 91%;
+  height: 91%;
 }
 
 .inner-container {
@@ -140,7 +142,7 @@ export default {
   align-content: center;
   background-color: rgb(243, 246, 255);
   border-radius: 15px;
-    height: 96%;
+  height: 96%;
   @media only screen and (max-width: 600px) {
     width: 100%;
     margin: 0;
@@ -243,6 +245,7 @@ export default {
 .nav-bar-project {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   height: 9%;
   width: 100%;
 }
@@ -260,12 +263,6 @@ export default {
   color: rgb(117, 116, 115);
   align-items: center;
   padding-left: 10px;
-}
-
-.user-image,
-.notification,
-.full-screen {
-  padding-top: 15px;
 }
 
 .chats {
@@ -315,6 +312,8 @@ export default {
   display: flex;
   flex-direction: row;
   margin-right: 20px;
+  justify-content: center;
+    align-items: center;
 }
 
 .message-text {
@@ -372,6 +371,14 @@ export default {
 
 .user-image {
   cursor: pointer;
+  margin-left: 20px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  img{
+    height: 100%;
+  }
 }
 .user-sidebar {
   @media only screen and (max-width: 600px) {
