@@ -49,6 +49,7 @@
         />
         <friend-sidebar
           v-if="showFriendProfile"
+          :selectChat="selectChat"
           @userData="setUserdata"
           class="friend-container"
         />

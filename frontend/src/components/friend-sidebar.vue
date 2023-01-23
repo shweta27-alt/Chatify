@@ -108,13 +108,11 @@ hwefgwfff</textarea
 import apiService from "../services/api.services";
 export default {
   props: {
-    isFriendsProfile: {
-      type: Boolean,
-      default: false,
-    },
-    isGroupUser: {
-      type: Boolean,
-      default: true,
+    selectChat: {
+      type: Object,
+      default() {
+            return {}
+        }
     },
   },
   data() {
@@ -125,10 +123,12 @@ export default {
       groupUser: [],
       editGroupName: true,
       groupName: "testtt",
+      isGroupUser:false
     };
   },
   mounted() {
     this.profiledata = this.$store.state.userData.user;
+    this.isGroupUser=this.selectChat.isGroupChat
   },
   methods: {
     async searchUser() {
