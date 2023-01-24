@@ -123,22 +123,22 @@ export default {
       let groupUserId = this.groupUser.map((val) => {
         return val._id;
       });
-      if (groupUserId > length > 1) {
-        return this.$toast.show("please add atleast 2 users", {
-          type: "error",
-          position: "top",
-        });
+      if (groupUserId.length > 1) {
+        let data = { name: this.groupName, users: JSON.stringify(groupUserId) };
+        return apiService
+          .groupAdd(data)
+          .then((response) => {
+            console.log(response);
+            this.$toast.show("group created successfully", {
+              type: "success",
+              position: "top",
+            });
+            this.closeGroupSidebar();
+          })
+          .catch((error) => console.log(error));
       }
-      let data = { name: this.groupName, users: JSON.stringify(groupUserId) };
-      apiService
-        .groupAdd(data)
-        .then((response) => {
-          console.log(response);
-          this.closeGroupSidebar();
-        })
-        .catch((error) => console.log(error));
-      this.$toast.show("group created successfully", {
-        type: "success",
+      return this.$toast.show("please add atleast 2 users", {
+        type: "error",
         position: "top",
       });
     },

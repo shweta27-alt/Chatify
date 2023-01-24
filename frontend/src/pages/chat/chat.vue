@@ -149,7 +149,7 @@ export default {
   align-content: center;
   background-color: rgb(243, 246, 255);
   border-radius: 15px;
-  height: 96%;
+  height: 90%;
   @media only screen and (max-width: 600px) {
     width: 100%;
     margin: 0;
@@ -341,7 +341,7 @@ export default {
 .group-container {
   overflow: hidden;
   padding: 0;
-  width: 25%;
+  width: 28%;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;

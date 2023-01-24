@@ -390,7 +390,11 @@ export default {
   margin-left: 15px;
   p {
     padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin: 0;
+    width: 143px;
+    white-space: nowrap;
   }
 }
 .group-chat-heading {

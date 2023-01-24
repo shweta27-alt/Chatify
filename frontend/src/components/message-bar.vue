@@ -110,6 +110,7 @@ export default {
   mounted() {
     console.log('in mounted');
     this.userData = this.$store.state.userData.user;
+    this.fetchChat();
   },
 
   computed: {
@@ -257,7 +258,7 @@ export default {
 
 .user-text-area {
   width: 100%;
-  height: 80px;
+  height: 10%;
   margin-top: 20px;
   border-radius: 20px;
   display: flex;
@@ -311,7 +312,7 @@ export default {
 
 .chats {
   overflow-y: scroll;
-  height: 63%;
+  height: 70%;
 }
 
 .time-name-chat-user {

@@ -2,7 +2,7 @@
   <div>
     <div v-if="!(selectChat && selectChat.isGroupChat)">
       <div class="friend-photo-user">
-        <img :src="getFriendUserImage" class="friend-user" />
+        <img :src="getFriendUserImage" />
       </div>
       <div class="friends-info">
         <div>{{ getFriendUserName }}</div>
@@ -127,7 +127,7 @@ export default {
   },
   mounted() {
     this.userData = this.$store.state.userData.user;
-    this.selectChat && (this.groupName=this.selectChat.chatName)
+    this.selectChat && (this.groupName = this.selectChat.chatName);
     this.groupUser =
       this.selectChat &&
       this.selectChat.isGroupChat &&
@@ -238,7 +238,7 @@ export default {
         .renamegroup(data)
         .then((response) => {
           this.editGroupName = true;
-           this.$emit("selectedChat", response.data.getUpdateChat[0]);
+          this.$emit("selectedChat", response.data.getUpdateChat[0]);
           this.$emit("fetchChat");
         })
         .catch((error) => {
@@ -257,10 +257,22 @@ export default {
 }
 
 .friend-photo-user {
-  margin-left: 15px;
-  margin-right: 20px;
-  border-radius: 10px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  margin: auto;
+  margin-top: 16px;
+  img {
+    height: 100%;
+    cursor: pointer;
+  }
 }
+
+.friends-info {
+  margin-top: 10px;
+}
+
 .user-wrapper {
   display: flex;
   flex-direction: column;
@@ -403,7 +415,7 @@ export default {
   text-align: left;
   margin-left: 15px;
   margin-right: 15px;
-  border-top: 1px solid grey;
+  border-top: 1px solid #e9edef;
   .friends-about-txt {
     margin-top: 10px;
   }
