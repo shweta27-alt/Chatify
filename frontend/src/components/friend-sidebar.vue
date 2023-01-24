@@ -98,6 +98,9 @@
             </div>
           </div>
         </div>
+        <div>
+          <button @click="exitGroup">Exit Group</button>
+        </div>
       </div>
     </div>
   </div>
@@ -201,16 +204,25 @@ export default {
       this.responseUser = response.data.users;
       console.log(this.responseUser);
     },
-    addGroupUser(data) {
-      let ifGroupUserExists = this.groupUser.find((val) => val._id == data._id);
-      if (!ifGroupUserExists) {
-        this.groupUser.push(data);
-      } else {
-        this.$toast.show("User already added to group", {
-          type: "error",
-          position: "top",
+    addGroupUser(user) {
+      let ifGroupUserExists = this.groupUser.find((val) => val._id == user._id);
+      let data = { chatId: this.selectChat._id, userId: user._id };
+      apiService
+        .addgroupuser(data)
+        .then((response) => {
+          if (!ifGroupUserExists) {
+            this.groupUser.push(user);
+          } else {
+            this.$toast.show("User already added to group", {
+              type: "error",
+              position: "top",
+            });
+          }
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      }
     },
     removeGroupUser(user) {
       let data = { chatId: this.selectChat._id, userId: user._id };
@@ -245,6 +257,20 @@ export default {
           console.log(error);
         });
     },
+
+    exitGroup(){
+      let data = { chatId: this.selectChat._id, userId: this.userData._id };
+      apiService
+        .removegroupuser(data)
+        .then((response) => {
+          console.log(response);
+          this.$emit("fetchChat");
+          this.$emit("onUserLeft")
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
 };
 </script>

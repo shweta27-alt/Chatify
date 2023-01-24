@@ -50,6 +50,7 @@
         />
         <friend-sidebar
           v-if="showFriendProfile"
+          @onUserLeft = "onUserLeft"
           :selectChat="selectChat"
           @fetchChat="fetchChat"
           @selectedChat="selectedChat"
@@ -116,6 +117,13 @@ export default {
     fetchChat(){
       console.log('heyy');
       this.$refs.userSideBar && this.$refs.userSideBar.fetchUserChat()
+    },
+
+    onUserLeft(){
+      this.selectChat=""
+      this.showMobileUserSidebar = false;
+      this.showProfileContainer = false;
+      this.showFriendProfile = !this.showFriendProfile;
     }
   },
   mounted() {

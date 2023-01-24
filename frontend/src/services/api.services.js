@@ -67,6 +67,10 @@ const apiService = {
 
   removegroupuser(data){
     return axios.put(getUrl() + "/chat/group-remove", data, { withCredentials: true }, getHeader())
+  },
+
+  addgroupuser(data){
+    return axios.put(getUrl() + "/chat/group-add", data, { withCredentials: true }, getHeader())
   }
 
 };
