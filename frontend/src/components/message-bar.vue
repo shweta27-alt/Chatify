@@ -1,8 +1,12 @@
 <template>
   <div class="right-container">
-    <div class="user-name-show" @click="showFriendsProfile" v-if="Object.keys(selectChat).length>0">
+    <div
+      class="user-name-show"
+      @click="showFriendsProfile"
+      v-if="Object.keys(selectChat).length > 0"
+    >
       <div class="chat-user">
-        <img :src="getChatUserImage"  />
+        <img :src="getChatUserImage" />
       </div>
 
       <div class="chat-user-name">
@@ -11,8 +15,8 @@
       </div>
     </div>
 
-    <div class="chats" v-if="Object.keys(selectChat).length>0">
-      <div v-for="data in chats" :key="data._id" >
+    <div class="chats" v-if="Object.keys(selectChat).length > 0">
+      <div v-for="data in chats" :key="data._id">
         <div class="dummy-chat" v-if="userData._id != data.sender._id">
           <div class="sender-image">
             <img :src="data.sender.profilePic" />
@@ -23,7 +27,7 @@
             <div class="sender-name">{{ data.sender.fullName }}</div>
 
             <div class="dummy-chat-text">
-              {{ data.content}}
+              {{ data.content }}
             </div>
           </div>
         </div>
@@ -37,18 +41,20 @@
             <div class="text-time">09:31</div>
             <div class="sender-name-user">{{ data.sender.fullName }}</div>
 
-            <div class="dummy-chat-text">{{ data.content}}</div>
+            <div class="dummy-chat-text">{{ data.content }}</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="user-text-area" v-if="Object.keys(selectChat).length>0">
+    <div class="user-text-area" v-if="Object.keys(selectChat).length > 0">
+      <div v-if="isTyping">typing....</div>
       <input
         type="text"
         class="message-text"
         placeholder="Say something..."
         v-model="message"
+        @input="onTyping"
         @keyup.enter="onSendMessage"
       />
       <div class="button-position">
@@ -62,21 +68,37 @@
 
 <script>
 import apiService from "../services/api.services";
+import io from "socket.io-client";
 export default {
   data() {
     return {
       userData: {},
       message: "",
       chats: [],
+      socketConnected: false,
+      socket: null,
+      typing: false,
+      isTyping: false,
     };
   },
   methods: {
     showFriendsProfile() {
       this.$emit("showFriendsProfile");
     },
-
+    onTyping() {
+      if (!this.socketConnected) return;
+      if (!this.typing) {
+        this.typing = true;
+        this.socket.emit("typing", this.selectChat._id);
+        let timer;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          this.typing=false;
+          this.socket.emit("stop typing", this.selectChat._id);
+        }, 2000);
+      }
+    },
     onSendMessage() {
-      console.log(this.message);
       if (this.message) {
         let data = {
           content: this.message,
@@ -85,7 +107,9 @@ export default {
         apiService
           .sendmessage(data)
           .then((response) => {
-            this.fetchChat()
+            this.message = "";
+            this.socket.emit("new message", response.data);
+            this.fetchChat();
             return console.log(response);
           })
           .catch((error) => {
@@ -94,23 +118,47 @@ export default {
       }
     },
 
-    fetchChat(){
+    fetchChat() {
       apiService
-      .fetchmessage(this.selectChat._id)
-      .then((response) => {
-        this.chats = response.data;
-        console.log(this.chats);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    }
+        .fetchmessage(this.selectChat._id)
+        .then((response) => {
+          this.chats = response.data;
+          console.log(this.chats);
+          this.socket.emit("join chat", this.selectChat._id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   mounted() {
-    console.log('in mounted');
+    console.log("in mounted");
     this.userData = this.$store.state.userData.user;
     this.fetchChat();
+    this.socket = io("http://localhost:5080");
+    this.socket.emit("setup", this.userData);
+    this.socket.on("connected", () => {
+      this.socketConnected = true;
+    });
+    this.socket.on("typing", () => (this.isTyping = true));
+    this.socket.on("stop typing", () => (this.isTyping = false));
+  },
+  updated() {
+    this.socket.on("message recived", (newMessageRecived) => {
+      if (
+        !this.selectChat ||
+        this.selectChat._id !== newMessageRecived.chat._id
+      ) { this.socket.emit("stop typing", this.selectChat._id);
+      } else {
+        let ifChatExists = this.chats.find(
+          (val) => val._id == newMessageRecived._id
+        );
+        if (!ifChatExists) {
+          this.chats = [...this.chats, newMessageRecived];
+        }
+      }
+    });
   },
 
   computed: {
@@ -128,12 +176,14 @@ export default {
     },
     getChatUserImage() {
       if (!this.selectChat.isGroupChat) {
-        let userImage = this.selectChat.users && this.selectChat.users.find((val) => {
-          return val._id != this.userData._id;
-        });
+        let userImage =
+          this.selectChat.users &&
+          this.selectChat.users.find((val) => {
+            return val._id != this.userData._id;
+          });
         return userImage && userImage.profilePic;
       } else {
-        return 'https://res.cloudinary.com/dkidih85l/image/upload/v1674413380/ndfqhrchmispwymvcsyh.png';
+        return "https://res.cloudinary.com/dkidih85l/image/upload/v1674413380/ndfqhrchmispwymvcsyh.png";
       }
     },
   },
@@ -225,8 +275,8 @@ export default {
   margin-top: 10px;
   text-align: left;
 }
-.chat-user-name{
-   margin-left: 20px;
+.chat-user-name {
+  margin-left: 20px;
   text-align: left;
 }
 
@@ -379,14 +429,16 @@ export default {
   transition: all 1s ease;
 }
 
-.sender-image-user,.sender-image,.chat-user{
+.sender-image-user,
+.sender-image,
+.chat-user {
   margin-left: 20px;
-    border-radius: 50%;
-    height: 40px;
-    width: 40px;
-    overflow: hidden;
-    img{
-      height: 100%;
-    }
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  img {
+    height: 100%;
+  }
 }
 </style>
