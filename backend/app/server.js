@@ -32,7 +32,7 @@ const server = app.listen(5080,console.log('server started on PORT 5080'))
 const io = require('socket.io')(server,{
   pingTimeout:60000,
   cors:{
-    origin:'http://localhost:8081'
+    origin:'http://localhost:8080'
 
   }
 })

@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div v-if="isloading" class="loading-image">
+     <img src="../../assets/loading.gif"/>
+  </div>
+  <div class="container" v-else>
     <auth-wrapper>
       <div class="upper">
         <div class="text-slogen">Sign up to chat with your friends.</div>
@@ -182,6 +185,7 @@ export default {
     },
 
     registerClick() {
+      this.isloading=true
       let validform = true,
         isValid;
       for (let key in this.formdata) {
@@ -201,10 +205,12 @@ export default {
         apiService
           .register(data)
           .then((response) => {
+            this.isloading=false
             console.log(response);
             this.$router.push("/chat");
           })
           .catch((error) => {
+            this.isloading=false
             this.showError = true;
             this.errorMessage = error.response.data.message;
             console.log(error);
@@ -253,6 +259,7 @@ export default {
       },
       showError: false,
       errorMessage: "",
+      isloading:false
     };
   },
 };
@@ -339,5 +346,18 @@ export default {
   margin-top: 3px;
   margin-bottom: 2px;
   text-align: left;
+}
+
+.loading-image{
+  height:100px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+
+  img{
+    height:100%;
+
+  }
 }
 </style>

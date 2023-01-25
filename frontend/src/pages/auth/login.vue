@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div v-if="isloading" class="loading-image">
+    <img src="../../assets/loading.gif" />
+  </div>
+  <div class="container" v-else>
     <auth-wrapper>
       <div class="main-content">
         <div class="username">
@@ -72,6 +75,7 @@ export default {
     },
 
     loginButton() {
+      this.isloading=true
       const data = {
         username: this.username,
         password: this.password,
@@ -81,6 +85,7 @@ export default {
         apiService
           .login(data)
           .then((response) => {
+            this.isloading=false
             console.log(response);
             let { data } = response;
             console.log(data);
@@ -89,6 +94,7 @@ export default {
             this.$router.push("/chat");
           })
           .catch((error) => {
+            this.isloading=false
             console.log(error);
             this.showError = true;
             this.errorMessage = error && error.response && error.response.data && error.response.data.message;
@@ -102,6 +108,7 @@ export default {
       password: "",
       showError: false,
       errorMessage: "",
+      isloading:false
     };
   },
 };
@@ -214,5 +221,18 @@ export default {
 button[disabled] {
   background-color: rgb(105, 104, 104);
   cursor: default;
+}
+
+.loading-image{
+  height:100px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+
+  img{
+    height:100%;
+
+  }
 }
 </style>

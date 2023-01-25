@@ -58,7 +58,7 @@
       />
       <div class="typing-wrapper" v-if="isTyping" ><img src="../assets/loading.gif" alt=""></div>
       <div class="button-position">
-        <div class="send-button">
+        <div class="send-button" @click="onSendMessage">
           <img src="../assets/send-message.png" class="send-button-img" />
         </div>
       </div>
@@ -144,6 +144,7 @@ export default {
     this.socket.on("typing", () => (this.isTyping = true));
     this.socket.on("stop typing", () => (this.isTyping = false));
   },
+  
   updated() {
     this.socket.on("message recived", (newMessageRecived) => {
       if (
@@ -296,14 +297,16 @@ export default {
 }
 
 .time-name-chat {
-  margin-left: 30px;
-  text-align: left;
-  color: #7792b1;
+    margin-left: 20px;
+    text-align: left;
+    color: #7792b1;
+    width: 80%;
 }
 
 .sender-name,
 .dummy-chat-text {
   margin-top: 5px;
+  word-break: break-all;
 }
 
 .user-text-area {
@@ -348,6 +351,7 @@ export default {
   padding: 10px 10px 10px 10px;
   text-align: right;
   box-sizing: border-box;
+  
   @media only screen and (max-width: 600px) {
     width: 100%;
     margin-left: 0;
@@ -367,8 +371,9 @@ export default {
 }
 
 .time-name-chat-user {
-  margin-right: 30px;
+  margin-right: 10px;
   color: #ffffff;
+  width:80%;
 }
 
 .sender-name-user {
@@ -440,6 +445,7 @@ export default {
   overflow: hidden;
   img {
     height: 100%;
+    width: 100%;
   }
 }
 .typing-wrapper{

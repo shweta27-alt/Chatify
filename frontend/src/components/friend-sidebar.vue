@@ -40,16 +40,28 @@
             src="../assets/pencil.png"
             alt=""
             @click="updateGroupName"
-            v-if="editGroupName"
+            v-if="editGroupName && isGroupAdmin"
           />
           <img
             class="groupName-icon"
             src="../assets/check.png"
             alt=""
             @click="submitGroupName"
-            v-else
+            v-if="!editGroupName && isGroupAdmin"
           />
         </div>
+
+        <div class="group-admin">
+          <div>Group Admin</div>
+          <input
+            type="text"
+            class="about-user-text"
+            v-model="groupAdminName"
+            disabled
+          /> 
+        </div>
+
+
         <div class="search-bar-title">Add or edit participants</div>
         <div class="search-bar-wrapper">
           <div v-if="groupUser.length > 0">
@@ -65,7 +77,7 @@
                   </div>
                   <div class="group-user-name">{{ data.fullName }}</div>
                 </div>
-                <div class="remove-group-user" @click="removeGroupUser(data)">
+                <div class="remove-group-user" @click="removeGroupUser(data)" v-if="isGroupAdmin">
                   <img src="../assets/cross.png" alt="" />
                 </div>
               </div>
@@ -77,10 +89,11 @@
             class="search-bar"
             v-model="userSearchData"
             @input="searchUser"
+            v-if="isGroupAdmin"
           />
         </div>
 
-        <div class="user-wrapper" v-if="userSearchData">
+        <div class="user-wrapper" v-if="userSearchData && isGroupAdmin">
           <div class="user">
             <div
               class="user-data"
@@ -126,11 +139,13 @@ export default {
       editGroupName: true,
       groupName: "testtt",
       isGroupUser: false,
+      groupAdminName:""
     };
   },
   mounted() {
     this.userData = this.$store.state.userData.user;
     this.selectChat && (this.groupName = this.selectChat.chatName);
+    this.groupAdminName = this.selectChat.groupAdmin.fullName
     this.groupUser =
       this.selectChat &&
       this.selectChat.isGroupChat &&
@@ -196,6 +211,12 @@ export default {
 
       return user && user.profileBio;
     },
+
+    isGroupAdmin(){
+      console.log(this.selectChat)
+      return (this.userData && this.userData._id) == this.selectChat.groupAdmin._id
+
+    }
   },
 
   methods: {
@@ -497,5 +518,9 @@ export default {
 }
 .search-bar-title {
   margin-top: 20px;
+}
+
+.group-admin{
+  margin-top:10px;
 }
 </style>
