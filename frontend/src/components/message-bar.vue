@@ -48,7 +48,6 @@
     </div>
 
     <div class="user-text-area" v-if="Object.keys(selectChat).length > 0">
-      <div v-if="isTyping">typing....</div>
       <input
         type="text"
         class="message-text"
@@ -57,6 +56,7 @@
         @input="onTyping"
         @keyup.enter="onSendMessage"
       />
+      <div class="typing-wrapper" v-if="isTyping" ><img src="../assets/loading.gif" alt=""></div>
       <div class="button-position">
         <div class="send-button">
           <img src="../assets/send-message.png" class="send-button-img" />
@@ -314,6 +314,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .say-something-text {
@@ -440,5 +441,12 @@ export default {
   img {
     height: 100%;
   }
+}
+.typing-wrapper{
+  height: 100%;
+    img{
+        height: 100%;
+    }
+
 }
 </style>
