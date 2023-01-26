@@ -4,6 +4,7 @@ const User = require("../models/user.model");
 exports.LocalStrategy = new LocalStrategy(
   { passReqToCallback: true },
   async function (req, username, password, done) {
+    //check for username can be mobile or email
     let query = {
       $or: [
         { mobile: { $elemMatch: { phoneNumber: `${username}` } } },
@@ -15,6 +16,7 @@ exports.LocalStrategy = new LocalStrategy(
     if (!user) {
       return done({message:"Invalid Username"}, false);
     } else {
+      //if user is present authenticate using passport authenticate
       return user
         .authenticate(password)
         .then((a) => {

@@ -1,3 +1,4 @@
+//login middleware to login user
 const login = (req, res) => {
     let getLogIn = req.logIn;
     return async (user, done) => {
@@ -10,6 +11,7 @@ const login = (req, res) => {
     };
 };
 
+//logot middleware to logout user
 const logout = (req, res) => {
     let getLogOut = req.logOut;
     return async () => {
@@ -19,11 +21,12 @@ const logout = (req, res) => {
                     return reject(err);
                 }
                 try {
+                    //destroy user session
                     req.session.destroy((err) => {
                         if (err) {
                             return reject(err);
                         }
-                        let domain = req.get('host');
+                        //clear user cookie
                         res.clearCookie('c.session', {
                             // secure: 'auto',
                               path:'/',

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../../models/user.model")
+const User = require("../../models/user.model");
+const {checkAuthenticated} = require('../../middlewares');
 
-router.get('/usersearch', async (req, res, next) => {
+router.get('/usersearch',checkAuthenticated, async (req, res, next) => {
    let userquery = req.query.search;
    if(userquery){
     let query =  {$or : [{fullName: {$regex: userquery,$options:"i"}},{email: {$regex: userquery,$options:"i"}},{ "mobile.phoneNumber" : {$regex: userquery,$options:"i"}}]}

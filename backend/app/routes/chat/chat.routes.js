@@ -2,9 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Chat = require("../../models/chat.model");
 const User = require("../../models/user.model");
+const {checkAuthenticated} = require('../../middlewares')
 
-router.post("/access-chat", async (req, res, next) => {
+
+// route to create a chat for a user
+router.post("/access-chat",checkAuthenticated, async (req, res, next) => {
   const { userId } = req.body;
+  //if user id is not present 
   if (!userId) {
     return res.status(400).json({ message: "Inavlid userId send" });
   }
@@ -23,9 +27,11 @@ router.post("/access-chat", async (req, res, next) => {
       path: "lastestMessage.sender",
       select: "fullName profilePic email",
     });
+    // if chat is present return the chat
     if (isChat.length > 0) {
       res.status(200).json(isChat[0]);
     } else {
+      //Else create a chat for user
       let chatData = {
         chatName: "sender",
         isGroupChat: false,
@@ -36,6 +42,7 @@ router.post("/access-chat", async (req, res, next) => {
       let fullChat = await Chat.findOne({ _id: response._id }).populate(
         "users"
       );
+
       return res.status(200).json({ fullChat });
     }
   } catch (error) {
@@ -44,14 +51,15 @@ router.post("/access-chat", async (req, res, next) => {
   }
 });
 
-router.get("/fetch-chat", async (req, res, next) => {
+//route to fetch all chat for curernt user
+router.get("/fetch-chat",checkAuthenticated, async (req, res, next) => {
   let userId = req.user._id;
   try {
     let result = await Chat.find({ users: { $elemMatch: { $eq: userId } } })
       .populate("users")
       .populate("groupAdmin")
       .populate("latestMessage")
-      .sort({ updatedAt: -1 });
+      .sort({ modified_at: -1 });
     result = await User.populate(result, {
       path: "latestMessage.sender",
       select: "fullName profilePic email",
@@ -63,19 +71,24 @@ router.get("/fetch-chat", async (req, res, next) => {
   }
 });
 
-router.post("/group", async (req, res, next) => {
+// route to create a group for user
+router.post("/group",checkAuthenticated, async (req, res, next) => {
   if (!(req.body.users || req.body.name)) {
     return res.status(200).json({ message: "Please fill the required field" });
   }
   let users = JSON.parse(req.body.users);
+  //check for users it should be greater then 2 to create a group
   if (users.length < 2) {
     return res
       .status(400)
       .json({ message: "Atleast two users are required to form a group" });
   }
+
+  //push current loggen in user to group 
   users.push(req.user._id);
 
   try {
+    //create a group
     let groupChatInstance = new Chat({
       chatName: req.body.name,
       users: users,
@@ -92,6 +105,7 @@ router.post("/group", async (req, res, next) => {
   }
 });
 
+//route to rename a group for a user
 router.put("/rename", async (req, res, next) => {
   let { chatName, chatId } = req.body;
   try {
@@ -110,7 +124,9 @@ router.put("/rename", async (req, res, next) => {
   }
 });
 
-router.put("/group-add", async (req, res, next) => {
+
+//route to add a user to  group
+router.put("/group-add",checkAuthenticated, async (req, res, next) => {
   let { chatId, userId } = req.body;
   try {
     let groupChat = await Chat.findOne({ _id: chatId });
@@ -128,7 +144,8 @@ router.put("/group-add", async (req, res, next) => {
   }
 });
 
-router.put("/group-remove", async(req,res, next)=>{
+//route to remove a user from group 
+router.put("/group-remove",checkAuthenticated, async(req,res, next)=>{
   let { chatId, userId } = req.body;
   try {
     let groupChat = await Chat.findOne({ _id: chatId });

@@ -168,6 +168,7 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         };
       };
+      //call the cloudnary api to get the image url
       axios
         .post(
           "https://api.cloudinary.com/v1_1/dkidih85l/image/upload",

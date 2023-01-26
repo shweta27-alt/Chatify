@@ -8,9 +8,7 @@ const Message = new Schema(
     {
         readby :{
             type: Array,
-            
         },
-
         sender:{
             type: mongoose.Schema.Types.ObjectId,
             ref:"user"

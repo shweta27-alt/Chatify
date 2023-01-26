@@ -1,5 +1,5 @@
 const { checkAuthenticatedUser } = require('./gaurds');
-
+//chat frontend routes
 module.exports = [
     {
         path: '/chat',

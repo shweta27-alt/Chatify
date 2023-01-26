@@ -51,7 +51,7 @@
               {{ data.latestMessage && data.latestMessage.content }}
             </p>
           </div>
-          <div>{{ getNotification(data) }}</div>
+          <div class="notification" v-if="getNotification(data)">{{ getNotification(data) }}</div>
         </div>
       </div>
     </div>
@@ -132,6 +132,7 @@ export default {
     },
     setSelectedChat(data) {
       this.selectedChat = data;
+      console.log("selected chat", this.selectedChat);
       this.chatNotification = this.chatNotification.filter(
         (val) => val.chat._id != data._id
       );
@@ -148,12 +149,20 @@ export default {
   mounted() {
     this.userData = this.$store.state.userData.user;
     this.fetchUserChat();
+    this.selectedChat = this.selectChat;
+    console.log(this.notification)
   },
   props: {
     notification: {
       type: Array,
       default() {
         return [];
+      },
+    },
+    selectChat: {
+      type: Object,
+      default() {
+        return {};
       },
     },
   },
@@ -409,6 +418,7 @@ export default {
   flex-direction: column;
   text-align: left;
   margin-left: 15px;
+  flex: auto;
   p {
     padding: 0;
     overflow: hidden;
@@ -443,5 +453,14 @@ export default {
   img {
     height: 100%;
   }
+}
+
+.notification {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #93b4d4;
+  color: #ffffff;
+  padding: 0;
 }
 </style>

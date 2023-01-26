@@ -6,17 +6,17 @@ const store = new MongoDBStore({
     collection: 'sessions'
   });
 
+  //express session middleware
 const sessionMW = async (req, res, next) => {
     let sessionMiddleware;
-    let domain=req.get('host')
-    const maxAge = 30000000;
+    const maxAge = 30000000; //max age of user session
     sessionMiddleware = session({
         name: 'c.session',
         secret: 'c.secret',
-        store: store,
+        store: store, // mongo db as session storage 
         resave: true,
         proxy: true,
-        rolling: true,
+        rolling: true,   //roll the session from current date to maxage
         saveUninitialized: false,
         cookie: {
             // secure: 'auto',

@@ -2,7 +2,9 @@
   <div class="container">
     <div class="nav-bar-project">
       <div class="logo-wrapper">
-        <div class="mobile-icon" @click="openUserSidebar">mobile-icon</div>
+        <div class="mobile-icon" @click="openUserSidebar">
+          <img src="../../assets/menu-burger.png" class="menubar" />
+        </div>
         <div>
           <img src="../../assets/chatify-logo.jpeg" class="chatify-logo" />
         </div>
@@ -20,7 +22,8 @@
           @selectedChat="selectedChat"
           @showGroupSidebar="showGroupSidebar"
           :notification="notification"
-          :key="notification.length"
+          :selectChat="selectChat"
+          :key="value"
           v-if="!showGroupContainer"
           :class="{
             'user-sidebar': true,
@@ -86,6 +89,7 @@ export default {
       showFriendProfile: false,
       selectChat: {},
       notification: [],
+      value: false,
     };
   },
   methods: {
@@ -127,7 +131,7 @@ export default {
       this.showFriendProfile = !this.showFriendProfile;
     },
     getNotification(data) {
-      console.log('not',data);
+      this.value = !this.value;
       this.notification = data;
     },
   },
@@ -410,12 +414,18 @@ export default {
   display: none;
   @media only screen and (max-width: 600px) {
     display: inline-block;
+    height: 33px;
+    img{
+      height: 100%;
+    }
   }
 }
 .show-user-sidebar {
   display: inline-block;
 }
 .logo-wrapper {
-  display: flex;
+      display: flex;
+    align-items: center;
+    margin-left: 20px;
 }
 </style>

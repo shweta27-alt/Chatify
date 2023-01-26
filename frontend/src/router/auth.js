@@ -1,5 +1,5 @@
 const { checkNonAuthenticatedUser } = require('./gaurds');
-
+//all authenticated frontend routes
 module.exports = [
     {
         path: '/',

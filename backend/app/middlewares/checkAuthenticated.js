@@ -1,4 +1,5 @@
 function checkAuthenticated(req,res,next){
+  //check if user is authenticated if get a valid cookie
   if(req.isAuthenticated()){
      return next()
   }

@@ -4,13 +4,16 @@ const User = require('../../models/user.model');
 const passport = require('passport');
 const {checkAuthenticated} = require('../../middlewares')
 
+//route to login with username password
 router.post('/login', async(req,res)=>{
+  //calling passport local stratergy
   passport.authenticate('local', function (err, user, info) {
     if (!user || err) {
         return res.status(400).json({
             message: (err && err.message) || 'Oops something went wrong',
         });
     }
+    //if successfully authenticated login using login middleware
     req.login(user, (err, data) => {
         if (err) {
             return res.status(400).json({

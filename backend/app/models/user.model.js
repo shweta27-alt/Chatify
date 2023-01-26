@@ -61,6 +61,7 @@ const User = new Schema(
     }
 );
 
+//passport local mongoose to add salt and hash password
 User.plugin(passportLocalMongoose, {
     iterations: 1000,
     keylen: 256,

@@ -8,6 +8,8 @@ mongo.connect();
 
 app.use(require('cookie-parser')());
 app.use(bodyParser.json({ limit: '2mb' }));
+
+//cors to allow origin and methods
 app.use(
     cors({
       origin:[ "http://localhost:8081","http://localhost:8080"],
