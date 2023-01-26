@@ -4,8 +4,6 @@ import store from '../../store'
 
 
 export function checkAuthenticatedUser(to,from,next){
-    console.log(store,to,from,next);
-    console.log(store.state.userData.isLoggedInUser)
     store.dispatch("getUserData").then((response)=>{
        if(response.isLoggedInUser){
         return next()
@@ -20,8 +18,6 @@ export function checkAuthenticatedUser(to,from,next){
 
 
 export function checkNonAuthenticatedUser(to,from,next){
-    console.log(store,to,from,next)
-    console.log(store.state.userData.isLoggedInUser)
     store.dispatch("getUserData").then((response)=>{
         console.log(response)
         if(!response.isLoggedInUser){

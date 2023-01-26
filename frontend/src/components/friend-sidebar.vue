@@ -145,7 +145,7 @@ export default {
   mounted() {
     this.userData = this.$store.state.userData.user;
     this.selectChat && (this.groupName = this.selectChat.chatName);
-    this.groupAdminName = this.selectChat.groupAdmin.fullName
+    this.groupAdminName = this.selectChat && this.selectChat.groupAdmin && this.selectChat.groupAdmin.fullName
     this.groupUser =
       this.selectChat &&
       this.selectChat.isGroupChat &&

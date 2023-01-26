@@ -36,8 +36,8 @@
     </div>
     <div class="user-wrapper" v-else>
       <div
-        class="user"
         v-for="data in userChat"
+        :class="`user ${data._id == selectedChat._id ? 'selected' : ''}`"
         :key="data._id"
         @click="setSelectedChat(data)"
       >
@@ -51,6 +51,7 @@
               {{ data.latestMessage && data.latestMessage.content }}
             </p>
           </div>
+          <div>{{ getNotification(data) }}</div>
         </div>
       </div>
     </div>
@@ -68,9 +69,9 @@ export default {
       userChat: [],
       userData: null,
       selectedChat: "",
+      chatNotification: this.notification,
     };
   },
-
   methods: {
     async searchUser() {
       let response = await apiService.usersearch(this.userSearchData);
@@ -129,15 +130,32 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-
     setSelectedChat(data) {
+      this.selectedChat = data;
+      this.chatNotification = this.chatNotification.filter(
+        (val) => val.chat._id != data._id
+      );
       this.$emit("selectedChat", data);
+    },
+    getNotification(data) {
+      let notificationCount =
+        this.chatNotification.length > 0 &&
+        this.chatNotification.filter((val) => val.chat._id == data._id);
+      return notificationCount.length ? notificationCount.length : "";
     },
   },
 
   mounted() {
     this.userData = this.$store.state.userData.user;
     this.fetchUserChat();
+  },
+  props: {
+    notification: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
   },
 };
 </script>
@@ -200,12 +218,15 @@ export default {
 }
 
 .user {
-  margin-top: 20px;
+  margin-top: 13px;
   width: 100%;
   border-radius: 10px;
-  padding-left: 11px;
+  padding: 8px;
   box-sizing: border-box;
   &:hover {
+    background-color: #eff2f9;
+  }
+  &.selected {
     background-color: #eff2f9;
   }
 }

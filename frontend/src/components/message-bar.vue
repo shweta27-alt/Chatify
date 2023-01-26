@@ -11,11 +11,10 @@
 
       <div class="chat-user-name">
         <div>{{ getMessageUserName }}</div>
-        <div class="time-limit">2 day ago</div>
       </div>
     </div>
 
-    <div class="chats" v-if="Object.keys(selectChat).length > 0">
+    <div class="chats" v-if="Object.keys(selectChat).length > 0" ref="chats">
       <div v-for="data in chats" :key="data._id">
         <div class="dummy-chat" v-if="userData._id != data.sender._id">
           <div class="sender-image">
@@ -23,7 +22,13 @@
           </div>
 
           <div class="time-name-chat">
-            <div class="text-time">09:25</div>
+            <div class="text-time">
+              {{
+                getUserMessageTime(data)
+                  ? `${getUserMessageTime(data)} ago`
+                  : "just now"
+              }}
+            </div>
             <div class="sender-name">{{ data.sender.fullName }}</div>
 
             <div class="dummy-chat-text">
@@ -38,7 +43,13 @@
           </div>
 
           <div class="time-name-chat-user">
-            <div class="text-time">09:31</div>
+            <div class="text-time">
+              {{
+                getUserMessageTime(data)
+                  ? `${getUserMessageTime(data)} ago`
+                  : "just now"
+              }}
+            </div>
             <div class="sender-name-user">{{ data.sender.fullName }}</div>
 
             <div class="dummy-chat-text">{{ data.content }}</div>
@@ -56,7 +67,9 @@
         @input="onTyping"
         @keyup.enter="onSendMessage"
       />
-      <div class="typing-wrapper" v-if="isTyping" ><img src="../assets/loading.gif" alt=""></div>
+      <div class="typing-wrapper" v-if="isTyping">
+        <img src="../assets/loading.gif" alt="" />
+      </div>
       <div class="button-position">
         <div class="send-button" @click="onSendMessage">
           <img src="../assets/send-message.png" class="send-button-img" />
@@ -79,7 +92,22 @@ export default {
       socket: null,
       typing: false,
       isTyping: false,
+      notification:[]
     };
+  },
+  watch: {
+    chats(oldvalue, newvalue) {
+      if (oldvalue.length !== newvalue.length) {
+        let chatsWrapper = this.$refs["chats"];
+        this.$nextTick(function () {
+          chatsWrapper &&
+            chatsWrapper.scroll({
+              top: chatsWrapper.scrollHeight,
+              behavior: "smooth",
+            });
+        });
+      }
+    },
   },
   methods: {
     showFriendsProfile() {
@@ -93,7 +121,7 @@ export default {
         let timer;
         clearTimeout(timer);
         timer = setTimeout(() => {
-          this.typing=false;
+          this.typing = false;
           this.socket.emit("stop typing", this.selectChat._id);
         }, 2000);
       }
@@ -109,8 +137,8 @@ export default {
           .then((response) => {
             this.message = "";
             this.socket.emit("new message", response.data);
-            this.fetchChat();
-            return console.log(response);
+            this.fetchMessage();
+            this.$emit('fetchChat');
           })
           .catch((error) => {
             console.log(error);
@@ -118,24 +146,55 @@ export default {
       }
     },
 
-    fetchChat() {
-      apiService
-        .fetchmessage(this.selectChat._id)
-        .then((response) => {
-          this.chats = response.data;
-          console.log(this.chats);
-          this.socket.emit("join chat", this.selectChat._id);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    fetchMessage() {
+      if (this.selectChat._id) {
+        apiService
+          .fetchmessage(this.selectChat._id)
+          .then((response) => {
+            this.chats = response.data.reverse();
+            this.socket.emit("join chat", this.selectChat._id);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+    getUserMessageTime(message) {
+      return this.getMessageTimeSince(message.created_at);
+    },
+    getMessageTimeSince(createdAt) {
+      let date = new Date(`${createdAt}`);
+      let seconds = Math.floor((new Date() - date) / 1000);
+
+      let interval = seconds / 31536000;
+
+      if (interval > 1) {
+        return Math.floor(interval) + " years";
+      }
+      interval = seconds / 2592000;
+      if (interval > 1) {
+        return Math.floor(interval) + " months";
+      }
+      interval = seconds / 86400;
+      if (interval > 1) {
+        return Math.floor(interval) + " days";
+      }
+      interval = seconds / 3600;
+      if (interval > 1) {
+        return Math.floor(interval) + " hours";
+      }
+      interval = seconds / 60;
+      if (interval > 1) {
+        return Math.floor(interval) + " minutes";
+      }
+      return 0;
     },
   },
 
   mounted() {
-    console.log("in mounted");
+    console.log('hey');
     this.userData = this.$store.state.userData.user;
-    this.fetchChat();
+    this.fetchMessage();
     this.socket = io("http://localhost:5080");
     this.socket.emit("setup", this.userData);
     this.socket.on("connected", () => {
@@ -144,19 +203,24 @@ export default {
     this.socket.on("typing", () => (this.isTyping = true));
     this.socket.on("stop typing", () => (this.isTyping = false));
   },
-  
+
   updated() {
     this.socket.on("message recived", (newMessageRecived) => {
       if (
         !this.selectChat ||
         this.selectChat._id !== newMessageRecived.chat._id
-      ) { this.socket.emit("stop typing", this.selectChat._id);
+      ) {
+        if(!(this.notification.find(val=>val._id==newMessageRecived._id))){
+          this.notification=[newMessageRecived,...this.notification];
+          this.$emit('notification',this.notification);
+        }
+          
       } else {
         let ifChatExists = this.chats.find(
           (val) => val._id == newMessageRecived._id
         );
         if (!ifChatExists) {
-          this.chats = [...this.chats, newMessageRecived];
+          this.chats = [newMessageRecived, ...this.chats];
         }
       }
     });
@@ -191,6 +255,9 @@ export default {
   props: {
     selectChat: {
       type: Object,
+      default() {
+        return {};
+      },
     },
   },
   components: {},
@@ -266,6 +333,7 @@ export default {
 .user-name-show {
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin-top: 30px;
   height: 60px;
   background-color: rgb(255, 255, 255);
@@ -288,7 +356,7 @@ export default {
   width: 70%;
   border-radius: 10px;
   box-sizing: border-box;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 10px 10px 15px;
   @media only screen and (max-width: 600px) {
     width: 100%;
     margin-left: 0;
@@ -297,10 +365,10 @@ export default {
 }
 
 .time-name-chat {
-    margin-left: 20px;
-    text-align: left;
-    color: #7792b1;
-    width: 80%;
+  margin-left: 20px;
+  text-align: left;
+  color: #7792b1;
+  width: 80%;
 }
 
 .sender-name,
@@ -325,10 +393,6 @@ export default {
   color: rgb(148, 147, 147);
 }
 
-.sender-image {
-  margin-left: 20px;
-}
-
 .search-bar-user {
   display: flex;
   width: 200px;
@@ -348,10 +412,10 @@ export default {
   margin-left: 26%;
   border-radius: 10px;
   margin-top: 10px;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 15px 10px 10px;
   text-align: right;
   box-sizing: border-box;
-  
+
   @media only screen and (max-width: 600px) {
     width: 100%;
     margin-left: 0;
@@ -368,12 +432,14 @@ export default {
 .chats {
   overflow-y: scroll;
   height: 70%;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .time-name-chat-user {
   margin-right: 10px;
   color: #ffffff;
-  width:80%;
+  width: 80%;
 }
 
 .sender-name-user {
@@ -436,7 +502,6 @@ export default {
 }
 
 .sender-image-user,
-.sender-image,
 .chat-user {
   margin-left: 20px;
   border-radius: 50%;
@@ -448,11 +513,20 @@ export default {
     width: 100%;
   }
 }
-.typing-wrapper{
+.sender-image {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+.typing-wrapper {
   height: 100%;
-    img{
-        height: 100%;
-    }
-
+  img {
+    height: 100%;
+  }
 }
 </style>

@@ -130,7 +130,6 @@ export default {
     },
     validateEmailAddress() {
       let re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-      console.log(re.test(this.formdata.email_address));
       if (!re.test(this.formdata.email_address.value)) {
         this.formdata.email_address.showError = true;
         this.formdata.email_address.errorMessage = "Enter valid Email Address";

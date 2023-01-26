@@ -8,9 +8,6 @@
         </div>
       </div>
       <div class="user-profile-notification">
-        <div class="notification">
-          <img src="../../assets/notification-bell.png" class="user-icon" />
-        </div>
         <div class="user-image" @click="onProfileClick">
           <img :src="userData && userData.profilePic" />
         </div>
@@ -19,9 +16,11 @@
     <div class="lower-chat">
       <div class="inner-container">
         <user-sidebar
-        ref="userSideBar" 
+          ref="userSideBar"
           @selectedChat="selectedChat"
           @showGroupSidebar="showGroupSidebar"
+          :notification="notification"
+          :key="notification.length"
           v-if="!showGroupContainer"
           :class="{
             'user-sidebar': true,
@@ -38,8 +37,10 @@
         />
         <message-bar
           @showFriendsProfile="showFriendsProfile"
+          @notification="getNotification"
           :selectChat="selectChat"
           :key="selectChat._id"
+          @fetchChat="fetchChat"
         />
         <profile-sidebar
           @userData="setUserdata"
@@ -50,7 +51,7 @@
         />
         <friend-sidebar
           v-if="showFriendProfile"
-          @onUserLeft = "onUserLeft"
+          @onUserLeft="onUserLeft"
           :selectChat="selectChat"
           @fetchChat="fetchChat"
           @selectedChat="selectedChat"
@@ -84,6 +85,7 @@ export default {
       showMobileUserSidebar: false,
       showFriendProfile: false,
       selectChat: {},
+      notification: [],
     };
   },
   methods: {
@@ -114,17 +116,20 @@ export default {
     selectedChat(data) {
       this.selectChat = data;
     },
-    fetchChat(){
-      console.log('heyy');
-      this.$refs.userSideBar && this.$refs.userSideBar.fetchUserChat()
+    fetchChat() {
+      this.$refs.userSideBar && this.$refs.userSideBar.fetchUserChat();
     },
 
-    onUserLeft(){
-      this.selectChat=""
+    onUserLeft() {
+      this.selectChat = "";
       this.showMobileUserSidebar = false;
       this.showProfileContainer = false;
       this.showFriendProfile = !this.showFriendProfile;
-    }
+    },
+    getNotification(data) {
+      console.log('not',data);
+      this.notification = data;
+    },
   },
   mounted() {
     this.userData = this.$store.state.userData.user;
@@ -326,7 +331,7 @@ export default {
 .user-profile-notification {
   display: flex;
   flex-direction: row;
-  margin-right: 20px;
+  margin-right: 38px;
   justify-content: center;
   align-items: center;
 }

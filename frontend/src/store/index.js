@@ -12,7 +12,6 @@ export default createStore({
   },
   mutations: {
     updateUserData(state, payload) {
-      // console.log(payload)
       state.userData = payload
       
     }

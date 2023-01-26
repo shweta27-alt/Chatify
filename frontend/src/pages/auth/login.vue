@@ -86,7 +86,6 @@ export default {
           .login(data)
           .then((response) => {
             this.isloading=false
-            console.log(response);
             let { data } = response;
             console.log(data);
             this.showError = false;
