@@ -19,7 +19,6 @@ export function checkAuthenticatedUser(to,from,next){
 //check if user is not authenticated based on store isLoggedInUser
 export function checkNonAuthenticatedUser(to,from,next){
     store.dispatch("getUserData").then((response)=>{
-        console.log(response)
         if(!response.isLoggedInUser){
         return next()
         }

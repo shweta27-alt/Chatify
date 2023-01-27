@@ -130,8 +130,7 @@ export default {
     logout() {
       apiService
         .logout()
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.showError = false;
           this.errorMessage = "";
           this.$router.push("/auth/login");
@@ -155,6 +154,10 @@ export default {
           this.$emit("userData", this.profiledata);
         })
         .catch((error) => {
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
           console.log(error);
         });
     },
@@ -180,6 +183,10 @@ export default {
           this.updateProfileImage(data.secure_url);
         })
         .catch((err) => {
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
           console.log(err);
         });
     },

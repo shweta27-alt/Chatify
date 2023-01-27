@@ -127,15 +127,20 @@ export default {
         let data = { name: this.groupName, users: JSON.stringify(groupUserId) };
         return apiService
           .groupAdd(data)
-          .then((response) => {
-            console.log(response);
+          .then(() => {
             this.$toast.show("group created successfully", {
               type: "success",
               position: "top",
             });
             this.closeGroupSidebar();
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            this.$toast.show("Something went wrong", {
+              type: "error",
+              position: "top",
+            });
+            console.log(error);
+          });
       }
       return this.$toast.show("please add atleast 2 users", {
         type: "error",
@@ -143,7 +148,6 @@ export default {
       });
     },
   },
-  mounted() {},
 };
 </script>
 

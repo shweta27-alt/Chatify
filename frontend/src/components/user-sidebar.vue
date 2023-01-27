@@ -51,7 +51,9 @@
               {{ data.latestMessage && data.latestMessage.content }}
             </p>
           </div>
-          <div class="notification" v-if="getNotification(data)">{{ getNotification(data) }}</div>
+          <div class="notification" v-if="getNotification(data)">
+            {{ getNotification(data) }}
+          </div>
         </div>
       </div>
     </div>
@@ -74,9 +76,16 @@ export default {
   },
   methods: {
     async searchUser() {
-      let response = await apiService.usersearch(this.userSearchData);
-      this.responseUser = response.data.users;
-      console.log(this.responseUser);
+      try {
+        let response = await apiService.usersearch(this.userSearchData);
+        this.responseUser = response.data.users;
+      } catch (err) {
+        console.log(err);
+        this.$toast.show("Something went wrong", {
+          type: "error",
+          position: "top",
+        });
+      }
     },
     onUserGroupChatClick() {
       this.$emit("showGroupSidebar");
@@ -84,11 +93,16 @@ export default {
     createUserChat(data) {
       apiService
         .createuserchat({ userId: data._id })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.fetchUserChat();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
+        });
       this.userSearchData = "";
     },
     getChatUserName(data) {
@@ -126,13 +140,17 @@ export default {
         .fetchchat()
         .then((response) => {
           this.userChat = response.data.result;
-          console.log(this.userChat);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
+        });
     },
     setSelectedChat(data) {
       this.selectedChat = data;
-      console.log("selected chat", this.selectedChat);
       this.chatNotification = this.chatNotification.filter(
         (val) => val.chat._id != data._id
       );
@@ -150,7 +168,6 @@ export default {
     this.userData = this.$store.state.userData.user;
     this.fetchUserChat();
     this.selectedChat = this.selectChat;
-    console.log(this.notification)
   },
   props: {
     notification: {

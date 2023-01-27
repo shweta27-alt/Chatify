@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
 
 
 const server = app.listen(5080,console.log('server started on PORT 5080'))
-
+//add a cors origin here for the socket 
 const io = require('socket.io')(server,{
   pingTimeout:60000,
   cors:{
@@ -38,30 +38,28 @@ const io = require('socket.io')(server,{
 
   }
 })
-
+//create a connection between cleint server
 io.on('connection',(socket)=>{
     console.log('connected to socket.io');
+    //take user data from frontend and join the group with user id
     socket.on('setup',(userData)=>{
-      console.log(userData._id)
       socket.join(userData._id);
       socket.emit('connected'); 
     })
-
+  //create a room with the room id sent from frontend
     socket.on('join chat',(room)=>{
       socket.join(room);
-      console.log('user joined the room',room);
     })
-
-    socket.on('typing',(room)=>socket.in(room).emit('typing'))
-    socket.on('stop typing',(room)=>socket.in(room).emit('stop typing'))
+    //to read and emit the typing event from frontend socket
+    socket.on('typing',(room)=>socket.in(room).emit('typing'));
+    //to read the emit stop typing event from frontend socket
+    socket.on('stop typing',(room)=>socket.in(room).emit('stop typing'));
+    //to read the new message from frontend socket
     socket.on('new message',(newMessageRecieved)=>{
-      console.log(newMessageRecieved);
       let chat = newMessageRecieved.chat;
       if(!chat.users) return console.log('chat users not defined')
-
       chat.users.forEach(user => {
-        if(user._id == newMessageRecieved.sender._id) return;
-        console.log(user);
+        if(user._id == newMessageRecieved.sender._id) return; 
         socket.in(user._id).emit("message recived",newMessageRecieved)
         
       });

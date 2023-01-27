@@ -203,16 +203,14 @@ export default {
       if (validform) {
         apiService
           .register(data)
-          .then((response) => {
+          .then(() => {
             this.isloading=false
-            console.log(response);
             this.$router.push("/chat");
           })
           .catch((error) => {
             this.isloading=false
             this.showError = true;
             this.errorMessage = error.response.data.message;
-            console.log(error);
           });
       }
     },

@@ -117,11 +117,14 @@ export default {
       if (!this.socketConnected) return;
       if (!this.typing) {
         this.typing = true;
+        //emit the typing event to backend 
         this.socket.emit("typing", this.selectChat._id);
+        //added debouncing to stop tyiping after some delay
         let timer;
         clearTimeout(timer);
         timer = setTimeout(() => {
           this.typing = false;
+          //emit the stop typing event to backend 
           this.socket.emit("stop typing", this.selectChat._id);
         }, 2000);
       }
@@ -136,6 +139,7 @@ export default {
           .sendmessage(data)
           .then((response) => {
             this.message = "";
+            //to emit the message to the backend socket
             this.socket.emit("new message", response.data);
             this.fetchMessage();
             this.$emit('fetchChat');
@@ -152,6 +156,7 @@ export default {
           .fetchmessage(this.selectChat._id)
           .then((response) => {
             this.chats = response.data.reverse();
+            //with chat id create a new room for user
             this.socket.emit("join chat", this.selectChat._id);
           })
           .catch((error) => {
@@ -192,19 +197,22 @@ export default {
   },
 
   mounted() {
-    console.log('hey');
     this.userData = this.$store.state.userData.user;
     this.fetchMessage();
     this.socket = io("http://localhost:5080");
-    this.socket.emit("setup", this.userData);
+    //emit the user data to server to join the group
+    this.socket.emit("setup", this.userData);  
     this.socket.on("connected", () => {
       this.socketConnected = true;
     });
+    //to check the typing event from backend 
     this.socket.on("typing", () => (this.isTyping = true));
+    //to check the stop typing event from backend 
     this.socket.on("stop typing", () => (this.isTyping = false));
   },
 
   updated() {
+    //to read the message from backend and show message pr notification 
     this.socket.on("message recived", (newMessageRecived) => {
       if (
         !this.selectChat ||

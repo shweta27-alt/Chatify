@@ -58,9 +58,8 @@
             class="about-user-text"
             v-model="groupAdminName"
             disabled
-          /> 
+          />
         </div>
-
 
         <div class="search-bar-title">Add or edit participants</div>
         <div class="search-bar-wrapper">
@@ -77,7 +76,11 @@
                   </div>
                   <div class="group-user-name">{{ data.fullName }}</div>
                 </div>
-                <div class="remove-group-user" @click="removeGroupUser(data)" v-if="isGroupAdmin">
+                <div
+                  class="remove-group-user"
+                  @click="removeGroupUser(data)"
+                  v-if="isGroupAdmin"
+                >
                   <img src="../assets/cross.png" alt="" />
                 </div>
               </div>
@@ -139,22 +142,22 @@ export default {
       editGroupName: true,
       groupName: "testtt",
       isGroupUser: false,
-      groupAdminName:""
+      groupAdminName: "",
     };
   },
   mounted() {
     this.userData = this.$store.state.userData.user;
     this.selectChat && (this.groupName = this.selectChat.chatName);
-    this.groupAdminName = this.selectChat && this.selectChat.groupAdmin && this.selectChat.groupAdmin.fullName
+    this.groupAdminName =
+      this.selectChat &&
+      this.selectChat.groupAdmin &&
+      this.selectChat.groupAdmin.fullName;
     this.groupUser =
       this.selectChat &&
       this.selectChat.isGroupChat &&
       this.selectChat.users.filter((val) => {
-        console.log("val", val._id);
-        console.log("userdata", this.userData._id);
         return val._id != this.userData._id;
       });
-    console.log(this.groupUser);
   },
 
   computed: {
@@ -175,8 +178,6 @@ export default {
         let user =
           this.selectChat.users &&
           this.selectChat.users.find((val) => {
-            console.log(val);
-            console.log(this.userData);
             return val._id != (this.userData && this.userData._id);
           });
         return user && user.profilePic;
@@ -212,25 +213,24 @@ export default {
       return user && user.profileBio;
     },
 
-    isGroupAdmin(){
-      console.log(this.selectChat)
-      return (this.userData && this.userData._id) == this.selectChat.groupAdmin._id
-
-    }
+    isGroupAdmin() {
+      return (
+        (this.userData && this.userData._id) == this.selectChat.groupAdmin._id
+      );
+    },
   },
 
   methods: {
     async searchUser() {
       let response = await apiService.usersearch(this.userSearchData);
       this.responseUser = response.data.users;
-      console.log(this.responseUser);
     },
     addGroupUser(user) {
       let ifGroupUserExists = this.groupUser.find((val) => val._id == user._id);
       let data = { chatId: this.selectChat._id, userId: user._id };
       apiService
         .addgroupuser(data)
-        .then((response) => {
+        .then(() => {
           if (!ifGroupUserExists) {
             this.groupUser.push(user);
           } else {
@@ -239,9 +239,12 @@ export default {
               position: "top",
             });
           }
-          console.log(response);
         })
         .catch((error) => {
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
           console.log(error);
         });
     },
@@ -249,16 +252,19 @@ export default {
       let data = { chatId: this.selectChat._id, userId: user._id };
       apiService
         .removegroupuser(data)
-        .then((response) => {
+        .then(() => {
           let removeUserIndex = this.groupUser.findIndex(
             (val) => val._id == user._id
           );
           if (removeUserIndex >= 0) {
             this.groupUser.splice(removeUserIndex, 1);
           }
-          console.log(response);
         })
         .catch((error) => {
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
           console.log(error);
         });
     },
@@ -275,23 +281,30 @@ export default {
           this.$emit("fetchChat");
         })
         .catch((error) => {
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
           console.log(error);
         });
     },
 
-    exitGroup(){
+    exitGroup() {
       let data = { chatId: this.selectChat._id, userId: this.userData._id };
       apiService
         .removegroupuser(data)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           this.$emit("fetchChat");
-          this.$emit("onUserLeft")
+          this.$emit("onUserLeft");
         })
         .catch((error) => {
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
           console.log(error);
         });
-    }
+    },
   },
 };
 </script>
@@ -520,7 +533,7 @@ export default {
   margin-top: 20px;
 }
 
-.group-admin{
-  margin-top:10px;
+.group-admin {
+  margin-top: 10px;
 }
 </style>

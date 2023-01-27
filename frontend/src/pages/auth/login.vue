@@ -84,10 +84,8 @@ export default {
       if (this.username && this.password) {
         apiService
           .login(data)
-          .then((response) => {
+          .then(() => {
             this.isloading=false
-            let { data } = response;
-            console.log(data);
             this.showError = false;
             this.errorMessage = "";
             this.$router.push("/chat");

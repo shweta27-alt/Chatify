@@ -59,7 +59,6 @@ router.post('/register/form', async (req, res) => {
   }
 
   let phoneUser = await User.getUserByPhoneNumber(phoneNumber, countryCode)
-  console.log(phoneUser)
   if (phoneUser) {
     return res.status(400).json({ message: "Phone number already taken" })
   }
@@ -98,54 +97,6 @@ router.post('/register/form', async (req, res) => {
 router.get('/usersession', checkAuthenticated,async(req,res,next)=>{
    res.json({user:req.user})
 })
-
-
-
-
-router.get('/test', async (req, res, next) => {
-  console.log(req.session);
-  // const newuser = new user({
-  //     profilePic: "https://res.cloudinary.com/my_cloud/image/upload/t_transf1/t_transf2/v1/my_path/sample.jpg",
-  //     profileBio: "I'm cool",
-  //     email: "shweta@gmail.com",
-  //     salt:{value:"!@#$$" },
-  //     hash :{value:"####"},
-  //     mobile: 88505558567,
-  //     archive: true,
-
-  // })
-  // await newuser.save()
-
-  // const newchat = new chat({
-  //     isgroupchat : true,
-  //     user: ["63b15d4cb2e092ebb1c28204", "63b15d4cb2e092ebb1c28204"],
-  //     chatname:"friends",
-  //     groupadmin:"63b15d4cb2e092ebb1c28204",
-  //     latestmessage:"63b15d4cb2e092ebb1c28204"
-  // })
-  // await newchat.save()
-
-  // const newmessage = new message ({
-  //    readby:["63b15fafc5e214e62f3c8570"],
-  //    sender:"63b15fafc5e214e62f3c8570",
-  //    content: "hey, let's meet",
-  //    chat:"63b15fafc5e214e62f3c8570"
-  // })
-  // await newmessage.save() 
-
-  
-  req.login({ mobile: '999999999' }, (err, data) => {
-    if (err) {
-      return res.status(500).json(err);
-    }
-    res.json({
-      userExists: true,
-      user: { mobile: '999999999' },
-    });
-  });
-
-});
-
 
 
 module.exports = router;

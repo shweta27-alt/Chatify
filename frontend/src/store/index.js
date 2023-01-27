@@ -21,7 +21,6 @@ export default createStore({
       let responseUser;
       try {
         let response = await apiService.usersession();
-        console.log(response)
         responseUser = { user: response.data.user, isLoggedInUser: true }
         commit('updateUserData', responseUser);
     
