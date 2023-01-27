@@ -272,6 +272,12 @@ export default {
       this.editGroupName = false;
     },
     submitGroupName() {
+      if(!this.groupName){
+         return  this.$toast.show("Group name should not be empty", {
+            type: "error",
+            position: "top",
+          });
+      }
       let data = { chatName: this.groupName, chatId: this.selectChat._id };
       apiService
         .renamegroup(data)

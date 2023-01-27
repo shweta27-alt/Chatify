@@ -5,7 +5,7 @@
         <div class="mobile-icon" @click="openUserSidebar">
           <img src="../../assets/menu-burger.png" class="menubar" />
         </div>
-        <div>
+        <div class="chatify-logo-wrapper">
           <img src="../../assets/chatify-logo.jpeg" class="chatify-logo" />
         </div>
       </div>
@@ -118,6 +118,7 @@ export default {
       this.showFriendProfile = !this.showFriendProfile;
     },
     selectedChat(data) {
+      this.showMobileUserSidebar = false;
       this.selectChat = data;
     },
     fetchChat() {
@@ -421,5 +422,8 @@ export default {
       display: flex;
     align-items: center;
     margin-left: 20px;
+}
+.chatify-logo-wrapper{
+  display: flex;
 }
 </style>
