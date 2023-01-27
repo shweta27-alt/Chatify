@@ -88,8 +88,20 @@ export default {
 
   methods: {
     async searchUser() {
-      let response = await apiService.usersearch(this.userSearchData);
-      this.responseUser = response.data.users;
+      let timer;
+      clearTimeout(timer);
+      timer = setTimeout(async() => {
+        try {
+          let response = await apiService.usersearch(this.userSearchData);
+          this.responseUser = response.data.users;
+        } catch (err) {
+          console.log(err);
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
+        }
+      }, 300);
     },
     closeGroupSidebar() {
       this.$emit("closeGroupSidebar");
@@ -202,7 +214,7 @@ export default {
   box-sizing: border-box;
   outline: none;
   padding-left: 12px;
-  font-size:12px ;
+  font-size: 12px;
   @media only screen and (max-width: 600px) {
     font-size: 10px;
     padding-left: 5px;

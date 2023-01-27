@@ -223,8 +223,20 @@ export default {
 
   methods: {
     async searchUser() {
-      let response = await apiService.usersearch(this.userSearchData);
-      this.responseUser = response.data.users;
+      let timer;
+      clearTimeout(timer);
+      timer = setTimeout(async() => {
+        try {
+          let response = await apiService.usersearch(this.userSearchData);
+          this.responseUser = response.data.users;
+        } catch (err) {
+          console.log(err);
+          this.$toast.show("Something went wrong", {
+            type: "error",
+            position: "top",
+          });
+        }
+      }, 300);
     },
     addGroupUser(user) {
       let ifGroupUserExists = this.groupUser.find((val) => val._id == user._id);
@@ -537,10 +549,10 @@ export default {
 .group-admin {
   margin-top: 10px;
 }
-.exit-group-button{
-  button{
+.exit-group-button {
+  button {
     margin-top: 10px;
-  background:red ;
+    background: red;
   }
 }
 </style>

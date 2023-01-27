@@ -77,8 +77,12 @@ export default {
   methods: {
     async searchUser() {
       try {
-        let response = await apiService.usersearch(this.userSearchData);
-        this.responseUser = response.data.users;
+        let timer;
+        clearTimeout(timer);
+        timer = setTimeout(async() => {
+          let response = await apiService.usersearch(this.userSearchData);
+          this.responseUser = response.data.users;
+        }, 300);
       } catch (err) {
         console.log(err);
         this.$toast.show("Something went wrong", {
@@ -237,7 +241,7 @@ export default {
   box-sizing: border-box;
   outline: none;
   padding-left: 12px;
-  font-size:12px ;
+  font-size: 12px;
   @media only screen and (max-width: 600px) {
     font-size: 10px;
     padding-left: 5px;
@@ -477,11 +481,11 @@ export default {
   padding: 0;
 }
 
-.chat-friend-name{
+.chat-friend-name {
   font-weight: bold;
 }
 
-.chat-content .latest-chat{
+.chat-content .latest-chat {
   margin-top: 2px;
 }
 </style>
