@@ -61,6 +61,10 @@
           />
         </div>
 
+        <div class="exit-group-button">
+          <button @click="exitGroup">Exit Group</button>
+        </div>
+
         <div class="search-bar-title">Add or edit participants</div>
         <div class="search-bar-wrapper">
           <div v-if="groupUser.length > 0">
@@ -113,9 +117,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <button @click="exitGroup">Exit Group</button>
         </div>
       </div>
     </div>
@@ -272,11 +273,11 @@ export default {
       this.editGroupName = false;
     },
     submitGroupName() {
-      if(!this.groupName){
-         return  this.$toast.show("Group name should not be empty", {
-            type: "error",
-            position: "top",
-          });
+      if (!this.groupName) {
+        return this.$toast.show("Group name should not be empty", {
+          type: "error",
+          position: "top",
+        });
       }
       let data = { chatName: this.groupName, chatId: this.selectChat._id };
       apiService
@@ -342,12 +343,14 @@ export default {
 .user-wrapper {
   display: flex;
   flex-direction: column;
-  height: 63%;
+  height: 35%;
+  overflow: hidden;
   overflow-y: scroll;
 }
 .user-data {
   display: flex;
   align-items: center;
+  overflow: scroll;
 }
 
 .about-me-text {
@@ -480,7 +483,7 @@ export default {
 
 .group-info {
   margin-top: 20px;
-  height: 100%;
+  height: 96%;
 }
 .group-participants {
   margin-top: 20px;
@@ -511,7 +514,8 @@ export default {
   border-radius: 16px;
   box-sizing: border-box;
   outline: none;
-  padding-left: 18px;
+  padding-left: 12px;
+  font-size: 12px;
 }
 .search-bar-wrapper {
   margin-top: 5px;
@@ -532,5 +536,11 @@ export default {
 
 .group-admin {
   margin-top: 10px;
+}
+.exit-group-button{
+  button{
+    margin-top: 10px;
+  background:red ;
+  }
 }
 </style>
