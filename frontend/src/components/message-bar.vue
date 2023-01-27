@@ -76,6 +76,10 @@
         </div>
       </div>
     </div>
+
+    <div v-if="!(Object.keys(selectChat).length > 0)" class="message-screen">
+         <img src="../assets/chatify-screen.png" alt="" />
+    </div>
   </div>
 </template>
 
@@ -537,6 +541,16 @@ export default {
   height: 100%;
   img {
     height: 100%;
+  }
+}
+.message-screen{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img{
+    height: 400px;
   }
 }
 </style>

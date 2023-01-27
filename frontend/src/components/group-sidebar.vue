@@ -201,7 +201,6 @@ export default {
   border-radius: 16px;
   box-sizing: border-box;
   outline: none;
-  padding-left: 18px;
   padding-left: 12px;
   font-size:12px ;
   @media only screen and (max-width: 600px) {

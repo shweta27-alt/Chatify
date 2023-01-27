@@ -30,7 +30,7 @@ body {
 /* Works on Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 4px;
-  height: 3px;
+  height: 1px;
 }
 
 *::-webkit-scrollbar-track {

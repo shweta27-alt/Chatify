@@ -224,7 +224,9 @@ export default {
   text-align: left;
   padding-left: 10px;
   font-size: 12px;
+  font-weight:600 ;
 }
+
 
 .user-profile-img,
 .info-button-img,

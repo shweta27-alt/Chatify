@@ -247,7 +247,7 @@ export default {
 .user {
   margin-top: 13px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 3px;
   padding: 8px;
   box-sizing: border-box;
   cursor: pointer;
@@ -475,5 +475,13 @@ export default {
   background-color: #93b4d4;
   color: #ffffff;
   padding: 0;
+}
+
+.chat-friend-name{
+  font-weight: bold;
+}
+
+.chat-content .latest-chat{
+  margin-top: 2px;
 }
 </style>
