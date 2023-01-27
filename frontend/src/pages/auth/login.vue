@@ -11,6 +11,7 @@
             placeholder="Phone number or email address"
             class="login-input-field"
             v-model="username"
+            @keyup.enter="loginButton"
           />
         </div>
 
@@ -20,6 +21,7 @@
             placeholder="Password"
             class="login-input-field"
             v-model="password"
+            @keyup.enter="loginButton"
           />
         </div>
         <p class="error-text" v-if="showError">
@@ -34,21 +36,8 @@
             <strong>Log in</strong>
           </button>
         </div>
-        <div class="partition">OR</div>
       </div>
-      <div class="loginwith-socialsites">
-        <div class="loginwith-google">
-          <div>
-            <img
-              src="../../assets/search.png"
-              alt="google"
-              class="google-logo"
-            />
-          </div>
-
-          <div class="login-google-text">Log in with Google</div>
-        </div>
-
+      <div class="forgot-password-wrapper">
         <div class="forgot-password">Forgotten your password?</div>
       </div>
     </auth-wrapper>

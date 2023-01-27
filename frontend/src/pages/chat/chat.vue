@@ -317,12 +317,6 @@ export default {
   height: 20px;
 }
 
-.button-position {
-  display: flex;
-  flex-direction: row-reverse;
-  margin-right: 20px;
-}
-
 .chatify-logo {
   height: 65px;
   margin-left: 20px;

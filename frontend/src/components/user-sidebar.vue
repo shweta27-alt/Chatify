@@ -249,6 +249,7 @@ export default {
   border-radius: 10px;
   padding: 8px;
   box-sizing: border-box;
+  cursor: pointer;
   &:hover {
     background-color: #eff2f9;
   }
@@ -387,12 +388,6 @@ export default {
 }
 .send-button-img {
   height: 20px;
-}
-
-.button-position {
-  display: flex;
-  flex-direction: row-reverse;
-  margin-right: 20px;
 }
 
 .chatify-logo {

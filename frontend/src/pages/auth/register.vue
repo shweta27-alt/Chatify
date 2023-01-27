@@ -14,6 +14,7 @@
             class="register-input-field"
             v-model="formdata.full_name.value"
             @input="validateFullName"
+            @keyup.enter="registerClick"
           />
           <p class="error-text" v-if="formdata.full_name.showError">
             {{ formdata.full_name.errorMessage }}
@@ -27,6 +28,7 @@
             class="register-input-field"
             v-model="formdata.phone_number.value"
             @input="validatePhoneNumber"
+            @keyup.enter="registerClick"
           />
           <p class="error-text" v-if="formdata.phone_number.showError">
             {{ formdata.phone_number.errorMessage }}
@@ -40,6 +42,7 @@
             class="register-input-field"
             v-model="formdata.email_address.value"
             @input="validateEmailAddress"
+            @keyup.enter="registerClick"
           />
           <p class="error-text" v-if="formdata.email_address.showError">
             {{ formdata.email_address.errorMessage }}
@@ -53,6 +56,7 @@
             class="register-input-field"
             v-model="formdata.password.value"
             @input="validatePassword"
+            @keyup.enter="registerClick"
           />
           <p class="error-text" v-if="formdata.password.showError">
             {{ formdata.password.errorMessage }}
@@ -66,6 +70,7 @@
             class="register-input-field"
             v-model="formdata.confirm_password.value"
             @input="validateConfirmPassword"
+            @keyup.enter="registerClick"
           />
           <p class="error-text" v-if="formdata.confirm_password.showError">
             {{ formdata.confirm_password.errorMessage }}
@@ -184,7 +189,7 @@ export default {
     },
 
     registerClick() {
-      this.isloading=true
+      this.isloading=true;
       let validform = true,
         isValid;
       for (let key in this.formdata) {
@@ -213,6 +218,7 @@ export default {
             this.errorMessage = error.response.data.message;
           });
       }
+      this.isloading=false;
     },
   },
 
@@ -335,6 +341,7 @@ export default {
 .log-in {
   padding-left: 5px;
   color: rgb(57, 98, 221);
+  cursor: pointer;
 }
 
 .error-text {

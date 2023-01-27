@@ -7,12 +7,11 @@
           class="profile-picture"
         />
       </label>
-
       <input type="file" id="image-input" @change="uploadProfileImage" />
     </div>
 
-    <div class="Information">
-      <div class="Username">
+    <div class="user-information">
+      <div class="username">
         <div class="user-name-profile">
           <img src="../assets/user.png" class="user-profile-img" />
         </div>
@@ -235,7 +234,7 @@ export default {
   margin-top: 13px;
 }
 
-.Username,
+.username,
 .about-me,
 .Phone-no {
   display: flex;
@@ -268,10 +267,12 @@ export default {
   border-radius: 12px;
   border: 1px;
   background-color: rgb(224, 224, 224);
+  cursor: pointer;
 }
 .profilebio-icon {
   height: 15px;
   margin-left: 5px;
+  cursor: pointer;
 }
 .profile-bio {
   display: flex;
@@ -284,5 +285,8 @@ export default {
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
+}
+.user-information{
+margin-top: 25px;
 }
 </style>

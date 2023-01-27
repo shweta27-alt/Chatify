@@ -391,20 +391,10 @@ export default {
   height: 15px;
   width: 15px;
 }
-
-.logout-button {
-  width: 70%;
-  height: 30px;
-  margin-top: 20px;
-  margin-left: 30px;
-  margin-right: 30px;
-  border-radius: 12px;
-  border: 1px;
-  background-color: rgb(224, 224, 224);
-}
 .groupName-icon {
   height: 15px;
   margin-left: 5px;
+  cursor: pointer;
 }
 .profile-bio {
   display: flex;
@@ -443,6 +433,7 @@ export default {
   margin-bottom: 10px;
   padding-top: 3px;
   padding-bottom: 3px;
+  cursor: pointer;
 }
 .group-user-img {
   height: 15px;

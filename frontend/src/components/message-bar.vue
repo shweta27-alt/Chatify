@@ -345,6 +345,7 @@ export default {
   margin-top: 30px;
   height: 60px;
   background-color: rgb(255, 255, 255);
+  cursor: pointer;
 }
 
 .dummy-chat {
@@ -472,6 +473,7 @@ export default {
   display: flex;
   flex-direction: row-reverse;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .chatify-logo {

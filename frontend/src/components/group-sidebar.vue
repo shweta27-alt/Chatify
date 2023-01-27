@@ -354,12 +354,6 @@ export default {
   height: 20px;
 }
 
-.button-position {
-  display: flex;
-  flex-direction: row-reverse;
-  margin-right: 20px;
-}
-
 .chatify-logo {
   height: 65px;
   margin-left: 20px;
@@ -425,6 +419,7 @@ export default {
   margin-bottom: 10px;
   padding-top: 3px;
   padding-bottom: 3px;
+  cursor: pointer;
 }
 .group-user-img {
   height: 15px;
@@ -460,6 +455,7 @@ export default {
   height: 40px;
   img {
     height: 100%;
+    cursor: pointer;
   }
 }
 .group-name {
