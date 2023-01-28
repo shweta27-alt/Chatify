@@ -11,7 +11,7 @@ const login = (req, res) => {
     };
 };
 
-//logot middleware to logout user
+//logout middleware to logout user
 const logout = (req, res) => {
     let getLogOut = req.logOut;
     return async () => {

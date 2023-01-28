@@ -51,7 +51,7 @@ router.post("/create-chat",checkAuthenticated, async (req, res, next) => {
   }
 });
 
-//route to fetch all chat for curernt user
+//route to fetch all chat for current user
 router.get("/fetch-chat",checkAuthenticated, async (req, res, next) => {
   let userId = req.user._id;
   try {

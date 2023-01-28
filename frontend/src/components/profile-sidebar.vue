@@ -115,6 +115,8 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+      
     },
     profileBioChange(e) {
       e.target.style.height = `${e.target.scrollHeight}px`;

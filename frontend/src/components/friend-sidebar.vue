@@ -263,6 +263,7 @@ export default {
           });
           console.log(error);
         });
+
     },
     removeGroupUser(user) {
       let data = { chatId: this.selectChat._id, userId: user._id };
