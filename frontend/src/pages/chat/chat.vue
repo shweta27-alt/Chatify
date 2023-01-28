@@ -28,6 +28,7 @@
           :class="{
             'user-sidebar': true,
             'show-user-sidebar': showMobileUserSidebar,
+            'hide-user-sidebar': showProfileContainer || showFriendProfile,
           }"
         />
         <group-sidebar
@@ -35,6 +36,7 @@
           :isShowGroup="showGroupContainer"
           :class="{
             'group-container': true,
+            'hide-group-sidebar': showProfileContainer || showFriendProfile,
           }"
           v-else
         />
@@ -44,12 +46,19 @@
           :selectChat="selectChat"
           :key="selectChat._id"
           @fetchChat="fetchChat"
+          :class="{
+            'hide-message-sidebar':
+              showMobileUserSidebar ||
+              showProfileContainer ||
+              showFriendProfile,
+          }"
         />
         <profile-sidebar
           @userData="setUserdata"
           :class="{
             'profile-container': true,
             profile: showProfileContainer,
+            'hide-profile-bar': showMobileUserSidebar || showFriendProfile,
           }"
         />
         <friend-sidebar
@@ -59,7 +68,12 @@
           @fetchChat="fetchChat"
           @selectedChat="selectedChat"
           @userData="setUserdata"
-          class="friend-container"
+          @closeFriendsSidebar="showFriendsProfile"
+          :class="{
+            'friend-container': true,
+            'hide-friend-sidebar':
+              showMobileUserSidebar || showProfileContainer,
+          }"
         />
       </div>
     </div>
@@ -108,8 +122,9 @@ export default {
       this.showGroupContainer = false;
     },
     openUserSidebar() {
-      this.showProfileContainer = false;
       this.showFriendProfile = false;
+      this.showProfileContainer = false;
+      this.showGroupContainer = false;
       this.showMobileUserSidebar = !this.showMobileUserSidebar;
     },
     showFriendsProfile() {
@@ -364,7 +379,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   @media only screen and (max-width: 600px) {
-    width: 58%;
+    width: 100%;
     padding: 14px;
   }
 }
@@ -385,6 +400,11 @@ export default {
   box-sizing: border-box;
   @media only screen and (max-width: 600px) {
     border-radius: unset;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: unset;
+    margin-left: 0;
   }
 }
 
@@ -410,20 +430,30 @@ export default {
   @media only screen and (max-width: 600px) {
     display: inline-block;
     height: 33px;
-    img{
+    img {
       height: 100%;
     }
   }
 }
 .show-user-sidebar {
   display: inline-block;
+  width: 100%;
 }
 .logo-wrapper {
-      display: flex;
-    align-items: center;
-    margin-left: 20px;
-}
-.chatify-logo-wrapper{
   display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+.chatify-logo-wrapper {
+  display: flex;
+}
+.hide-message-bar,
+.hide-user-sidebar,
+.hide-friend-sidebar,
+.hide-group-sidebar,
+.hide-message-sidebar {
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
 }
 </style>

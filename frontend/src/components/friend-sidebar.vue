@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="close-friend-sidebar">
+      <img src="../assets/cross.png" alt="" @click="closeFriendSideBar" />
+    </div>
     <div v-if="!(selectChat && selectChat.isGroupChat)">
       <div class="friend-photo-user">
         <img :src="getFriendUserImage" />
@@ -225,7 +228,7 @@ export default {
     async searchUser() {
       let timer;
       clearTimeout(timer);
-      timer = setTimeout(async() => {
+      timer = setTimeout(async () => {
         try {
           let response = await apiService.usersearch(this.userSearchData);
           this.responseUser = response.data.users;
@@ -323,6 +326,9 @@ export default {
           });
           console.log(error);
         });
+    },
+    closeFriendSideBar() {
+      this.$emit("closeFriendsSidebar");
     },
   },
 };
@@ -553,6 +559,15 @@ export default {
   button {
     margin-top: 10px;
     background: red;
+  }
+}
+.close-friend-sidebar{
+  height: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  img{
+    height: 100%;
   }
 }
 </style>

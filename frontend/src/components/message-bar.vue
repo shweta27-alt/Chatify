@@ -551,6 +551,9 @@ export default {
   align-items: center;
   img{
     height: 400px;
+     @media only screen and (max-width: 600px) {
+       height: 200px;
+  }
   }
 }
 </style>

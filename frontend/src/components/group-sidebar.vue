@@ -181,8 +181,9 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(58, 58, 58, 0.2),
     0 6px 20px 0 rgba(28, 28, 28, 0.19);
   @media only screen and (max-width: 600px) {
-    width: 58%;
+    width: 100%;
     padding: 14px;
+    margin-right: 0;
     border-radius: unset;
   }
 }

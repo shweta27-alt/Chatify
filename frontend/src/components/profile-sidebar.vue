@@ -52,13 +52,6 @@
               v-else
             />
           </div>
-          <!-- <p class="about-user-text">
-            {{
-              profiledata && profiledata.profileBio
-                ? profiledata.profileBio
-                : "Hey there, I am using chatify"
-            }}
-          </p> -->
         </div>
       </div>
 
@@ -224,9 +217,8 @@ export default {
   text-align: left;
   padding-left: 10px;
   font-size: 12px;
-  font-weight:600 ;
+  font-weight: 600;
 }
-
 
 .user-profile-img,
 .info-button-img,
@@ -243,6 +235,9 @@ export default {
 }
 .about-user-text {
   padding: 0;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 }
 
 .profile-name,
@@ -280,7 +275,7 @@ export default {
   display: flex;
   align-items: center;
   @media only screen and (max-width: 600px) {
-    width: 80%;
+    width: 100%;
   }
 }
 .about-me-profile {
@@ -288,7 +283,7 @@ export default {
     width: 100%;
   }
 }
-.user-information{
-margin-top: 25px;
+.user-information {
+  margin-top: 25px;
 }
 </style>
