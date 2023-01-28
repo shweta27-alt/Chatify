@@ -38,7 +38,7 @@ const io = require('socket.io')(server,{
 
   }
 })
-//create a connection between cleint server
+//create a connection between client server
 io.on('connection',(socket)=>{
     console.log('connected to socket.io');
     //take user data from frontend and join the group with user id

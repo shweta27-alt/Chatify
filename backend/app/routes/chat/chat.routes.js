@@ -74,7 +74,7 @@ router.get("/fetch-chat",checkAuthenticated, async (req, res, next) => {
 // route to create a group for user
 router.post("/group",checkAuthenticated, async (req, res, next) => {
   if (!(req.body.users || req.body.name)) {
-    return res.status(200).json({ message: "Please fill the required field" });
+    return res.status(400).json({ message: "Please fill the required field" });
   }
   let users = JSON.parse(req.body.users);
   //check for users it should be greater then 2 to create a group
@@ -84,7 +84,7 @@ router.post("/group",checkAuthenticated, async (req, res, next) => {
       .json({ message: "Atleast two users are required to form a group" });
   }
 
-  //push current loggen in user to group 
+  //push current logged in user to group 
   users.push(req.user._id);
 
   try {
