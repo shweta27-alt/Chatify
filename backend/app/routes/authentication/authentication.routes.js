@@ -102,5 +102,17 @@ router.get('/usersession', checkAuthenticated,async(req,res,next)=>{
    res.json({user:req.user})
 })
 
+router.post('/reset-password',async(req,res)=>{
+   let{ password, username} = req.body
+   if(!(username || password)){
+    return res.status(400).json({message:"Invalid username and password"})
+   }
+   
+   User.resetPassword(username, password).then((response)=>{
+    res.status(200).json({success:true})
+   }).catch((error)=>{
+    res.status(400).json({message:error})
+   })
+})
 
 module.exports = router;

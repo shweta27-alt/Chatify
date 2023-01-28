@@ -8,7 +8,7 @@ const {checkAuthenticated} = require('../../middlewares')
 //route to create an message 
 router.post('/message',checkAuthenticated, async (req, res, next) => {
     let {content, chatId} = req.body
-    //check if conent or chat id is missing here
+    //check if content or chat id is missing here
     if(!(content || chatId)){
         return res.status(400).json({message:"Invalid data"})
     }

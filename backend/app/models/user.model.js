@@ -31,7 +31,7 @@ const User = new Schema(
 
         profileBio: {
             type: String,
-            default: ''
+            default: "Hey there, I am using Chatify"
         },
         email: {
             type: String,
@@ -78,6 +78,27 @@ User.statics.getUserByEmail = async function getUserByEmail(emailAddress) {
 User.statics.getUserByQuery = async function getUserByQuery(query,userid) {
     const User = this.model("user")
     return User.find(query).find({_id:{$ne:userid}})
+}
+
+User.statics.resetPassword = async function resetPassword(username, password){
+    const User = this.model("user")
+    let query = {
+        $or: [
+          { mobile: { $elemMatch: { phoneNumber: `${username}` } } },
+          { email: `${username}` },
+        ],
+      };
+
+    return User.findOne(query).then((user)=>{
+        if(user){
+            return user.setPassword(password).then(()=>{
+                return user.save()
+            })
+        }
+
+        return Promise.reject("user not found")
+    })
+    
 }
 
 

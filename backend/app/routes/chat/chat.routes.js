@@ -73,6 +73,7 @@ router.get("/fetch-chat",checkAuthenticated, async (req, res, next) => {
 
 // route to create a group for user
 router.post("/group",checkAuthenticated, async (req, res, next) => {
+  //check for users and groupname
   if (!(req.body.users || req.body.name)) {
     return res.status(400).json({ message: "Please fill the required field" });
   }

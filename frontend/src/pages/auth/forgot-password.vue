@@ -72,8 +72,8 @@
 </template>
 
 <script>
+import apiService from "@/services/api.services";
 import authWrapper from "../../components/auth-wrapper.vue";
-// import apiService from "../../services/api.services";
 export default {
   name: "login.vue",
   components: {
@@ -83,7 +83,20 @@ export default {
     goToLogin() {
       this.$router.push("/auth/login");
     },
-    resetPassword() {},
+    resetPassword() {
+      if(this.username && this.password && this.confirmPassword){
+        let data = {username: this.username, password: this.password}
+      apiService.resetpassword(data).then(()=>{
+          this.showError=false
+          this.goToLogin()
+      }).catch((error)=>{
+        console.log(error)
+        this.showError=true
+        this.errorMessage =  error && error.response && error.response.data &&  error.response.data.message
+      })
+      }
+    
+    },
     validatePassword() {
       let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       if (this.confirmPassword) {
@@ -210,6 +223,7 @@ export default {
   margin-bottom: 2px;
   display: flex;
   justify-content: left;
+  text-align:left
 }
 
 .login-button {

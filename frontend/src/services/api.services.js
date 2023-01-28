@@ -69,8 +69,11 @@ const apiService = {
 
   addgroupuser(data){
     return axios.put(getUrl() + "/chat/group-add", data, { withCredentials: true }, getHeader())
+  },
+
+  resetpassword(data){
+    return axios.post(getUrl()+ "/authentication/reset-password", data, { withCredentials:true}, getHeader())
   }
-  
 };
 
 export default apiService;
