@@ -37,7 +37,7 @@
           </button>
         </div>
       </div>
-      <div class="forgot-password-wrapper">
+      <div class="forgot-password-wrapper" @click="onForgotPasswordClick">
         <div class="forgot-password">Forgotten your password?</div>
       </div>
     </auth-wrapper>
@@ -62,7 +62,9 @@ export default {
     newlogin() {
       this.$router.push("/auth/register");
     },
-
+    onForgotPasswordClick(){
+     this.$router.push("/auth/forgot-password");
+    },
     loginButton() {
       this.isloading=true
       const data = {

@@ -2,10 +2,6 @@
 
 const passport = require('passport');
 const { LocalStrategy } = require('./local-stratergy');
-const {
-    GoogleStrategyName,
-    GoogleStrategy,
-} = require('./google-stratergy');
 
 //add user data to the session in mongodb
 passport.serializeUser(function (user, done) {
@@ -18,7 +14,6 @@ passport.deserializeUser(function (user, done) {
 
 passport.use(LocalStrategy);
 
-passport.use(GoogleStrategyName, GoogleStrategy);
 
 
 

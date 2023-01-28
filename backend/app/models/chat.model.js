@@ -14,7 +14,7 @@ const Chat = new Schema(
     users: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
+        ref: "user",  //ref to user model in populate
       },
     ],
     chatName: {
@@ -23,11 +23,11 @@ const Chat = new Schema(
     },
     groupAdmin: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "user", //ref to user model in populate
     },
     latestMessage: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "message",
+      ref: "message", //ref to message model in populate
     },
   },
   {

@@ -31,6 +31,15 @@ module.exports = [
                     ),
                 beforeEnter: checkNonAuthenticatedUser
             },
+            {
+                name: 'forgot-password',
+                path: 'forgot-password/',
+                component: () =>
+                    import(
+                        './../pages/auth/forgot-password.vue'
+                    ),
+                beforeEnter: checkNonAuthenticatedUser
+            }
         ]
     }
 ];

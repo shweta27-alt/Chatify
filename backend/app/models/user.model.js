@@ -26,7 +26,6 @@ const User = new Schema(
         },
         profilePic: {
             type: String,
-            required: true,
             default: "https://res.cloudinary.com/dkidih85l/image/upload/v1674412574/ip8qhnt3cxuhx6pftlip.png"
         },
 
@@ -49,12 +48,6 @@ const User = new Schema(
         mobile: {
             type: [phoneNumber],
         },
-        archive: {
-            default: false,
-            type: Boolean,
-            required: true,
-        }
-
     },
     {
         timestamps: { createdAt: 'created_at', updatedAt: 'modified_at' },

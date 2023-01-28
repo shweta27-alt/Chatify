@@ -28,6 +28,7 @@ router.post('/login', async(req,res)=>{
 
 })
 
+//route to logout user
 router.post('/logout',async(req,res)=>{
   req.logout(req,res)
   .then(()=>{
@@ -38,9 +39,11 @@ router.post('/logout',async(req,res)=>{
   })
 })
 
+//route to register new user 
 router.post('/register/form', async (req, res) => {
   let { body } = req
   let { fullName, phoneNumber, countryCode = 91, emailAddress, password } = body
+  //validation for all fields 
   if (!fullName) {
     return res.status(400).json({ message: "Invalid FullName" })
   }
@@ -58,19 +61,20 @@ router.post('/register/form', async (req, res) => {
     return res.status(400).json({ message: "Invalid password" })
   }
 
+   //check if phone number registerd to any other user
   let phoneUser = await User.getUserByPhoneNumber(phoneNumber, countryCode)
   if (phoneUser) {
     return res.status(400).json({ message: "Phone number already taken" })
   }
 
 
-
+  //check if email registerd to any other user
   let emailUser = await User.getUserByEmail(emailAddress)
   if (emailUser) {
     return res.status(400).json({ message: "Email already taken" })
   }
 
-
+  //create a user 
   let newUser = {
     email: emailAddress,
     mobile: {
@@ -93,7 +97,7 @@ router.post('/register/form', async (req, res) => {
   });
 })
 
-
+//route to user session for a valid session check
 router.get('/usersession', checkAuthenticated,async(req,res,next)=>{
    res.json({user:req.user})
 })

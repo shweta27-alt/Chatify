@@ -11,9 +11,6 @@ const getUrl = () => {
 
 // api service to contain all api
 const apiService = {
-  getUser() {
-
-  },
   login(data) {
     return axios.post(getUrl() + "/authentication/login", data, { withCredentials: true }, getHeader());
   },
@@ -43,7 +40,7 @@ const apiService = {
   },
 
   createuserchat(data){
-    return axios.post(getUrl() + "/chat/access-chat", data, { withCredentials: true }, getHeader())
+    return axios.post(getUrl() + "/chat/create-chat", data, { withCredentials: true }, getHeader())
   },
   
   fetchchat(){

@@ -6,7 +6,7 @@ const {checkAuthenticated} = require('../../middlewares')
 
 
 // route to create a chat for a user
-router.post("/access-chat",checkAuthenticated, async (req, res, next) => {
+router.post("/create-chat",checkAuthenticated, async (req, res, next) => {
   const { userId } = req.body;
   //if user id is not present 
   if (!userId) {
@@ -110,11 +110,13 @@ router.put("/rename", async (req, res, next) => {
   let { chatName, chatId } = req.body;
   try {
     let upadteChat = await Chat.findOne({ _id: chatId });
+    //rename existing chat name
     upadteChat.chatName = chatName;
     let chat = await upadteChat.save();
     let getUpdateChat = await Chat.find({ _id: chat._id })
       .populate("users")
       .populate("groupAdmin");
+      //if not chat found return with error
     if (!getUpdateChat) {
       return res.status(404).json({ message: "Chat not found" });
     }
@@ -130,6 +132,7 @@ router.put("/group-add",checkAuthenticated, async (req, res, next) => {
   let { chatId, userId } = req.body;
   try {
     let groupChat = await Chat.findOne({ _id: chatId });
+    //add userid to existing users
     groupChat.users = [...groupChat.users, userId];
     let chat = await groupChat.save();
     let getGroupChat = await Chat.find({ _id: chat._id })
@@ -149,6 +152,7 @@ router.put("/group-remove",checkAuthenticated, async(req,res, next)=>{
   let { chatId, userId } = req.body;
   try {
     let groupChat = await Chat.findOne({ _id: chatId });
+    //remove userid to existing users
     let removeUserIndex = groupChat.users.indexOf(userId)
     groupChat.users.splice(removeUserIndex,1) 
     let chat = await groupChat.save();

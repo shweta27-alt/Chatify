@@ -21,6 +21,7 @@ router.post('/message',checkAuthenticated, async (req, res, next) => {
       message = await message.populate("chat")
       message = await User.populate(message,{path:"chat.users", select:"fullName profilePic email"})
       let userChat = await Chat.findOne({_id:chatId})
+      //change the latest message to current latest message
       userChat.latestMessage = message
       await userChat.save()
       return res.status(200).json(message)

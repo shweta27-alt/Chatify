@@ -11,7 +11,7 @@ const Message = new Schema(
         },
         sender:{
             type: mongoose.Schema.Types.ObjectId,
-            ref:"user"
+            ref:"user" //ref to user model in populate
         },
         content:{
             type: String,
@@ -19,7 +19,7 @@ const Message = new Schema(
         },
         chat:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:"chat"
+            ref:"chat" //ref to chat model in populate
         }
     },
     {
