@@ -15,12 +15,7 @@ const apiService = {
     return axios.post(getUrl() + "/authentication/login", data, { withCredentials: true }, getHeader());
   },
   register(data) {
-    return axios.post(
-      getUrl() + "/authentication/register/form",
-      data,
-      { withCredentials: true },
-      getHeader()
-    );
+    return axios.post( getUrl() + "/authentication/register/form", data, { withCredentials: true }, getHeader() );
   },
 
   logout() {

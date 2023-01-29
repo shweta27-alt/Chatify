@@ -3,9 +3,19 @@ const router = express.Router();
 const User = require('../../models/user.model');
 const passport = require('passport');
 const {checkAuthenticated} = require('../../middlewares')
+const rateLimit = require('express-rate-limit')
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 10, 
+  message: { message: 'Too many requests. Try again after some time.' },
+  keyGenerator: function () {
+      return `chatify-rate-limiter`;
+  },
+});
 
 //route to login with username password
-router.post('/login', async(req,res)=>{
+router.post('/login',limiter, async(req,res)=>{
   //calling passport local stratergy
   passport.authenticate('local', function (err, user, info) {
     if (!user || err) {
@@ -40,7 +50,7 @@ router.post('/logout',async(req,res)=>{
 })
 
 //route to register new user 
-router.post('/register/form', async (req, res) => {
+router.post('/register/form',limiter, async (req, res) => {
   let { body } = req
   let { fullName, phoneNumber, countryCode = 91, emailAddress, password } = body
   //validation for all fields 
@@ -103,7 +113,7 @@ router.get('/usersession', checkAuthenticated,async(req,res,next)=>{
 })
 
 //router to reset the password
-router.post('/reset-password',async(req,res)=>{
+router.post('/reset-password', limiter,async(req,res)=>{
    let{ password, username} = req.body
    if(!(username || password)){
     return res.status(400).json({message:"Invalid username and password"})
