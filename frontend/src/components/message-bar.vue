@@ -550,7 +550,7 @@ export default {
   justify-content: center;
   align-items: center;
   img{
-    height: 45%;
+    height: 40%;
      @media only screen and (max-width: 600px) {
        height: 200px;
   }

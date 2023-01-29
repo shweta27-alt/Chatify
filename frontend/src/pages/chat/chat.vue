@@ -437,7 +437,6 @@ export default {
 }
 .show-user-sidebar {
   display: inline-block;
-  width: 100%;
 }
 .logo-wrapper {
   display: flex;
