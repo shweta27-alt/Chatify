@@ -85,7 +85,7 @@ router.post('/register/form', async (req, res) => {
     username: emailAddress
   }
 
-
+ //It save the user in db and hash the password and user get logged in
   let user = await User.register(new User(newUser), password)
   return req.login(user, async (err, data) => {
     if (err) {
@@ -102,6 +102,7 @@ router.get('/usersession', checkAuthenticated,async(req,res,next)=>{
    res.json({user:req.user})
 })
 
+//router to reset the password
 router.post('/reset-password',async(req,res)=>{
    let{ password, username} = req.body
    if(!(username || password)){

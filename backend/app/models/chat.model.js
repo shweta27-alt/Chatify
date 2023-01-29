@@ -35,6 +35,10 @@ const Chat = new Schema(
   }
 );
 
+Chat.index({users:1})
+Chat.index({isGroupChat:1})
+Chat.index({isGroupChat:1,users:1})
+
 Chat.statics.getChat = async function getChat() {};
 
 module.exports = chatifyDb.model("chat", Chat);

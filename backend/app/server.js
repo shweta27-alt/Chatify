@@ -58,6 +58,7 @@ io.on('connection',(socket)=>{
     socket.on('new message',(newMessageRecieved)=>{
       let chat = newMessageRecieved.chat;
       if(!chat.users) return console.log('chat users not defined')
+      //check if message received sender id match with any of the user we return it otherwise we emit the message to other user 
       chat.users.forEach(user => {
         if(user._id == newMessageRecieved.sender._id) return; 
         socket.in(user._id).emit("message received",newMessageRecieved)

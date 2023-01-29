@@ -8,7 +8,7 @@ let chatifyDb = getChatifyDb();
 const phoneNumber = new Schema({
     phoneNumber: {
         type: String,
-        required: true
+        required: true,
     },
     countryCode: {
         type: Number,
@@ -18,11 +18,20 @@ const phoneNumber = new Schema({
     { _id: false }
 )
 
+phoneNumber.index({countryCode:1,phoneNumber:1})
+phoneNumber.index({phoneNumber:1},{unique:true})
+
 const User = new Schema(
     {
         fullName: {
             type: String,
             required: true,
+        },
+
+        userName:{
+            type: String,
+            lowercase:true,
+            trim:true
         },
         profilePic: {
             type: String,
@@ -35,7 +44,10 @@ const User = new Schema(
         },
         email: {
             type: String,
+            lowercase:true,
+            trim:true,
             required: true,
+
         },
         salt: {
             type: String,
@@ -53,6 +65,11 @@ const User = new Schema(
         timestamps: { createdAt: 'created_at', updatedAt: 'modified_at' },
     }
 );
+
+User.index({fullName:1})
+User.index({username:1})
+User.index({email:1},{unique:true})
+
 
 //passport local mongoose to add salt and hash password
 User.plugin(passportLocalMongoose, {

@@ -95,7 +95,7 @@
           </div>
           <input
             type="text"
-            placeholder="Search user or create chat"
+            placeholder="Search user and add to group"
             class="search-bar"
             v-model="userSearchData"
             @input="searchUser"
@@ -244,26 +244,25 @@ export default {
     addGroupUser(user) {
       let ifGroupUserExists = this.groupUser.find((val) => val._id == user._id);
       let data = { chatId: this.selectChat._id, userId: user._id };
-      apiService
-        .addgroupuser(data)
-        .then(() => {
-          if (!ifGroupUserExists) {
+      if (!ifGroupUserExists) {
+        apiService
+          .addgroupuser(data)
+          .then(() => {
             this.groupUser.push(user);
-          } else {
-            this.$toast.show("User already added to group", {
+          })
+          .catch((error) => {
+            this.$toast.show("Something went wrong", {
               type: "error",
               position: "top",
             });
-          }
-        })
-        .catch((error) => {
-          this.$toast.show("Something went wrong", {
-            type: "error",
-            position: "top",
+            console.log(error);
           });
-          console.log(error);
+      } else {
+        this.$toast.show("User already added to group", {
+          type: "error",
+          position: "top",
         });
-
+      }
     },
     removeGroupUser(user) {
       let data = { chatId: this.selectChat._id, userId: user._id };
@@ -562,12 +561,12 @@ export default {
     background: red;
   }
 }
-.close-friend-sidebar{
+.close-friend-sidebar {
   height: 10px;
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-  img{
+  img {
     height: 100%;
   }
 }

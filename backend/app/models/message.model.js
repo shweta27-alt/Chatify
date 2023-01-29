@@ -6,9 +6,6 @@ let chatifyDb=getChatifyDb();
 
 const Message = new Schema(
     {
-        readby :{
-            type: Array,
-        },
         sender:{
             type: mongoose.Schema.Types.ObjectId,
             ref:"user" //ref to user model in populate
@@ -26,6 +23,9 @@ const Message = new Schema(
         timestamps: { createdAt: 'created_at', updatedAt: 'modified_at' },
     }
 );
+
+Message.index({sender:1})
+Message.index({chat:1})
 
 Message.statics.getChat = async function getChat() {
 };

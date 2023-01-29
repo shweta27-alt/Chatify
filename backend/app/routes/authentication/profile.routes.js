@@ -17,6 +17,7 @@ router.post('/update-profile', async (req, res, next) => {
         
     }
     let response = await profileUser.save()
+    //update the user session after updating the db
     req.session.passport.user=response;
     return res.status(200).json({user:response});
 });

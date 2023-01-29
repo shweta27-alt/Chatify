@@ -209,15 +209,16 @@ export default {
     this.socket.on("connected", () => {
       this.socketConnected = true;
     });
+    
+  },
+
+  updated() {
     //to check the typing event from backend 
     this.socket.on("typing", () => (this.isTyping = true));
     //to check the stop typing event from backend 
     this.socket.on("stop typing", () => (this.isTyping = false));
-  },
-
-  updated() {
     //to read the message from backend and show message pr notification 
-    this.socket.on("message recived", (newMessageRecived) => {
+    this.socket.on("message received", (newMessageRecived) => {
       if (
         !this.selectChat ||
         this.selectChat._id !== newMessageRecived.chat._id
