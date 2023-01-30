@@ -65,7 +65,7 @@
         </div>
 
         <div class="exit-group-button">
-          <button @click="exitGroup">Exit Group</button>
+          <button @click="exitGroup"><strong>Exit Group</strong></button>
         </div>
 
         <div class="search-bar-title">Add or edit participants</div>
@@ -567,8 +567,16 @@ export default {
 }
 .exit-group-button {
   button {
-    margin-top: 10px;
-    background: red;
+  background-color: rgb(255, 3, 3);
+  color:white;
+  width: 70%;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  border-radius: 5px;
+  border: 1px;
+  cursor: pointer;
   }
 }
 .close-friend-sidebar {

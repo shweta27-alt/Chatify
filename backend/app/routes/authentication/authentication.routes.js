@@ -10,7 +10,7 @@ const limiter = rateLimit({
   windowMs: 60 * 1000,
   max: 10, //max request allowed per windowMs
   message: { message: 'Too many requests. Try again after some time.' },
-  keyGenerator: function () {
+  keyGenerator: function (req) {
       return `chatify-rate-limiter-${req.ip}`; //key for the request including user ip
   },
 });

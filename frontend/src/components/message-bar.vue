@@ -123,7 +123,7 @@ export default {
         this.typing = true;
         //emit the typing event to backend 
         this.socket.emit("typing", this.selectChat._id);
-        //added debouncing to stop tyiping after some delay
+        //added debouncing to stop typing after some delay
         let timer;
         clearTimeout(timer);
         timer = setTimeout(() => {

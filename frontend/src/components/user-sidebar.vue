@@ -77,7 +77,7 @@ export default {
   methods: {
     async searchUser() {
       try {
-        //debounce the serch user result with 300 milliseconds
+        //debounce the search user result with 300 milliseconds
         let timer;
         clearTimeout(timer);
         timer = setTimeout(async() => {
