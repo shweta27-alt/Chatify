@@ -46,6 +46,7 @@
           :selectChat="selectChat"
           :key="selectChat._id"
           @fetchChat="fetchChat"
+          @newMessage="newMessage"
           :class="{
             'hide-message-sidebar':
               showMobileUserSidebar ||
@@ -157,6 +158,9 @@ export default {
       this.value = !this.value;
       this.notification = data;
     },
+    newMessage(){
+        this.value = !this.value;
+    }
   },
   mounted() {
     //set user data to current logged in user data

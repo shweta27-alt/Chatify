@@ -237,6 +237,7 @@ export default {
           
       } else {
         //show messages realtime
+        this.$emit('newMessage');
         let ifChatExists = this.chats.find(
           (val) => val._id == newMessageRecived._id
         );
