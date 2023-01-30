@@ -288,6 +288,7 @@ export default {
 .profile-bio {
   display: flex;
   align-items: center;
+  width: 90%;
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
