@@ -36,6 +36,7 @@
               v-model="profileBio"
               @input="profileBioChange"
               :disabled="editProfileBio"
+               @keydown="onKeyDown"
             />
             <img
               class="profilebio-icon"
@@ -101,6 +102,15 @@ export default {
         : "Hey there, I am using chatify";
   },
   methods: {
+    onKeyDown(evt){
+      //max 100 character limit for profile bio
+      if (this.profileBio.length >= 100) {
+        if (evt.keyCode >= 48 && evt.keyCode <= 90) {
+          evt.preventDefault()
+          return
+        }
+      }
+    },
     updateProfileBio() {
       this.editProfileBio = false;
     },
@@ -278,6 +288,7 @@ export default {
 .profile-bio {
   display: flex;
   align-items: center;
+  width: 90%;
   @media only screen and (max-width: 600px) {
     width: 100%;
   }
