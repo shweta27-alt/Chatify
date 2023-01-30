@@ -159,6 +159,7 @@ export default {
       this.chatNotification = this.chatNotification.filter(
         (val) => val.chat._id != data._id
       );
+      this.$emit("setNotification", this.chatNotification);
       this.$emit("selectedChat", data);
     },
     getNotification(data) {

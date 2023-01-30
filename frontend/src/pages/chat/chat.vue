@@ -21,6 +21,7 @@
           ref="userSideBar"
           @selectedChat="selectedChat"
           @showGroupSidebar="showGroupSidebar"
+          @setNotification="setNotification"
           :notification="notification"
           :selectChat="selectChat"
           :key="value"
@@ -160,6 +161,9 @@ export default {
     },
     newMessage(){
         this.fetchChat();
+    },
+    setNotification(data){
+      this.notification = data;
     }
   },
   mounted() {
