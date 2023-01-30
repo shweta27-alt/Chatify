@@ -31,7 +31,7 @@ router.post("/create-chat",checkAuthenticated, async (req, res, next) => {
     if (isChat.length > 0) {
       res.status(200).json(isChat[0]);
     } else {
-      //Else create a chat for user
+      //else create a chat for user
       let chatData = {
         chatName: "sender",
         isGroupChat: false,

@@ -110,6 +110,7 @@ export default {
     },
 
     validateFullName() {
+      //regex to validate full name
       let re = /^[a-zA-Z0-9-_'. ]+$/;
       if (!re.test(this.formdata.full_name.value.trim())) {
         this.formdata.full_name.showError = true;
@@ -122,6 +123,7 @@ export default {
       }
     },
     validatePhoneNumber() {
+      //regex to validate phone number
       let re = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
       if (!re.test(this.formdata.phone_number.value)) {
         this.formdata.phone_number.showError = true;
@@ -134,6 +136,7 @@ export default {
       }
     },
     validateEmailAddress() {
+      //regex to validate email address
       let re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
       if (!re.test(this.formdata.email_address.value)) {
         this.formdata.email_address.showError = true;
@@ -146,6 +149,7 @@ export default {
       }
     },
     validatePassword() {
+    //regex passowrd check also check if password confirm password matches if confirm password present
       let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       if (this.formdata.confirm_password.value) {
         if (
@@ -175,6 +179,7 @@ export default {
       }
     },
     validateConfirmPassword() {
+      //check if password confirm password matches
       if (
         !(this.formdata.confirm_password.value == this.formdata.password.value)
       ) {
@@ -192,6 +197,7 @@ export default {
       this.isloading=true;
       let validform = true,
         isValid;
+      //validate all the form data validate methods
       for (let key in this.formdata) {
         isValid = this.formdata[key].validate();
         validform = validform && isValid;
@@ -204,7 +210,7 @@ export default {
         emailAddress: this.formdata.email_address.value,
         password: this.formdata.password.value,
       };
-
+      //if all validated then call the register to register user
       if (validform) {
         apiService
           .register(data)

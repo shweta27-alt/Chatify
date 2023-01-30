@@ -108,6 +108,7 @@ export default {
   },
   methods: {
     onProfileClick() {
+      //on profile click show or hide the Profile bar 
       this.showMobileUserSidebar = false;
       this.showProfileContainer = !this.showProfileContainer;
       this.showFriendProfile = false;
@@ -116,30 +117,35 @@ export default {
       this.userData = user;
     },
     showGroupSidebar() {
+      //show group side bar on group click
       this.showGroupContainer = true;
     },
     closeGroupSidebar() {
+      //close group side bar on group close
       this.showGroupContainer = false;
     },
     openUserSidebar() {
+      //on user sidebar click show or hide the mobile user sidebar for mobile device 
       this.showFriendProfile = false;
       this.showProfileContainer = false;
       this.showGroupContainer = false;
       this.showMobileUserSidebar = !this.showMobileUserSidebar;
     },
     showFriendsProfile() {
+      //on friend profile click show or hide the friend sidebar 
       this.showMobileUserSidebar = false;
       this.showProfileContainer = false;
       this.showFriendProfile = !this.showFriendProfile;
     },
     selectedChat(data) {
+      //select the chat on selection
       this.showMobileUserSidebar = false;
       this.selectChat = data;
     },
     fetchChat() {
+      //fetch user chats from user side bar component
       this.$refs.userSideBar && this.$refs.userSideBar.fetchUserChat();
     },
-
     onUserLeft() {
       this.selectChat = "";
       this.showMobileUserSidebar = false;
@@ -147,11 +153,13 @@ export default {
       this.showFriendProfile = !this.showFriendProfile;
     },
     getNotification(data) {
+      //get notification from message and pass it to user side bar to show notification
       this.value = !this.value;
       this.notification = data;
     },
   },
   mounted() {
+    //set user data to current logged in user data
     this.userData = this.$store.state.userData.user;
   },
 };

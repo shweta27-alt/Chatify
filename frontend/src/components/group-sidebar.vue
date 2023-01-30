@@ -88,6 +88,7 @@ export default {
 
   methods: {
     async searchUser() {
+      //debounce the serch user result with 300 milliseconds
       let timer;
       clearTimeout(timer);
       timer = setTimeout(async() => {
@@ -107,6 +108,7 @@ export default {
       this.$emit("closeGroupSidebar");
     },
     addGroupUser(data) {
+      //if group user already exists throw an error 
       let ifGroupUserExists = this.groupUser.find((val) => val._id == data._id);
       if (!ifGroupUserExists) {
         this.groupUser.push(data);
@@ -126,6 +128,7 @@ export default {
       }
     },
     onGroupAdd() {
+      //throw an error if user have not enter the group name
       if (!this.groupName) {
         return this.$toast.show("please enter group name", {
           type: "error",
@@ -135,8 +138,10 @@ export default {
       let groupUserId = this.groupUser.map((val) => {
         return val._id;
       });
+      //check for group length should be greater then 1 atleast 2 are required
       if (groupUserId.length > 1) {
         let data = { name: this.groupName, users: JSON.stringify(groupUserId) };
+        //create a group
         return apiService
           .groupAdd(data)
           .then(() => {

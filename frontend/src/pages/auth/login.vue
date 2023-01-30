@@ -71,7 +71,7 @@ export default {
         username: this.username,
         password: this.password,
       };
-
+      //if both user name and passowrd then login user
       if (this.username && this.password) {
         apiService
           .login(data)

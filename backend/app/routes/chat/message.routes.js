@@ -37,6 +37,7 @@ router.post('/message',checkAuthenticated, async (req, res, next) => {
 router.get('/message',checkAuthenticated,async(req,res,next)=>{
    let chatId = req.query.chatId;
    try{
+      //find all the message for current logged in user
       const message = await Message.find({chat:chatId}).populate("sender","fullName profilePic email").populate("chat")
       return res.status(200).json(message)
    } 

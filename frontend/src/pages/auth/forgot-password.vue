@@ -84,6 +84,7 @@ export default {
       this.$router.push("/auth/login");
     },
     resetPassword() {
+      //reset the password
       if(this.username && this.password && this.confirmPassword){
         let data = {username: this.username, password: this.password}
       apiService.resetpassword(data).then(()=>{
@@ -98,6 +99,7 @@ export default {
     
     },
     validatePassword() {
+       //regex passowrd check also check if password confirm password matches if confirm password present
       let re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       if (this.confirmPassword) {
         if (!(this.confirmPassword == this.password)) {
@@ -120,6 +122,7 @@ export default {
       }
     },
     validateConfirmPassword() {
+      //check if password confirm password matches
       if (!(this.confirmPassword == this.password)) {
         this.showConfirmPasswordError = true;
         this.showConfirmPasswordErrorMessage = "Password does not match";

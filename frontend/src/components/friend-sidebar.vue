@@ -166,6 +166,7 @@ export default {
 
   computed: {
     getFriendUserName() {
+      //get the friend username in chat users whose id not matches with current loggedin user id
       if (this.selectChat.isGroupChat) {
         return this.selectChat.chatName;
       } else {
@@ -178,6 +179,7 @@ export default {
       }
     },
     getFriendUserImage() {
+      //get the friend user image in chat users whose id not matches with current loggedin user id
       if (!this.selectChat.isGroupChat) {
         let user =
           this.selectChat.users &&
@@ -191,6 +193,7 @@ export default {
     },
 
     getFriendPhoneNumber() {
+      //get the friend phone number in chat users whose id not matches with current loggedin user id
       let user =
         this.selectChat.users &&
         this.selectChat.users.find((val) => {
@@ -200,6 +203,7 @@ export default {
     },
 
     getFriendEmail() {
+      //get the friend email  in chat users whose id not matches with current loggedin user id
       let user =
         this.selectChat.users &&
         this.selectChat.users.find((val) => {
@@ -208,6 +212,7 @@ export default {
       return user && user.email;
     },
     getFriendsProfileBio() {
+      //get the friend profile bio in chat users whose id not matches with current loggedin user id
       let user =
         this.selectChat.users &&
         this.selectChat.users.find((val) => {
@@ -226,6 +231,7 @@ export default {
 
   methods: {
     async searchUser() {
+      //debounce the serch user result with 300 milliseconds
       let timer;
       clearTimeout(timer);
       timer = setTimeout(async () => {
@@ -244,6 +250,7 @@ export default {
     addGroupUser(user) {
       let ifGroupUserExists = this.groupUser.find((val) => val._id == user._id);
       let data = { chatId: this.selectChat._id, userId: user._id };
+      //if user already exists then throw error otherwise add in group
       if (!ifGroupUserExists) {
         apiService
           .addgroupuser(data)
@@ -288,12 +295,14 @@ export default {
       this.editGroupName = false;
     },
     submitGroupName() {
+      //throw error if group name is empty
       if (!this.groupName) {
         return this.$toast.show("Group name should not be empty", {
           type: "error",
           position: "top",
         });
       }
+      //otherwise rename the group
       let data = { chatName: this.groupName, chatId: this.selectChat._id };
       apiService
         .renamegroup(data)
@@ -312,6 +321,7 @@ export default {
     },
 
     exitGroup() {
+      //exit the user from the group by passing the user id
       let data = { chatId: this.selectChat._id, userId: this.userData._id };
       apiService
         .removegroupuser(data)

@@ -94,6 +94,7 @@ export default {
   },
   mounted() {
     this.profiledata = this.$store.state.userData.user;
+    //set default bio if current logged in user bio is empty
     this.profileBio =
       this.profiledata && this.profiledata.profileBio
         ? this.profiledata.profileBio
@@ -104,6 +105,7 @@ export default {
       this.editProfileBio = false;
     },
     submitProfileBio() {
+      //update the current logged in user profile bio
       this.editProfileBio = true;
       apiService
         .profileupdate({ profileBio: this.profileBio })
@@ -115,13 +117,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-
-      
     },
     profileBioChange(e) {
       e.target.style.height = `${e.target.scrollHeight}px`;
     },
     logout() {
+      //logout the user 
       apiService
         .logout()
         .then(() => {
@@ -140,6 +141,7 @@ export default {
         });
     },
     updateProfileImage(data) {
+      //update the current logged in user profile image
       apiService
         .profileupdate({ profileImage: data })
         .then(({ data }) => {
@@ -165,7 +167,7 @@ export default {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
         };
       };
-      //call the cloudnary api to get the image url
+      //send upload image data and call the cloudnary api to get the image url
       axios
         .post(
           "https://api.cloudinary.com/v1_1/dkidih85l/image/upload",
@@ -174,7 +176,7 @@ export default {
           getHeader()
         )
         .then(({ data }) => {
-          this.updateProfileImage(data.secure_url);
+          this.updateProfileImage(data.secure_url); //update the profile pic with cloudnary secure image url
         })
         .catch((err) => {
           this.$toast.show("Something went wrong", {

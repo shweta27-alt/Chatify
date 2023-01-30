@@ -134,6 +134,7 @@ export default {
       }
     },
     onSendMessage() {
+      //send the message to selected user chat id 
       if (this.message) {
         let data = {
           content: this.message,
@@ -155,10 +156,12 @@ export default {
     },
 
     fetchMessage() {
+      //fetch all the message for selected chat id
       if (this.selectChat._id) {
         apiService
           .fetchmessage(this.selectChat._id)
           .then((response) => {
+            //show data in reverse with flex column reverse with scroll bar down to up
             this.chats = response.data.reverse();
             //with chat id create a new room for user
             this.socket.emit("join chat", this.selectChat._id);
@@ -172,6 +175,7 @@ export default {
       return this.getMessageTimeSince(message.created_at);
     },
     getMessageTimeSince(createdAt) {
+      //get the time since in message by created at field
       let date = new Date(`${createdAt}`);
       let seconds = Math.floor((new Date() - date) / 1000);
 
@@ -203,6 +207,7 @@ export default {
   mounted() {
     this.userData = this.$store.state.userData.user;
     this.fetchMessage();
+    //create socket connection
     this.socket = io("http://localhost:5080");
     //emit the user data to server to join the group
     this.socket.emit("setup", this.userData);  
@@ -217,18 +222,21 @@ export default {
     this.socket.on("typing", () => (this.isTyping = true));
     //to check the stop typing event from backend 
     this.socket.on("stop typing", () => (this.isTyping = false));
-    //to read the message from backend and show message pr notification 
+    //to read the message from backend and show message or notification 
     this.socket.on("message received", (newMessageRecived) => {
+      //if message recived chat  and selected chat id is same then show message otherwise show notification
       if (
         !this.selectChat ||
         this.selectChat._id !== newMessageRecived.chat._id
       ) {
+        //show notification realtime
         if(!(this.notification.find(val=>val._id==newMessageRecived._id))){
           this.notification=[newMessageRecived,...this.notification];
           this.$emit('notification',this.notification);
         }
           
       } else {
+        //show messages realtime
         let ifChatExists = this.chats.find(
           (val) => val._id == newMessageRecived._id
         );
@@ -241,23 +249,25 @@ export default {
 
   computed: {
     getMessageUserName() {
+      //if group chat return chatname otherwise return other user name from selected chat user
       if (this.selectChat.isGroupChat) {
         return this.selectChat.chatName;
       } else {
         let userName =
           this.selectChat.users &&
           this.selectChat.users.find((val) => {
-            return val._id != this.userData._id;
+            return val._id != this.userData._id;//user whose id not matches current logged in user id
           });
         return userName && userName.fullName;
       }
     },
     getChatUserImage() {
+       //if group chat return default image otherwise return other user profilePic from selected chat user
       if (!this.selectChat.isGroupChat) {
         let userImage =
           this.selectChat.users &&
           this.selectChat.users.find((val) => {
-            return val._id != this.userData._id;
+            return val._id != this.userData._id; //user whose id not matches current logged in user id
           });
         return userImage && userImage.profilePic;
       } else {

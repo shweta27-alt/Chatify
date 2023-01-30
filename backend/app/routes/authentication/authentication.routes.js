@@ -5,12 +5,13 @@ const passport = require('passport');
 const {checkAuthenticated} = require('../../middlewares')
 const rateLimit = require('express-rate-limit')
 
+//limit the request if it is more the 10 request per minute
 const limiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 10, 
+  max: 10, //max request allowed per windowMs
   message: { message: 'Too many requests. Try again after some time.' },
   keyGenerator: function () {
-      return `chatify-rate-limiter`;
+      return `chatify-rate-limiter-${req.ip}`; //key for the request including user ip
   },
 });
 
@@ -18,6 +19,7 @@ const limiter = rateLimit({
 router.post('/login',limiter, async(req,res)=>{
   //calling passport local stratergy
   passport.authenticate('local', function (err, user, info) {
+    //if not get any user from local stratergy done
     if (!user || err) {
         return res.status(400).json({
             message: (err && err.message) || 'Oops something went wrong',
