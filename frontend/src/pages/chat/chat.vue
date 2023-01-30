@@ -159,7 +159,7 @@ export default {
       this.notification = data;
     },
     newMessage(){
-        this.value = !this.value;
+        this.fetchChat();
     }
   },
   mounted() {
