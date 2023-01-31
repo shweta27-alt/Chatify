@@ -6,7 +6,7 @@ const getHeader = () => {
 };
 
 const getUrl = () => {
-  return "http://localhost:5080";
+  return "https://webchatapplication.onrender.com";
 };
 
 // api service to contain all api
