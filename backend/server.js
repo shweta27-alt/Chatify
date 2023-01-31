@@ -3,6 +3,9 @@ const express = require('express');
 const app = new express();
 const cors = require('cors')
 const mongo = require('./mongoose.init');
+const path = require("path");
+const dotenv = require("dotenv");
+dotenv.config();
 mongo.connect();
 
 
@@ -19,7 +22,21 @@ app.use(
     })
   );
 
-require('./routes')(app);
+require('./app/routes')(app);
+
+const __dirname1 = path.resolve();
+  console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/frontend/dist")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "frontend", "dist", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
 
 //other than above routes
 app.use(function (req, res, next) {
@@ -29,7 +46,7 @@ app.use(function (req, res, next) {
 });
 
 
-const server = app.listen(5080,console.log('server started on PORT 5080'))
+const server = app.listen(process.env.PORT,console.log('server started on PORT 5080'))
 //add a cors origin here for the socket 
 const io = require('socket.io')(server,{
   pingTimeout:60000,

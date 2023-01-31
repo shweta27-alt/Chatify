@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose')
-const { getChatifyDb } = require('../mongoose.init');
+const { getChatifyDb } = require('../../mongoose.init');
 let chatifyDb = getChatifyDb();
 
 
