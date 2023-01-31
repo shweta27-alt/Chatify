@@ -2,7 +2,7 @@ const session = require('express-session');
 let MongoDBStore = require('connect-mongodb-session')(session);
 
 const store = new MongoDBStore({
-    uri: 'mongodb://127.0.0.1:27017/chatifyDb',
+    uri: 'mongodb+srv://shweta277:Poiuytrewq%4012345@cluster0.dbc32st.mongodb.net/Chatify?retryWrites=true&w=majority',
     collection: 'sessions'
   });
 

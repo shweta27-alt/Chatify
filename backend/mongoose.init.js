@@ -10,10 +10,11 @@ function createConnection(dbURL, name, options) {
     return db;
 }
 
+
 //connect mongo db 
 function connect() {
     chatifyDb = createConnection(
-        'mongodb://127.0.0.1:27017/chatifyDb',
+        'mongodb+srv://shweta277:Poiuytrewq%4012345@cluster0.dbc32st.mongodb.net/Chatify?retryWrites=true&w=majority',
         'chatifyDb'
     );
 }
