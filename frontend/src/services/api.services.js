@@ -6,7 +6,7 @@ const getHeader = () => {
 };
 
 const getUrl = () => {
-  return "https://webchatapplication-chatify.fly.dev";
+  return "http://localhost:5080";
 };
 
 // api service to contain all api

@@ -15,7 +15,7 @@ app.use(bodyParser.json({ limit: '2mb' }));
 //cors to allow origin and methods
 app.use(
     cors({
-      origin:[ "http://localhost:8081","http://localhost:8080","https://webchatapplication-chatify.fly.dev"],
+      origin:[ "http://localhost:8081","http://localhost:5080","https://webchatapplication-chatify.fly.dev"],
       methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
       credentials: true,
       sameSite: 'none'
@@ -51,7 +51,7 @@ const server = app.listen(process.env.PORT||8080,console.log('server started on 
 const io = require('socket.io')(server,{
   pingTimeout:60000,
   cors:{
-    origin:[ "http://localhost:8081","http://localhost:8080","https://webchatapplication-chatify.fly.dev"]
+    origin:[ "http://localhost:8081","http://localhost:5080","https://webchatapplication-chatify.fly.dev"]
 
   }
 })

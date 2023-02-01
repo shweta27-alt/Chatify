@@ -19,11 +19,11 @@ const sessionMW = async (req, res, next) => {
         rolling: true,   //roll the session from current date to maxage
         saveUninitialized: false,
         cookie: {
-            secure: 'auto',
+            // secure: 'auto',
             path: '/',
-            sameSite: 'none',
+            // sameSite: 'none',
             maxAge,
-            domain: `.webchatapplication-chatify.fly.dev`,
+            domain: `localhost`,
         },
     });
 

@@ -47,6 +47,7 @@
           :selectChat="selectChat"
           :key="selectChat._id"
           @fetchChat="fetchChat"
+          ref="messageSideBar"
           @newMessage="newMessage"
           :class="{
             'hide-message-sidebar':
@@ -117,6 +118,7 @@ export default {
     },
     setUserdata(user) {
       this.userData = user;
+      this.$refs.messageSideBar.fetchMessage();
     },
     showGroupSidebar() {
       //show group side bar on group click

@@ -28,10 +28,10 @@ const logout = (req, res) => {
                         }
                         //clear user cookie
                         res.clearCookie('c.session', {
-                            secure: 'auto',
+                            // secure: 'auto',
                               path:'/',
-                              sameSite: 'none',
-                              domain: `.webchatapplication-chatify.fly.dev`,
+                            //   sameSite: 'none',
+                              domain: `localhost`,
                             expires: new Date(
                                 Date.now() - 100000
                             ).toISOString(),
