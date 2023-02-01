@@ -23,7 +23,7 @@ const sessionMW = async (req, res, next) => {
             path: '/',
             sameSite: 'none',
             maxAge,
-            domain: `.web-chat-application.herokuapp.com`,
+            domain: `.webchatapplication-chatify.fly.dev`,
         },
     });
 
