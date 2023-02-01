@@ -28,10 +28,10 @@ const logout = (req, res) => {
                         }
                         //clear user cookie
                         res.clearCookie('c.session', {
-                            // secure: 'auto',
+                            secure: 'auto',
                               path:'/',
-                           // sameSite: 'none',
-                              domain: `localhost`,
+                              sameSite: 'none',
+                              domain: `.webchatapplication.onrender.com`,
                             expires: new Date(
                                 Date.now() - 100000
                             ).toISOString(),

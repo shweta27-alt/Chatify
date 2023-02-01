@@ -4,9 +4,9 @@ let MongoDBStore = require('connect-mongodb-session')(session);
 const store = new MongoDBStore({
     uri: 'mongodb+srv://shweta277:Poiuytrewq%4012345@cluster0.dbc32st.mongodb.net/Chatify?retryWrites=true&w=majority',
     collection: 'sessions'
-  });
+});
 
-  //express session middleware
+//express session middleware
 const sessionMW = async (req, res, next) => {
     let sessionMiddleware;
     const maxAge = 30000000; //max age of user session
@@ -19,11 +19,11 @@ const sessionMW = async (req, res, next) => {
         rolling: true,   //roll the session from current date to maxage
         saveUninitialized: false,
         cookie: {
-            // secure: 'auto',
-            path:'/',
-            // sameSite: 'none',
+            secure: 'auto',
+            path: '/',
+            sameSite: 'none',
             maxAge,
-            domain: `localhost`,
+            domain: `.webchatapplication.onrender.com`,
         },
     });
 
