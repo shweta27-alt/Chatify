@@ -18,7 +18,7 @@ app.use(
       origin:[ "http://localhost:8081","http://localhost:8080","https://web-chat-application.herokuapp.com/"],
       methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
       credentials: true,
-      sameSite: 'none',
+      sameSite: 'none'
     })
   );
 
@@ -46,7 +46,7 @@ app.use(function (req, res, next) {
 });
 
 
-const server = app.listen(process.env.PORT,console.log('server started on PORT 5080'))
+const server = app.listen(process.env.PORT||8080,console.log('server started on PORT 5080'))
 //add a cors origin here for the socket 
 const io = require('socket.io')(server,{
   pingTimeout:60000,

@@ -31,7 +31,7 @@ const logout = (req, res) => {
                             secure: 'auto',
                               path:'/',
                               sameSite: 'none',
-                              domain: `.web-chat-application.herokuapp.com`,
+                              domain: `.webchatapplication-chatify.fly.dev`,
                             expires: new Date(
                                 Date.now() - 100000
                             ).toISOString(),
