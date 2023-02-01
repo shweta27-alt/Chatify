@@ -208,7 +208,7 @@ export default {
     this.userData = this.$store.state.userData.user;
     this.fetchMessage();
     //create socket connection
-    this.socket = io("https://webchatapplication.onrender.com");
+    this.socket = io("https://webchatapplication-chatify-production.up.railway.app");
     //emit the user data to server to join the group
     this.socket.emit("setup", this.userData);  
     this.socket.on("connected", () => {

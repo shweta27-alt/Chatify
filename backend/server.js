@@ -51,7 +51,7 @@ const server = app.listen(process.env.PORT,console.log('server started on PORT 5
 const io = require('socket.io')(server,{
   pingTimeout:60000,
   cors:{
-    origin:[ "http://localhost:8081","http://localhost:8080","https://webchatapplication.onrender.com"]
+    origin:[ "http://localhost:8081","http://localhost:8080","https://webchatapplication-chatify-production.up.railway.app/"]
 
   }
 })
