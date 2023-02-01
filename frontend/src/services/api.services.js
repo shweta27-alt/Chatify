@@ -6,7 +6,7 @@ const getHeader = () => {
 };
 
 const getUrl = () => {
-  return "https://webchatapplication-chatify-production.up.railway.app";
+  return "https://web-chat-application.herokuapp.com/";
 };
 
 // api service to contain all api

@@ -15,10 +15,10 @@ app.use(bodyParser.json({ limit: '2mb' }));
 //cors to allow origin and methods
 app.use(
     cors({
-      origin:[ "http://localhost:8081","http://localhost:8080","https://webchatapplication-chatify-production.up.railway.app"],
+      origin:[ "http://localhost:8081","http://localhost:8080","https://web-chat-application.herokuapp.com/"],
       methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
       credentials: true,
-      sameSite: 'none'
+      sameSite: 'none',
     })
   );
 
