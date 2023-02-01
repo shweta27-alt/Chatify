@@ -31,7 +31,7 @@ const logout = (req, res) => {
                             secure: 'auto',
                               path:'/',
                               sameSite: 'none',
-                              domain: `.webchatapplication.onrender.com`,
+                              domain: `.webchatapplication-chatify-production.up.railway.app`,
                             expires: new Date(
                                 Date.now() - 100000
                             ).toISOString(),
