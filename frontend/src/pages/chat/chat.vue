@@ -118,7 +118,7 @@ export default {
     },
     setUserdata(user) {
       this.userData = user;
-      this.$refs.messageSideBar.fetchMessage();
+      this.$refs.messageSideBar && this.$refs.messageSideBar.fetchMessage();
     },
     showGroupSidebar() {
       //show group side bar on group click

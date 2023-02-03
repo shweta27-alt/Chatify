@@ -35,7 +35,7 @@ const User = new Schema(
         },
         profilePic: {
             type: String,
-            default: "https://res.cloudinary.com/dkidih85l/image/upload/v1674412574/ip8qhnt3cxuhx6pftlip.png"
+            default: "https://res.cloudinary.com/dkidih85l/image/upload/v1675432668/effetpmpaazmw74g81pl.png"
         },
 
         profileBio: {
