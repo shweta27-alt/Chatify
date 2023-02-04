@@ -10,7 +10,7 @@ router.post("/create-chat",checkAuthenticated, async (req, res, next) => {
   const { userId } = req.body;
   //if user id is not present 
   if (!userId) {
-    return res.status(400).json({ message: "Inavlid userId send" });
+    return res.status(400).json({ message: "Invalid userId send" });
   }
   try {
     let isChat = await Chat.find({
