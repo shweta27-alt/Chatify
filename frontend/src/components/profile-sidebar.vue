@@ -136,18 +136,10 @@ export default {
       apiService
         .logout()
         .then(() => {
-          this.showError = false;
-          this.errorMessage = "";
           this.$router.push("/auth/login");
         })
         .catch((error) => {
           console.log(error);
-          this.showError = true;
-          this.errorMessage =
-            error &&
-            error.response &&
-            error.response.data &&
-            error.response.data.message;
         });
     },
     updateProfileImage(data) {
