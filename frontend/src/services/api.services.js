@@ -6,7 +6,7 @@ const getHeader = () => {
 };
 
 const getUrl = () => {
-  return "https://chatify-api-shweta27alts-projects.vercel.app/";
+  return "http://localhost:5080";
 };
 
 // api service to contain all api

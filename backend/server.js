@@ -15,7 +15,7 @@ app.use(bodyParser.json({ limit: '2mb' }));
 //cors to allow origin and methods
 app.use(
     cors({
-      origin:[ "http://localhost:8081","http://localhost:5080","https://webchatapplication-chatify.fly.dev","http://localhost:8080", "https://chatify-api-shweta27alts-projects.vercel.app/"],
+      origin:[ "http://localhost:8081","http://localhost:5080","https://webchatapplication-chatify.fly.dev","http://localhost:8080", "http://chatify-qmd603jit-shweta27alts-projects.vercel.app"],
       methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
       credentials: true,
       sameSite: 'none'
@@ -51,7 +51,7 @@ const server = app.listen(process.env.PORT||8080,console.log('server started on 
 const io = require('socket.io')(server,{
   pingTimeout:60000,
   cors:{
-    origin:[ "http://localhost:8081","http://localhost:5080","https://webchatapplication-chatify.fly.dev","http://localhost:8080", "https://chatify-api-shweta27alts-projects.vercel.app/"]
+    origin:[ "http://localhost:8081","http://localhost:5080","https://webchatapplication-chatify.fly.dev","http://localhost:8080", "http://chatify-qmd603jit-shweta27alts-projects.vercel.app"]
 
   }
 })
