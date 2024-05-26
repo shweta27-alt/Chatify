@@ -11,25 +11,16 @@ mongo.connect();
 
 app.use(require('cookie-parser')());
 app.use(bodyParser.json({ limit: '2mb' }));
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+
 //cors to allow origin and methods
 app.use(
-  cors({
-    origin: [
-      "http://localhost:8081",
-      "http://localhost:5080",
-      "https://webchatapplication-chatify.fly.dev",
-      "http://localhost:8080",
-      "https://chatify-front-beta.vercel.app"
-    ],
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-    credentials: true
-  })
-);
-
+    cors({
+      origin:[ "http://localhost:8081","http://localhost:5080","https://webchatapplication-chatify.fly.dev","http://localhost:8080", "https://chatify-front-beta.vercel.app"],
+      methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+      credentials: true,
+      sameSite: 'none'
+    })
+  );
 
 require('./app/routes')(app);
 
@@ -46,7 +37,6 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running..");
   });
 }
-
 
 //other than above routes
 app.use(function (req, res, next) {
