@@ -6,7 +6,7 @@ const getHeader = () => {
 };
 
 const getUrl = () => {
-  return "https://chatify-app-zeta.vercel.app/";
+  return "https://chatify-app-zeta.vercel.app";
 };
 
 // api service to contain all api
