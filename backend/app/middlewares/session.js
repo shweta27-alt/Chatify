@@ -19,11 +19,12 @@ const sessionMW = async (req, res, next) => {
         rolling: true,   //roll the session from current date to maxage
         saveUninitialized: false,
         cookie: {
-            // secure: 'auto',
+            secure: true,
             path: '/',
-            // sameSite: 'none',
+            sameSite: 'none',
             maxAge,
-            domain: `https://chatify-app-zeta.vercel.app/`,
+            domain: `chatify-app-zeta.vercel.app`, 
+            domain: `localhost`,
         },
     });
 
