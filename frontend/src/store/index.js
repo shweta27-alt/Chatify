@@ -1,16 +1,5 @@
 import { createStore } from 'vuex';
-// import apiService from "../services/api.services";
-import axios from "axios";
-
-const getHeader = () => {
-  return {
-    headers: { "Content-Type": "application/json" },
-  };
-};
-
-const getUrl = () => {
-  return "https://chatify-app-zeta.vercel.app";
-};
+import apiService from "../services/api.services";
 
 export default createStore({
   state: {
@@ -31,7 +20,7 @@ export default createStore({
     async getUserData({ commit }) {
       let responseUser;
       try {
-        let response = await axios.get(getUrl() + "/authentication/usersession", { withCredentials: true }, getHeader())
+        let response = await apiService.usersession();
         responseUser = { user: response.data.user, isLoggedInUser: true }
         commit('updateUserData', responseUser);
     
