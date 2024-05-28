@@ -24,7 +24,7 @@ const sessionMW = async (req, res, next) => {
             sameSite: 'none',
             maxAge,
             domain: `chatify-app-zeta.vercel.app`, 
-            domain: `localhost`,
+            // domain: `localhost`,
         },
     });
 
